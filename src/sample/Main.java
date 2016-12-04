@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javafx.scene.control.Button;
@@ -40,6 +41,10 @@ public class Main extends Application {
 
        Label messageLabel = new Label("Podaj swój login oraz hasło aby zalogować się do systemu zapisów:");
        messageLabel.setPadding(new Insets(10,0,10,0));
+       Label errorLabel = new Label();
+       errorLabel.setTextFill(Color.RED);
+       errorLabel.setPadding(new Insets(0,0,10,0));
+
        Label loginLabel = new Label("Login:");
        Label passLabel = new Label("Hasło:");
 
@@ -52,10 +57,14 @@ public class Main extends Application {
        Button loginButton = new Button("Zaloguj");
        loginButton.setPadding(new Insets(5,5,5,5));
        loginButton.setOnAction(e -> {
+           errorLabel.setText("");
            String login = loginField.getText();
            String password = passField.getText();
 
            ValidationOutput whoIsIt = validateLoginData(login, password);
+           if(whoIsIt.equals(ValidationOutput.wrongInput))
+               errorLabel.setText("Błędny login lub hasło!");
+
            System.out.println(whoIsIt);
        });
 
@@ -70,6 +79,7 @@ public class Main extends Application {
        layout.add(passLabel, 0,2);
        layout.add(passField, 1,2);
        layout.add(loginButton, 1,3);
+       layout.add(errorLabel, 1,4);
 
 
        layout.setAlignment(Pos.CENTER);
