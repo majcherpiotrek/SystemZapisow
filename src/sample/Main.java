@@ -1,6 +1,6 @@
 package sample;
 
-import admin.AdminUserInterface;
+import users.admin.Admin;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +20,8 @@ import java.util.Scanner;
 
 public class Main extends Application {
 
-    private Stage windowLogin;
+    private Stage mainWindow;
+    private Scene mainScene;
     private static final String adminDataFilename = "admin.txt";
     private static final String studentDataFilename = "student.txt";
 
@@ -31,13 +32,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        windowLogin = primaryStage;
-        windowLogin.setTitle("Logowanie do systemu");
-        windowLogin.setOnCloseRequest(e -> {
+        mainWindow = primaryStage;
+        mainWindow.setTitle("Logowanie do systemu");
+        mainWindow.setOnCloseRequest(e -> {
             e.consume(); //Konsumujemy zdarzenie - program nie zamknie się już automatycznie
             boolean closeProgram = ConfirmationBox.Display("Zamykanie programu", "Czy na pewno chcesz zamknąć program?");
             if(closeProgram)
-                windowLogin.close();
+                mainWindow.close();
         });
 
        Label messageLabel = new Label("Podaj swój login oraz hasło aby zalogować się do systemu zapisów:");
@@ -72,11 +73,7 @@ public class Main extends Application {
        layout.add(errorLabel, 1,4);
 
        layout.setAlignment(Pos.CENTER);
-       Scene sceneLogin = new Scene(layout);
-
-       //Tworzenie scen dla administratora i studenta
-       AdminUserInterface adminUserInterface = new AdminUserInterface();
-       Scene adminScene = adminUserInterface.createUserInterfaceScene(windowLogin,sceneLogin);
+       mainScene = new Scene(layout);
 
        loginButton.setOnAction(e -> {
            errorLabel.setText("");
@@ -89,7 +86,10 @@ public class Main extends Application {
 
            if(whoIsIt.equals(ValidationOutput.admin)){
                /*ADMIN*/
-               windowLogin.setScene(adminScene);
+               Admin admin = new Admin(this.mainWindow, this.mainScene);
+
+               /*Zamiana sceny w głównym oknie - wyświetlenie menu admina*/
+               admin.displayMainMenu();
                loginField.clear();
                passField.clear();
            }
@@ -98,9 +98,9 @@ public class Main extends Application {
 
 
 
-       windowLogin.resizableProperty().setValue(false);
-       windowLogin.setScene(sceneLogin);
-       windowLogin.show();
+       mainWindow.resizableProperty().setValue(false);
+       mainWindow.setScene(mainScene);
+       mainWindow.show();
 
     }
 
