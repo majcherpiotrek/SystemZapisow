@@ -1,5 +1,6 @@
 package sample;
 
+import admin.AdminUserInterface;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -56,17 +57,6 @@ public class Main extends Application {
 
        Button loginButton = new Button("Zaloguj");
        loginButton.setPadding(new Insets(5,5,5,5));
-       loginButton.setOnAction(e -> {
-           errorLabel.setText("");
-           String login = loginField.getText();
-           String password = passField.getText();
-
-           ValidationOutput whoIsIt = validateLoginData(login, password);
-           if(whoIsIt.equals(ValidationOutput.wrongInput))
-               errorLabel.setText("Błędny login lub hasło!");
-
-           System.out.println(whoIsIt);
-       });
 
        GridPane layout = new GridPane();
        layout.setHgap(10);
@@ -81,9 +71,32 @@ public class Main extends Application {
        layout.add(loginButton, 1,3);
        layout.add(errorLabel, 1,4);
 
-
        layout.setAlignment(Pos.CENTER);
        Scene sceneLogin = new Scene(layout);
+
+       //Tworzenie scen dla administratora i studenta
+       AdminUserInterface adminUserInterface = new AdminUserInterface();
+       Scene adminScene = adminUserInterface.createUserInterfaceScene(windowLogin,sceneLogin);
+
+       loginButton.setOnAction(e -> {
+           errorLabel.setText("");
+           String login = loginField.getText();
+           String password = passField.getText();
+
+           ValidationOutput whoIsIt = validateLoginData(login, password);
+           if(whoIsIt.equals(ValidationOutput.wrongInput))
+               errorLabel.setText("Błędny login lub hasło!");
+
+           if(whoIsIt.equals(ValidationOutput.admin)){
+               /*ADMIN*/
+               windowLogin.setScene(adminScene);
+               loginField.clear();
+               passField.clear();
+           }
+           System.out.println(whoIsIt);
+       });
+
+
 
        windowLogin.resizableProperty().setValue(false);
        windowLogin.setScene(sceneLogin);

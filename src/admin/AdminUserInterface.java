@@ -1,4 +1,5 @@
 package admin;
+import javafx.geometry.Pos;
 import user.UserInterface;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -19,15 +20,35 @@ public class AdminUserInterface extends UserInterface{
 
 
     @Override
-    public void DisplayMainInterface(){
-        Stage windowAdmin = new Stage();
-        windowAdmin.setTitle("Panel administracyjny systemu");
-        windowAdmin.setOnCloseRequest(e -> {
-            e.consume(); //Konsumujemy zdarzenie - program nie zamknie się już automatycznie
-            boolean closeProgram = ConfirmationBox.Display("Zamykanie programu", "Czy na pewno chcesz zamknąć program?");
-            if(closeProgram)
-                windowAdmin.close();
+    public Scene createUserInterfaceScene(Stage lastWindow, Scene lastScene){
+        window = lastWindow;
+        window.setTitle("Panel administracyjny");
+
+        //Przycisk pokazania profilu
+        Button buttonProfile = new Button("Pokaż profil");
+        buttonProfile.setPadding(new Insets(5,5,5,5));
+        buttonProfile.setAlignment(Pos.CENTER);
+        buttonProfile.setOnAction(e ->{
+            /*pokazanie profilu*/
+            showProfile();
         });
+
+        //Przycisk wylogowywania
+        Button buttonLogout = new Button("Wyloguj");
+        buttonLogout.setPadding(new Insets(5,5,5,5));
+        buttonLogout.setAlignment(Pos.CENTER);
+        buttonLogout.setOnAction(e -> {
+            window.setScene(lastScene);
+        });
+
+        VBox layout = new VBox();
+        layout.setPadding(new Insets(10,10,10,10));
+        layout.setSpacing(20);
+        layout.setAlignment(Pos.CENTER);
+
+        layout.getChildren().addAll(buttonProfile,buttonLogout);
+        scene = new Scene(layout);
+        return scene;
     }
 
     @Override
@@ -35,3 +56,17 @@ public class AdminUserInterface extends UserInterface{
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
