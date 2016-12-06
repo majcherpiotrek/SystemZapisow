@@ -10,11 +10,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-class ConfirmationBox {
+public class ConfirmationBox {
 
     private static boolean decision;
 
-    static boolean Display(String windowTitle, String message){
+    public static boolean Display(String windowTitle, String message){
 
         Stage confirmationBoxWindow = new Stage();
         confirmationBoxWindow.initModality(Modality.APPLICATION_MODAL); //razem z showAndWait() powoduje, że nie można edytować innego okna, zanim to nie zostanie zamknięte
