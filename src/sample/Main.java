@@ -107,7 +107,6 @@ public class Main extends Application {
 
         while(input.hasNextLine()) {
             line = input.nextLine();
-            System.out.println("bla");
             if(line.equals(loginLine))
                 return ValidationOutput.admin;
         }
