@@ -1,2 +1,2 @@
-student student
-student2 student2
+student student Popek Monster popek@firma.pl
+student2 student2 Mariusz Pudzianowski buła@łokieć.pl

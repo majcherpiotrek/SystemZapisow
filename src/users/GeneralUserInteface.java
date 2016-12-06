@@ -10,7 +10,7 @@ import sample.ConfirmationBox;
 /**
  * Created by piotrek on 06.12.16.
  */
-public abstract class GeneralUser {
+public abstract class GeneralUserInteface {
 
     /*
      *Okno w którym program będzie wyświetlany

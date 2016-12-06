@@ -1,6 +1,6 @@
 package sample;
 
-import users.admin.Admin;
+import users.admin.AdminUserInterface;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,18 +13,38 @@ import javafx.stage.Stage;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import users.student.Student;
+import users.student.StudentUserInterface;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*TODO
+       ->Dodać dodatkowe pola w klasie Student (listę grup, wydział, prawo do zapisów itd.) + dodać te dane w plikach tekstowych
+       ->Stworzyć enumy dla wydziałów itd... (albo jakoś inaczej to rozwiązać, jak nam coś przyjdzie do głowy, żeby się nie napisać tak strasznie ;< )
+       ->Stworzyć klasę kurs i grupa
+       ->Utworzyć globalną listę wszystkich kursów albo oddzielne listy kursów dla każdego wydziału czy kierunku, whatever, jeszcze to przemyślimy
+       ->Zrobić dodawanie nowych kursów w klasie Admin
+       ->Zrobić listę studentów, którą będzie mógł przeglądać admin (pytanie czy globalną, czy tworzoną dla obiektu admina, chyba lepiej globalną)
+       ->Jak już jest lista studentów to zrobić zmianę prawa do zapisów
+       ->Zrobić zapisywanie danych do plików (tych list wszystkich itd), albo automatyczne generowanie przy starcie programu.
+       ->Zrobić przeglądanie kursów i grup w klasie Student
+       ->Zrobić zapisywanie/wypisywanie do/z grup w klasie Student
+       ->Jak nam się będzie chciało, to można zrobić ładne wyświetlanie planu zajęć w formie tabeli
+
+    Najpierw zróbmy jak najprostsze GUI albo nawet wyświetlanie profili, list itd w konsoli, a potem to jakoś ubierzemy. Bo inaczej będziemy walczyć
+    z gui, a z logiką programu będziemy w lesie. Tak na spokojnie ogarniemy sobie ten tutorial i będzie git :D
+
+    PS Proponuję pisać tutaj roboczo jakieś ważne rzeczy jak coś przyjdzie do głowy co jeszcze trzeba zrobić, albo co zmienić. Komunikaty w commitach
+    można dawać krótkie, a nad klasami dawać dokładny opis co się zmieniło, albo właśnie tutaj.
+
+*/
 public class Main extends Application {
 
-    private Stage mainWindow;
-    private Scene mainScene;
-    private static final String adminDataFilename = "admin.txt";
-    private static final String studentDataFilename = "student.txt";
+    private static Stage mainWindow;
+    private static Scene mainScene;
+    public static final String adminDataFilename = "admin.txt";
+    public static final String studentDataFilename = "student.txt";
 
     private enum ValidationOutput {
         admin, student, wrongInput, noDatabase
@@ -87,7 +107,7 @@ public class Main extends Application {
 
            if(whoIsIt.equals(ValidationOutput.admin)){
                /*ADMIN*/
-               Admin admin = new Admin(this.mainWindow, this.mainScene);
+               AdminUserInterface admin = new AdminUserInterface(this.mainWindow, this.mainScene, login);
                /*Zamiana sceny w głównym oknie - wyświetlenie menu admina*/
                admin.displayMainMenu();
                loginField.clear();
@@ -96,7 +116,7 @@ public class Main extends Application {
 
            if(whoIsIt.equals(ValidationOutput.student)){
                /*STUDENT*/
-               Student student = new Student(this.mainWindow, this.mainScene);
+               StudentUserInterface student = new StudentUserInterface(this.mainWindow, this.mainScene, login);
                /*Zamiana sceny w głównym oknie - wyświetlenie menu admina*/
                student.displayMainMenu();
                loginField.clear();
@@ -116,7 +136,6 @@ public class Main extends Application {
     private ValidationOutput validateLoginData(String login, String password){
 
         Scanner input;
-        String loginLine = login + " " + password;
 
         try{
             File adminDataFile = new File(adminDataFilename);
@@ -129,7 +148,12 @@ public class Main extends Application {
 
         while(input.hasNextLine()) {
             line = input.nextLine();
-            if(line.equals(loginLine))
+            Scanner temp = new Scanner(line);
+            temp.useDelimiter(" ");
+            String _login = temp.next();
+            String _password = temp.next();
+
+            if(login.equals(_login) && password.equals(_password))
                 return ValidationOutput.admin;
         }
 
@@ -144,11 +168,21 @@ public class Main extends Application {
 
         while(input.hasNextLine()){
             line = input.nextLine();
-            if(line.equals(loginLine))
+            Scanner temp = new Scanner(line);
+            temp.useDelimiter(" ");
+            String _login = temp.next();
+            String _password = temp.next();
+            if(login.equals(_login) && password.equals(_password))
                 return ValidationOutput.student;
         }
 
         return ValidationOutput.wrongInput;
+    }
+
+    /*Funkcja pozwalająca na zamknięcie programu przy wystąpieniu nieobsługiwalnego błędu w innej klasie*/
+    public static void closeOnError(String errorMessage){
+        System.err.println(errorMessage);
+        mainWindow.close();
     }
 
     public static void main(String[] args) {

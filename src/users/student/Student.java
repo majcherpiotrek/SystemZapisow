@@ -1,49 +1,66 @@
 package users.student;
+import users.User;
+import sample.Main;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import users.GeneralUser;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Created by piotrek on 06.12.16.
  */
-public class Student extends GeneralUser {
+class Student extends User {
 
-    public Student(Stage _parentWindow, Scene _parentScene){
-        this.parentWindow = _parentWindow;
-        this.parentScene = _parentScene;
+    /*Konstruktor klasy Student - tworzy obiekt użytkownika
+     *na podstawie danych z pliku. Znajduje odpowiednie dane
+     *na podstawie loginu, pozyskanego przy logowaniu*/
+    Student(String _login){
+        this.login = _login;
+        String studentData = "";
+        String fileName = Main.studentDataFilename;
+        File file = new File(fileName);
+        Scanner input;
+        boolean found = false;
+
+        try {
+            input = new Scanner(file);
+        }catch(IOException ex){
+            Main.closeOnError("FATAL ERROR - database disappeared");
+            return;
+        }
+
+        while(input.hasNextLine()){
+            String temp = input.findInLine(login);
+            if(temp.equals(login)){
+                found = true;
+                studentData = input.nextLine();
+                break;
+            }
+        }
+        if(found)
+            input = new Scanner(studentData);
+        else{
+            Main.closeOnError("FATAL ERROR - Student not found after login");
+            return;
+        }
+
+        input.useDelimiter(" ");
+
+        password = input.next();
+        name = input.next();
+        surname = input.next();
+        email = input.next();
     }
 
     @Override
-    public void displayMainMenu() {
-        /*Inicjalizacja szkieletu GUI*/
-        initInterfaceFrame("Panel studenta");
+    public String toString(){
+        String result = "";
+        result += login + " ";
+        result += password + " ";
+        result += name + " ";
+        result += surname + " ";
+        result += email + " ";
 
-        VBox mainMenuLayout = new VBox();
-        mainMenuLayout.setPadding(new Insets(50,50,50,50));
-        mainMenuLayout.setSpacing(40);
-        mainMenuLayout.setAlignment(Pos.CENTER);
-
-        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonLogout);
-        Scene mainMenuScene = new Scene(mainMenuLayout);
-        this.parentWindow.setScene(mainMenuScene);
-    }
-
-    @Override
-    public void showProfile() {
-
-    }
-
-    @Override
-    public void manageCourses() {
-
-    }
-
-    @Override
-    public void manageGroups() {
-
+        return result;
     }
 }
