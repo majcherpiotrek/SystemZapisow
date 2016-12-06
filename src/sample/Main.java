@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import users.student.Student;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,9 +88,17 @@ public class Main extends Application {
            if(whoIsIt.equals(ValidationOutput.admin)){
                /*ADMIN*/
                Admin admin = new Admin(this.mainWindow, this.mainScene);
-
                /*Zamiana sceny w głównym oknie - wyświetlenie menu admina*/
                admin.displayMainMenu();
+               loginField.clear();
+               passField.clear();
+           }
+
+           if(whoIsIt.equals(ValidationOutput.student)){
+               /*STUDENT*/
+               Student student = new Student(this.mainWindow, this.mainScene);
+               /*Zamiana sceny w głównym oknie - wyświetlenie menu admina*/
+               student.displayMainMenu();
                loginField.clear();
                passField.clear();
            }

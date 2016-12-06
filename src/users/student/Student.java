@@ -1,31 +1,26 @@
-package users.admin;
-import sample.ConfirmationBox;
-import javafx.geometry.Pos;
-import users.GeneralUser;
+package users.student;
+
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import users.GeneralUser;
 
 /**
- * Klasa administrator w systemie. Posiada metody do wyświetlnia
- * interfejsu użytkownika oraz do edycji danych w systemie.
  * Created by piotrek on 06.12.16.
  */
-public class Admin extends GeneralUser {
+public class Student extends GeneralUser {
 
-
-    public Admin(Stage _parentWindow, Scene _previousScene){
-        /*Przypisanie okna i sceny rodzica*/
+    public Student(Stage _parentWindow, Scene _parentScene){
         this.parentWindow = _parentWindow;
-        this.parentScene = _previousScene;
+        this.parentScene = _parentScene;
     }
 
     @Override
-    public void displayMainMenu(){
+    public void displayMainMenu() {
         /*Inicjalizacja szkieletu GUI*/
-        initInterfaceFrame("Panel administracyjny");
+        initInterfaceFrame("Panel studenta");
 
         VBox mainMenuLayout = new VBox();
         mainMenuLayout.setPadding(new Insets(50,50,50,50));
@@ -38,33 +33,17 @@ public class Admin extends GeneralUser {
     }
 
     @Override
-    public void showProfile(){
-        System.out.println("show profile");
+    public void showProfile() {
+
     }
 
     @Override
     public void manageCourses() {
-        System.out.println("manage courses");
+
     }
 
     @Override
     public void manageGroups() {
-        System.out.println("manage courses");
+
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
