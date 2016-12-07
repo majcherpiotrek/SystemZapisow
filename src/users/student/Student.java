@@ -1,4 +1,5 @@
 package users.student;
+import sample.Department;
 import users.User;
 import sample.Main;
 
@@ -7,12 +8,42 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by piotrek on 06.12.16.
  */
 class Student extends User {
 
-    /*
+
+    public String getID() {
+        return ID;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public String getFieldOfStudy() {
+        return fieldOfStudy;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public int getTerm() {
+        return term;
+    }
+
+    public boolean isSignUpRight() {
+        return signUpRight;
+    }
+
+    public int getECTS() {
+        return ECTS;
+    }
+
     private String ID;
     private Department department;
     private String fieldOfStudy;
@@ -20,8 +51,9 @@ class Student extends User {
     private int term;
     private boolean signUpRight;
     private int ECTS;
-    private ArrayList<Group> studentGroups;
-     */
+  //  private ArrayList<Group> studentGroups;
+
+
 
     /*Konstruktor klasy Student - tworzy obiekt użytkownika
      *na podstawie danych z pliku. Znajduje odpowiednie dane
@@ -61,9 +93,16 @@ class Student extends User {
         input.useDelimiter(" ");
 
         password = input.next();
+        email = input.next();
         name = input.next();
         surname = input.next();
-        email = input.next();
+        ID = input.next();
+        department = Department.valueOf(input.next());
+        fieldOfStudy = input.next();
+        specialization = input.next();
+        term = parseInt(input.next());
+        signUpRight = Boolean.valueOf(input.next());
+        ECTS = Integer.valueOf(input.next());
     }
 
     @Override
@@ -75,7 +114,13 @@ class Student extends User {
         profileData.add(name);
         profileData.add(surname);
         profileData.add(email);
-
+        profileData.add(ID);
+        profileData.add(department.getName());
+        profileData.add(fieldOfStudy);
+        profileData.add(specialization);
+        profileData.add(String.valueOf(term));
+        profileData.add(String.valueOf(signUpRight));
+        profileData.add(String.valueOf(ECTS));
         return profileData;
     }
 
@@ -87,6 +132,13 @@ class Student extends User {
         result += name + " ";
         result += surname + " ";
         result += email + " ";
+        result += ID + " ";
+        result += department + " ";
+        result += fieldOfStudy + " ";
+        result += specialization + " ";
+        result += term + " ";
+        result += signUpRight + " ";
+        result += ECTS + " ";
 
         return result;
     }

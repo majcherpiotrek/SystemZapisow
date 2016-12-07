@@ -2,6 +2,7 @@ package users.admin;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import users.GeneralUserInteface;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -49,8 +50,11 @@ public class AdminUserInterface extends GeneralUserInteface {
     @Override
     public void showProfile(Scene lastScene){
         System.out.println(admin);
-        VBox layout = new VBox();
-        layout.setSpacing(20);
+        GridPane layout = new GridPane();
+        VBox v1 = new VBox();
+        VBox v2 = new VBox();
+        v1.setSpacing(20);
+        v2.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
 
         Button powrot = new Button("Wróć");
@@ -59,14 +63,27 @@ public class AdminUserInterface extends GeneralUserInteface {
             parentWindow.setScene(lastScene);
         });
 
-        Label login = new Label(admin.login);
-        Label name  = new Label(admin.name);
-        Label surr  = new Label(admin.surname);
-        Label email = new Label(admin.email);
+        Label login = new Label("Login : ");
+        Label email = new Label("E-mail");
+        Label name  = new Label("Imię : ");
+        Label surr  = new Label("Nazwisko : ");
 
-        layout.getChildren().addAll(login,name,surr,email,powrot);
+        Label loginV2 = new Label(admin.login);
+        Label nameV2  = new Label(admin.name);
+        Label surrV2  = new Label(admin.surname);
+        Label emailV2 = new Label(admin.email);
+
+        v1.getChildren().addAll(login,name,surr,email,powrot);
+        v2.getChildren().addAll(loginV2,nameV2,surrV2,emailV2);
+
+        layout.setHgap(10);
+        layout.setVgap(10);
+
+        layout.setConstraints(v1,0,0);
+        layout.setConstraints(v2,1,0);
+        layout.getChildren().addAll(v1,v2);
+
         Scene scene = new Scene(layout);
-
         parentWindow.setScene(scene);
     }
 
