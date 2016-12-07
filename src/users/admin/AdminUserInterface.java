@@ -1,5 +1,7 @@
 package users.admin;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import users.GeneralUserInteface;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -34,12 +36,38 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonLogout);
         Scene mainMenuScene = new Scene(mainMenuLayout);
+
+         /*Obsługa zdarzeń przycisków*/
+        buttonLogout.setOnAction(e -> logout());
+        buttonProfile.setOnAction(e -> showProfile(mainMenuScene));
+        buttonCourses.setOnAction(e -> manageCourses());
+
         this.parentWindow.setScene(mainMenuScene);
+
     }
 
     @Override
-    public void showProfile(){
+    public void showProfile(Scene lastScene){
         System.out.println(admin);
+        VBox layout = new VBox();
+        layout.setSpacing(20);
+        layout.setAlignment(Pos.CENTER);
+
+        Button powrot = new Button("Wróć");
+
+        powrot.setOnAction(e->{
+            parentWindow.setScene(lastScene);
+        });
+
+        Label login = new Label(admin.login);
+        Label name  = new Label(admin.name);
+        Label surr  = new Label(admin.surname);
+        Label email = new Label(admin.email);
+
+        layout.getChildren().addAll(login,name,surr,email,powrot);
+        Scene scene = new Scene(layout);
+
+        parentWindow.setScene(scene);
     }
 
     @Override

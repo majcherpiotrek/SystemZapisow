@@ -26,7 +26,7 @@ public abstract class GeneralUserInteface {
 
     /*Metody abstrakcyjne do przeładowania w klasach admina i studenta*/
     public abstract void displayMainMenu();
-    public abstract void showProfile();
+    public abstract void showProfile(Scene lastScene);
     public abstract void manageCourses();
     public abstract void manageGroups();
 
@@ -52,11 +52,7 @@ public abstract class GeneralUserInteface {
         buttonCourses.setPadding(new Insets(5,10,5,10));
         buttonCourses.setAlignment(Pos.CENTER);
 
-        /*Obsługa zdarzeń przycisków*/
-        buttonLogout.setOnAction(e -> logout());
-        buttonProfile.setOnAction(e -> showProfile());
-        buttonCourses.setOnAction(e -> manageCourses());
-    }
+           }
     public void logout() {
         boolean confirmed = ConfirmationBox.Display("Wylogowywanie", "Czy na pewno chcesz się wylogować?");
         if(confirmed)

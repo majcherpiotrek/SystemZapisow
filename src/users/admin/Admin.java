@@ -33,11 +33,13 @@ class Admin extends User{
 
         while(input.hasNextLine()){
             String temp = input.findInLine(login);
+            if(temp != null)
             if(temp.equals(login)){
                 found = true;
                 adminData = input.nextLine();
                 break;
             }
+            input.nextLine();
         }
         if(found)
             input = new Scanner(adminData);
@@ -49,9 +51,10 @@ class Admin extends User{
         input.useDelimiter(" ");
 
         password = input.next();
+        email = input.next();
         name = input.next();
         surname = input.next();
-        email = input.next();
+
     }
 
     @Override
