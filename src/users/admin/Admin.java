@@ -33,11 +33,12 @@ class Admin extends User{
 
         while(input.hasNextLine()){
             String temp = input.findInLine(login);
-            if(temp.equals(login)){
+            if(temp != null){
                 found = true;
                 adminData = input.nextLine();
                 break;
             }
+            input.nextLine();
         }
         if(found)
             input = new Scanner(adminData);
