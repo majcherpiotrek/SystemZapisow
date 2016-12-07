@@ -62,6 +62,4 @@ public abstract class GeneralUserInteface {
         if(confirmed)
             this.parentWindow.setScene(this.parentScene);
     }
-
-
 }

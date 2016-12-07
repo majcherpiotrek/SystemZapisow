@@ -15,10 +15,10 @@ public class StudentUserInterface extends GeneralUserInteface {
 
     private Student student;
 
-    public StudentUserInterface(Stage _parentWindow, Scene _parentScene, String login){
+    public StudentUserInterface(Stage _parentWindow, Scene _parentScene, String studentLogin){
         this.parentWindow = _parentWindow;
         this.parentScene = _parentScene;
-        student = new Student(login);
+        student = new Student(studentLogin);
     }
 
     @Override

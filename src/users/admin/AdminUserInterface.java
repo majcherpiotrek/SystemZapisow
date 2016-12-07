@@ -15,11 +15,11 @@ public class AdminUserInterface extends GeneralUserInteface {
 
     private Admin admin;
 
-    public AdminUserInterface(Stage _parentWindow, Scene _previousScene, String login){
+    public AdminUserInterface(Stage _parentWindow, Scene _previousScene, String adminLogin){
         /*Przypisanie okna i sceny rodzica*/
         this.parentWindow = _parentWindow;
         this.parentScene = _previousScene;
-        admin = new Admin(login);
+        admin = new Admin(adminLogin);
     }
 
     @Override

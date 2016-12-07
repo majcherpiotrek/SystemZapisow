@@ -4,12 +4,24 @@ import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by piotrek on 06.12.16.
  */
 class Student extends User {
+
+    /*
+    private String ID;
+    private Department department;
+    private String fieldOfStudy;
+    private String specialization;
+    private int term;
+    private boolean signUpRight;
+    private int ECTS;
+    private ArrayList<Group> studentGroups;
+     */
 
     /*Konstruktor klasy Student - tworzy obiekt użytkownika
      *na podstawie danych z pliku. Znajduje odpowiednie dane
@@ -50,6 +62,19 @@ class Student extends User {
         name = input.next();
         surname = input.next();
         email = input.next();
+    }
+
+    @Override
+    public ArrayList<String> getProfile(){
+        ArrayList<String> profileData = new ArrayList<>();
+
+        profileData.add(login);
+        profileData.add(password);
+        profileData.add(name);
+        profileData.add(surname);
+        profileData.add(email);
+
+        return profileData;
     }
 
     @Override
