@@ -30,4 +30,8 @@ public class Group {
         this.room = room;
         this.signedUpStudents = FXCollections.observableArrayList();
     }
+
+    public void addStudent(Student student){
+        signedUpStudents.add(student);
+    }
 }

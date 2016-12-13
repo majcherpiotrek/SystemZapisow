@@ -40,6 +40,11 @@ public class Course {
         groups = FXCollections.observableArrayList();
     }
 
+    public void addGroup(Group group){
+        groups.add(group);
+    }
+
+
     public String getName() {
         return name;
     }

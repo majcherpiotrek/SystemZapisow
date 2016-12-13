@@ -1,5 +1,7 @@
 package users.student;
+import javafx.collections.FXCollections;
 import sample.Department;
+import sample.Group;
 import users.User;
 import sample.Main;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
+import javafx.collections.ObservableList;
 
 /**
  * Created by piotrek on 06.12.16.
@@ -22,6 +25,7 @@ public class Student extends User {
     private int term;
     private boolean signUpRight;
     private int ECTS;
+    private ObservableList<Group> groupList;
 
     public Student(String login, String password,String name, String surname, String email, String ID, Department department, String fieldOfStudy, String specialization, int term, boolean signUpRight, int ECTS){
         this.login = login;
@@ -36,6 +40,11 @@ public class Student extends User {
         this.term = term;
         this.signUpRight = signUpRight;
         this.ECTS = ECTS;
+        this.groupList = FXCollections.observableArrayList();
+    }
+
+    public void addGroup(Group group){
+        groupList.add(group);
     }
 
     public String getID() {
@@ -93,9 +102,6 @@ public class Student extends User {
     public void setECTS(int ECTS) {
         this.ECTS = ECTS;
     }
-
-    //  private ArrayList<Group> studentGroups;
-
 
 
     /*Konstruktor klasy Student - tworzy obiekt użytkownika
