@@ -13,37 +13,8 @@ import static java.lang.Integer.parseInt;
 /**
  * Created by piotrek on 06.12.16.
  */
-class Student extends User {
-
-
-    public String getID() {
-        return ID;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public String getFieldOfStudy() {
-        return fieldOfStudy;
-    }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public int getTerm() {
-        return term;
-    }
-
-    public boolean isSignUpRight() {
-        return signUpRight;
-    }
-
-    public int getECTS() {
-        return ECTS;
-    }
-
+public class Student extends User {
+    //atrybuty studenta
     private String ID;
     private Department department;
     private String fieldOfStudy;
@@ -51,14 +22,86 @@ class Student extends User {
     private int term;
     private boolean signUpRight;
     private int ECTS;
-  //  private ArrayList<Group> studentGroups;
+
+    public Student(String login, String password,String name, String surname, String email, String ID, Department department, String fieldOfStudy, String specialization, int term, boolean signUpRight, int ECTS){
+        this.login = login;
+        this.password = password;
+        this. name = name;
+        this.surname = surname;
+        this.email = email;
+        this.ID = ID;
+        this.department = department;
+        this.fieldOfStudy = fieldOfStudy;
+        this.specialization = specialization;
+        this.term = term;
+        this.signUpRight = signUpRight;
+        this.ECTS = ECTS;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public String getFieldOfStudy() {
+        return fieldOfStudy;
+    }
+
+    public void setFieldOfStudy(String fieldOfStudy) {
+        this.fieldOfStudy = fieldOfStudy;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
+    }
+
+    public boolean isSignUpRight() {
+        return signUpRight;
+    }
+
+    public void setSignUpRight(boolean signUpRight) {
+        this.signUpRight = signUpRight;
+    }
+
+    public int getECTS() {
+        return ECTS;
+    }
+
+    public void setECTS(int ECTS) {
+        this.ECTS = ECTS;
+    }
+
+    //  private ArrayList<Group> studentGroups;
 
 
 
     /*Konstruktor klasy Student - tworzy obiekt użytkownika
      *na podstawie danych z pliku. Znajduje odpowiednie dane
      *na podstawie loginu, pozyskanego przy logowaniu*/
-    Student(String _login){
+    public Student(String _login){
         this.login = _login;
         String studentData = "";
         String fileName = Main.studentDataFilename;
@@ -104,6 +147,8 @@ class Student extends User {
         signUpRight = Boolean.valueOf(input.next());
         ECTS = Integer.valueOf(input.next());
     }
+
+
 
     @Override
     public ArrayList<String> getProfile(){

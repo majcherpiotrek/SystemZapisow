@@ -10,12 +10,12 @@ import java.util.Scanner;
 /**
  * Created by piotrek on 06.12.16.
  */
-class Admin extends User{
+public class Admin extends User{
 
     /*Konstruktor klasy Admin - tworzy obiekt użytkownika
      *na podstawie danych z pliku. Znajduje odpowiednie dane
      *na podstawie loginu, pozyskanego przy logowaniu*/
-    Admin(String _login){
+    public Admin(String _login){
 
         this.login = _login;
         String adminData = "";
@@ -55,6 +55,14 @@ class Admin extends User{
         name = input.next();
         surname = input.next();
 
+    }
+
+    public Admin(String login, String password, String name, String surname, String email){
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
     }
 
     @Override

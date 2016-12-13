@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import users.admin.AdminUserInterface;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import users.student.Student;
 import users.student.StudentUserInterface;
 
 import java.io.File;
@@ -45,10 +47,13 @@ public class Main extends Application {
     private static Scene mainScene;
     public static final String adminDataFilename = "admin.txt";
     public static final String studentDataFilename = "student.txt";
+    public static final String groupDataFilename = "grupy.txt";
 
     private enum ValidationOutput {
         admin, student, wrongInput, noDatabase
     }
+
+    ObservableList<Student> studentsList = DataBase.INSTANCE.getStudentsList();
 
     @Override
     public void start(Stage primaryStage) throws Exception{

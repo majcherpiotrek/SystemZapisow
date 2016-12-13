@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import sample.ConfirmationBox;
 
@@ -27,7 +28,7 @@ public abstract class GeneralUserInteface {
     /*Metody abstrakcyjne do przeładowania w klasach admina i studenta*/
     public abstract void displayMainMenu();
     public abstract void showProfile(Scene lastScene);
-    public abstract void manageCourses();
+    public abstract void manageCourses(Scene lastScene);
     public abstract void manageGroups();
 
     /*Funkcja inicjalizująca elementy wspólne interfejsów admina i studenta*/
