@@ -263,6 +263,10 @@ public class AdminUserInterface extends GeneralUserInteface {
                 }
             });
 
+            dodaj.setOnAction(e->{
+                addGroup(lastScene,course);
+            });
+
             powrot.setOnAction(e->{
             parentWindow.setScene(lastScene);
             });
@@ -484,6 +488,112 @@ public class AdminUserInterface extends GeneralUserInteface {
                             specialization.getValue(),
                             Integer.parseInt(ECTS.getText()),
                             obligatory.isSelected())
+            );
+
+            AlertBox.Display("Potwierdzenie","Dodano kurs.");
+            parentWindow.setScene(lastScene);
+        });
+    }
+
+    void addGroup(Scene lastScene, Course course){
+       /* private String name;
+        private String groupCode;
+        private String courseCode;
+        private String proffesor;
+        private String date;
+        private int numberOfHours;
+        private int numberOfPlaces;
+        private int room;*/
+        Label nameLabel = new Label("Nazwa Kursu :");
+        TextField name = new TextField();
+        name.setText(course.getName());
+        name.setDisable(true);
+
+        Label groupCodeLabel = new Label("Kod Grupy :");
+        TextField groupCode = new TextField();
+
+        Label courseCodeLabel = new Label("Kod Kursu :");
+        TextField courseCode = new TextField();
+        courseCode.setText(course.getCourseCode());
+        courseCode.setDisable(true);
+
+        Label profesorLabel = new Label("Profesor :");
+        TextField profesor = new TextField();
+
+        Label dateLabel = new Label("Termin :");
+        TextField date = new TextField();
+
+        Label numberOfHoursLabel = new Label("Liczba godzin :");
+        TextField numberOfHours = new TextField();
+
+        Label numberOfPlacesLabel = new Label("Liczba miejsc :");
+        TextField numberOfPlaces = new TextField();
+
+        Label ECTSLabel = new Label("ECTS :");
+        TextField ECTS = new TextField();
+
+        Label roomLabel = new Label("Pokój :");
+        TextField room = new TextField();
+
+
+
+        HBox nameBox = new HBox(nameLabel,name);
+        nameBox.setSpacing(10);
+
+        HBox groupCodeBox = new HBox(groupCodeLabel,groupCode);
+        groupCodeBox.setSpacing(10);
+
+        HBox courseCodeBox = new HBox(courseCodeLabel,courseCode);
+        courseCodeBox.setSpacing(10);
+
+        HBox profesorBox = new HBox(profesorLabel,profesor);
+        profesorBox.setSpacing(10);
+
+        HBox dateBox = new HBox(dateLabel,date);
+        dateBox.setSpacing(10);
+
+        HBox numberOfHoursBox = new HBox(numberOfHoursLabel,numberOfHours);
+        numberOfHoursBox.setSpacing(10);
+
+        HBox numberOfPlacesBox = new HBox(numberOfPlacesLabel,numberOfPlaces);
+        numberOfPlacesBox.setSpacing(10);
+
+        HBox roomBox = new HBox(roomLabel,room);
+        roomBox.setSpacing(10);
+
+        VBox box = new VBox(nameBox,groupCodeBox,courseCodeBox,profesorBox,dateBox,numberOfHoursBox,numberOfPlacesBox,roomBox);
+        box.setSpacing(4);
+
+
+        Button confirm = new Button("Zatwierdź");
+        Button powrot = new Button("Wróć");
+
+        HBox buttons = new HBox(powrot,confirm);
+
+        VBox layout = new VBox();
+        layout.getChildren().addAll(box,buttons);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(40,30,40,30));
+
+        Scene scene = new Scene(layout);
+        parentWindow.setScene(scene);
+
+        powrot.setOnAction(e->{
+            parentWindow.setScene(lastScene);
+        });
+
+        confirm.setOnAction(e->{
+
+            course.addGroup(
+                    new Group(name.getText(),
+                            groupCode.getText(),
+                            groupCode.getText(),
+                            profesor.getText(),
+                            date.getText(),
+                            Integer.parseInt(numberOfHours.getText()),
+                            Integer.parseInt(numberOfPlaces.getText()),
+                            Integer.parseInt(room.getText())
+                            )
             );
 
             AlertBox.Display("Potwierdzenie","Dodano kurs.");
