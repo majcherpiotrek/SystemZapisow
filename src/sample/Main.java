@@ -29,6 +29,13 @@ import users.student.StudentUserInterface;
        ->PRZETESTOWAĆ CZY WSZYSTKO HULA
        ->dodawanie/usuwanie kursów i grup przez admina
 
+       ->zmienić komunikat po dodaniu grupy
+       ->uniemożliwić wielokrotny zapis do tej samej grupy
+       ->dodać w table view grup informację o tym, ile jest jeszcze wolnych miejsc w grupie
+       ->dodać zapisywanie do pliku
+       ->dodać sprawdzanie prawa do zapisów i wywalać jakiegoś alert boxa jak nie ma
+       -> FIX BUG - Wypisanie się ostatniego studenta z grupy powoduje jej skasowanie w kursie! SOLVED
+
 */
 public class Main extends Application {
 

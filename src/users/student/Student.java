@@ -65,17 +65,15 @@ public class Student extends User {
             }
     }
 
-    public void deleteGroup(Group group){
-      for(Course c : DataBase.INSTANCE.getCourseList()){
-          if(c.getCourseCode().equals(group.getCourseCode())){
+    public void signOutFromGroup(Group group){
+      for(Course c : DataBase.INSTANCE.getCourseList())
+          if(c.getCourseCode().equals(group.getCourseCode()))
+              for(Group g : c.getGroups())
+                  if(g.equals(group))
+                      g.getSignedUpStudents().remove(this);
 
-              for(Student student : group.getSignedUpStudents()){
-                  student.getGroupList().remove(group);
-              }
+      this.groupList.remove(group);
 
-              c.getGroups().remove((group));
-          }
-      }
     }
 
     public String getID() {
