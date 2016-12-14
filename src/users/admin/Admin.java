@@ -124,9 +124,12 @@ public class Admin extends User{
         student.setSignUpRight(true);
     }
 
-    public void deleteSignUpLaw(Student student){
-        student.setSignUpRight(false);
+    public void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
+
+    public void CreateNewCourse(){
+
     }
+
 
 
 }
