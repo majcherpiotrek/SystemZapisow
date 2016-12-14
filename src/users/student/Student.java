@@ -23,7 +23,7 @@ public class Student extends User {
     private int term;
     private boolean signUpRight;
     private int ECTS;
-    private ObservableList<Group> groupList;
+    private ObservableList<Group> groupList = FXCollections.observableArrayList();
 
     public Student(String login, String password, String name, String surname, String email, String ID, Department department, FieldsOfStudies fieldOfStudy, Specialization specialization, int term, boolean signUpRight, int ECTS){
         this.login = login;
@@ -43,7 +43,9 @@ public class Student extends User {
 
     public ObservableList<Group> getGroupList() {return groupList;}
 
-    public void addGroup(Group group){
+
+
+    public void signUpToGroup(Group group){
 
             if (group.getSignedUpStudents().size() < group.getNumberOfPlaces()) {
 
@@ -51,7 +53,7 @@ public class Student extends User {
                 group.getSignedUpStudents().add(this);
 
                 //dodanie studentowi grupy
-                groupList.add(group);
+                this.groupList.add(group);
 
             }
     }

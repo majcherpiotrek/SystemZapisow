@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import users.student.Student;
 
 /**
  * Klasa administrator w systemie. Posiada metody do wyświetlnia
@@ -46,13 +47,16 @@ public class AdminUserInterface extends GeneralUserInteface {
         mainMenuLayout.setSpacing(40);
         mainMenuLayout.setAlignment(Pos.CENTER);
 
-        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonLogout);
+        Button buttonManageStudents = new Button("Zarządzaj katalogiem studentów");
+
+        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses,buttonManageStudents, buttonLogout);
         Scene mainMenuScene = new Scene(mainMenuLayout);
 
          /*Obsługa zdarzeń przycisków*/
         buttonLogout.setOnAction(e -> logout());
         buttonProfile.setOnAction(e -> showProfile(mainMenuScene));
         buttonCourses.setOnAction(e -> manageCourses(mainMenuScene));
+        buttonManageStudents.setOnAction((e-> manageStudents(mainMenuScene)));
 
         this.parentWindow.setScene(mainMenuScene);
 
@@ -240,6 +244,89 @@ public class AdminUserInterface extends GeneralUserInteface {
             });
     }
 
+
+    public void manageStudents(Scene lastScene){
+        VBox layout = new VBox();
+        HBox bottomBar = new HBox();
+        layout.setPadding(new Insets(10,10,5,5));
+        layout.setSpacing(10);
+        bottomBar.setPadding(new Insets(10,10,5,5));
+        bottomBar.setSpacing(20);
+        Button powrot = new Button("Wróć");
+        Button nadajPrawoDoZapisow = new Button("Nadaj prawo do zapisów");
+        Button usunPrawoDoZapisow = new Button("Usuń prawo do zapisów");
+
+        javafx.scene.control.TableView<Student> table = new javafx.scene.control.TableView<>();
+
+        TableColumn<Student,String> loginColumn = new TableColumn<>("Login");
+        loginColumn.setMinWidth(100);
+        loginColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("login"));
+
+        TableColumn<Student,String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setMinWidth(40);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
+
+        TableColumn<Student,String> surnameColumn = new TableColumn<>("Surname");
+        surnameColumn.setMinWidth(40);
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("surname"));
+
+        TableColumn<Student,String> emailColumn = new TableColumn<>("Email");
+        emailColumn.setMinWidth(40);
+        emailColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("email"));
+
+        TableColumn<Student,String> IDColumn = new TableColumn<>("ID");
+        IDColumn.setMinWidth(40);
+        IDColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("ID"));
+
+        TableColumn<Student,String> departmentColumn = new TableColumn<>("Department");
+        departmentColumn.setMinWidth(20);
+        departmentColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("department"));
+
+        TableColumn<Student,String> fieldOfStudyColumn = new TableColumn<>("Field");
+        fieldOfStudyColumn.setMinWidth(20);
+        fieldOfStudyColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("fieldOfStudy"));
+
+        TableColumn<Student,String> termColumn = new TableColumn<>("Term");
+        termColumn.setMinWidth(20);
+        termColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("term"));
+
+        TableColumn<Student,String> signUpRightColumn = new TableColumn<>("SignUpRight");
+        signUpRightColumn.setMinWidth(20);
+        signUpRightColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("signUpRight"));
+
+        TableColumn<Student,String> ECTSColumn = new TableColumn<>("ECTS");
+        ECTSColumn.setMinWidth(20);
+        ECTSColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("ECTS"));
+
+        table.setItems(DataBase.INSTANCE.getStudentsList());
+        table.getColumns().addAll(loginColumn,nameColumn,surnameColumn,emailColumn,IDColumn,departmentColumn,fieldOfStudyColumn,termColumn,signUpRightColumn,ECTSColumn);
+        bottomBar.getChildren().addAll(powrot,nadajPrawoDoZapisow,usunPrawoDoZapisow);
+        layout.getChildren().addAll(table,bottomBar);
+        Scene scene = new Scene(layout);
+        parentWindow.setScene(scene);
+
+        nadajPrawoDoZapisow.setOnAction(e->{
+            try {
+                admin.giveSignUpLaw(table.getSelectionModel().getSelectedItem());
+                manageStudents(lastScene);
+            }catch(NullPointerException exc){
+                AlertBox.Display("Błąd","Nie wybrano studenta.");
+            }
+        });
+
+        usunPrawoDoZapisow.setOnAction(e->{
+            try {
+                admin.deleteSignUpLaw(table.getSelectionModel().getSelectedItem());
+                manageStudents(lastScene);
+            }catch(NullPointerException exc){
+                AlertBox.Display("Błąd","Nie wybrano studenta.");
+            }
+        });
+
+        powrot.setOnAction(e->{
+            parentWindow.setScene(lastScene);
+        });
+    }
 
 }
 

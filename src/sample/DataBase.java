@@ -178,6 +178,7 @@ public final class DataBase {
 
 
 
+        courseList.get(0).addGroup(new Group("AK1","1",courseList.get(0).getCourseCode(),"JB","sroda 7:30",30,70,15));
     }
 
     public ObservableList<Student> getStudentsList() {
