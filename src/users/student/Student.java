@@ -18,8 +18,11 @@ public class Student extends User {
     //atrybuty studenta
     private String ID;
     private Department department;
+    private String departmentName;
     private FieldsOfStudies fieldOfStudy;
+    private String fieldOfStudyName;
     private Specialization specialization;
+    private String specializationName;
     private int term;
     private boolean signUpRight;
     private int ECTS;
@@ -33,8 +36,11 @@ public class Student extends User {
         this.email = email;
         this.ID = ID;
         this.department = department;
+        this.departmentName = this.department.getName();
         this.fieldOfStudy = fieldOfStudy;
+        this.fieldOfStudyName = this.fieldOfStudy.getName();
         this.specialization = specialization;
+        this.specializationName = this.specialization.getName();
         this.term = term;
         this.signUpRight = signUpRight;
         this.ECTS = ECTS;
@@ -42,6 +48,7 @@ public class Student extends User {
     }
 
     public ObservableList<Group> getGroupList() {return groupList;}
+
 
 
 
@@ -71,7 +78,7 @@ public class Student extends User {
       }
     }
 
-    String getID() {
+    public String getID() {
         return ID;
     }
 
@@ -103,7 +110,7 @@ public class Student extends User {
         this.specialization = specialization;
     }
 
-    int getTerm() {
+    public int getTerm() {
         return term;
     }
 
@@ -111,21 +118,27 @@ public class Student extends User {
         this.term = term;
     }
 
-    boolean isSignUpRight() {
+    public boolean isSignUpRight() {
         return signUpRight;
     }
 
-    void setSignUpRight(boolean signUpRight) {
+    public void setSignUpRight(boolean signUpRight) {
         this.signUpRight = signUpRight;
     }
 
-    int getECTS() {
+    public int getECTS() {
         return ECTS;
     }
 
     void setECTS(int ECTS) {
         this.ECTS = ECTS;
     }
+
+    public String getDepartmentName() { return departmentName; }
+
+    public String getFieldOfStudyName() { return fieldOfStudyName; }
+
+    public String getSpecializationName() { return specializationName; }
 
     @Override
     public ArrayList<String> getProfile(){

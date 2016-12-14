@@ -1,21 +1,18 @@
 package users.admin;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import sample.AlertBox;
-import sample.Course;
-import sample.DataBase;
-import sample.Group;
+import sample.*;
 import users.GeneralUserInteface;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import users.student.Student;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Klasa administrator w systemie. Posiada metody do wyświetlnia
@@ -48,6 +45,8 @@ public class AdminUserInterface extends GeneralUserInteface {
         mainMenuLayout.setAlignment(Pos.CENTER);
 
         Button buttonManageStudents = new Button("Zarządzaj katalogiem studentów");
+        buttonManageStudents.setPadding(new Insets(5,10,5,10));
+        buttonManageStudents.setAlignment(Pos.CENTER);
 
         mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses,buttonManageStudents, buttonLogout);
         Scene mainMenuScene = new Scene(mainMenuLayout);
@@ -66,6 +65,7 @@ public class AdminUserInterface extends GeneralUserInteface {
     public void showProfile(Scene lastScene){
         System.out.println(admin);
         GridPane layout = new GridPane();
+        layout.setPadding(new Insets(40,30,40,30));
         VBox v1 = new VBox();
         VBox v2 = new VBox();
         v1.setSpacing(20);
@@ -115,13 +115,15 @@ public class AdminUserInterface extends GeneralUserInteface {
         Button usun = new Button("Usuń Kurs");
         Button dodaj = new Button("Dodaj Kurs");
         Button edytuj = new Button("Edytuj Kurs");
-
-
+        Button zarzadzajGrupami = new Button("Zarządzaj Grupami");
+        zarzadzajGrupami.setDisable(true);
+        usun.setDisable(true);
+        edytuj.setDisable(true);
 
         javafx.scene.control.TableView<Course> table = new javafx.scene.control.TableView<>();
 
         TableColumn<Course,String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(100);
+        nameColumn.setMinWidth(250);
         nameColumn.setCellValueFactory(new PropertyValueFactory<Course, String>("name"));
 
         TableColumn<Course,String> courseCodeColumn = new TableColumn<>("Code");
@@ -155,13 +157,21 @@ public class AdminUserInterface extends GeneralUserInteface {
         table.setItems(DataBase.INSTANCE.getCourseList());
         table.getColumns().addAll(nameColumn,courseCodeColumn,termColumn,departmentColumn,fieldOfStudyColumn,groupTypesColumn,specializationColumn,ECTSColumn);
 
-        bottomBar.getChildren().addAll(powrot,usun,dodaj,edytuj);
+        bottomBar.getChildren().addAll(powrot,usun,dodaj,edytuj,zarzadzajGrupami);
+
+        table.setMinWidth(1500);
 
         layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
         parentWindow.setScene(scene);
 
 
+
+        table.getSelectionModel().selectedItemProperty().addListener((v,OldValue,NewValue)->{
+            zarzadzajGrupami.setDisable(false);
+            usun.setDisable(false);
+            edytuj.setDisable(false);
+        });
 
         powrot.setOnAction(e->{
             parentWindow.setScene(lastScene);
@@ -174,6 +184,19 @@ public class AdminUserInterface extends GeneralUserInteface {
                 AlertBox.Display("Błąd","Nie wybrano żadnego kursu do usunięcia.");
             }
         });
+
+        zarzadzajGrupami.setOnAction(e->{
+            try {
+                manageGroups(lastScene, table.getSelectionModel().getSelectedItem());
+            }catch(NullPointerException exc){
+                AlertBox.Display("Błąd","Nie wybrano żadnego kursu.");
+            }
+        });
+
+        dodaj.setOnAction(e->{
+            addCourse(lastScene);
+            }
+        );
     }
 
     @Override
@@ -192,7 +215,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             javafx.scene.control.TableView<Group> table = new javafx.scene.control.TableView<>();
 
             TableColumn<Group,String> nameColumn = new TableColumn<>("Name");
-            nameColumn.setMinWidth(100);
+            nameColumn.setMinWidth(300);
             nameColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("name"));
 
             TableColumn<Group,String> groupCodeColumn = new TableColumn<>("GroupCode");
@@ -225,6 +248,7 @@ public class AdminUserInterface extends GeneralUserInteface {
 
             table.setItems(course.getGroups());
             table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+            table.setMinWidth(1500);
 
             bottomBar.getChildren().addAll(powrot,usun,dodaj,edytuj);
             layout.getChildren().addAll(table,bottomBar);
@@ -259,7 +283,7 @@ public class AdminUserInterface extends GeneralUserInteface {
         javafx.scene.control.TableView<Student> table = new javafx.scene.control.TableView<>();
 
         TableColumn<Student,String> loginColumn = new TableColumn<>("Login");
-        loginColumn.setMinWidth(100);
+        loginColumn.setMinWidth(200);
         loginColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("login"));
 
         TableColumn<Student,String> nameColumn = new TableColumn<>("Name");
@@ -280,11 +304,15 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         TableColumn<Student,String> departmentColumn = new TableColumn<>("Department");
         departmentColumn.setMinWidth(20);
-        departmentColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("department"));
+        departmentColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("departmentName"));
 
         TableColumn<Student,String> fieldOfStudyColumn = new TableColumn<>("Field");
         fieldOfStudyColumn.setMinWidth(20);
-        fieldOfStudyColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("fieldOfStudy"));
+        fieldOfStudyColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("fieldOfStudyName"));
+
+        TableColumn<Student,String> specializationColumn = new TableColumn<>("Spec");
+        specializationColumn.setMinWidth(20);
+        specializationColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("specializationName"));
 
         TableColumn<Student,String> termColumn = new TableColumn<>("Term");
         termColumn.setMinWidth(20);
@@ -299,7 +327,9 @@ public class AdminUserInterface extends GeneralUserInteface {
         ECTSColumn.setCellValueFactory(new PropertyValueFactory<Student, String>("ECTS"));
 
         table.setItems(DataBase.INSTANCE.getStudentsList());
-        table.getColumns().addAll(loginColumn,nameColumn,surnameColumn,emailColumn,IDColumn,departmentColumn,fieldOfStudyColumn,termColumn,signUpRightColumn,ECTSColumn);
+        table.getColumns().addAll(loginColumn,nameColumn,surnameColumn,emailColumn,IDColumn,departmentColumn,fieldOfStudyColumn,specializationColumn,termColumn,signUpRightColumn,ECTSColumn);
+        table.setMinWidth(1500);
+
         bottomBar.getChildren().addAll(powrot,nadajPrawoDoZapisow,usunPrawoDoZapisow);
         layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
@@ -308,7 +338,8 @@ public class AdminUserInterface extends GeneralUserInteface {
         nadajPrawoDoZapisow.setOnAction(e->{
             try {
                 admin.giveSignUpLaw(table.getSelectionModel().getSelectedItem());
-                manageStudents(lastScene);
+                //manageStudents(lastScene);
+                table.refresh();
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano studenta.");
             }
@@ -317,7 +348,8 @@ public class AdminUserInterface extends GeneralUserInteface {
         usunPrawoDoZapisow.setOnAction(e->{
             try {
                 admin.deleteSignUpLaw(table.getSelectionModel().getSelectedItem());
-                manageStudents(lastScene);
+                //manageStudents(lastScene);
+                table.refresh();
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano studenta.");
             }
@@ -328,6 +360,136 @@ public class AdminUserInterface extends GeneralUserInteface {
         });
     }
 
+
+    public void addCourse(Scene lastScene){
+        Label nameLabel = new Label("Nazwa Kursu :");
+        TextField name = new TextField();
+
+        Label courseCodeLabel = new Label("Kod Kursu :");
+        TextField courseCode = new TextField();;
+
+        Label termLabel = new Label("Semestr :");
+        TextField term = new TextField();;
+
+        Label departmentLabel = new Label("Wydział :");
+        ChoiceBox<Department> department = new ChoiceBox<>();
+        department.getItems().addAll(Department.values());
+
+        Label lectureLabel = new Label("Wykład :");
+        CheckBox lecture = new CheckBox();
+
+        Label excercisesLabel = new Label("Ćwiczenia :");
+        CheckBox excercises = new CheckBox();
+
+        Label seminarLabel = new Label("Seminarium :");
+        CheckBox seminar = new CheckBox();
+
+        Label laboratoryLabel = new Label("Laboratorium :");
+        CheckBox laboratory = new CheckBox();
+
+        Label projectLabel = new Label("Projekt :");
+        CheckBox project = new CheckBox();
+
+        Label fieldOfStudysLabel = new Label("Kierunek :");
+        ChoiceBox<FieldsOfStudies> fieldOfStudys = new ChoiceBox<>();;
+        fieldOfStudys.getItems().addAll(FieldsOfStudies.values());
+
+        Label specializationLabel = new Label("Specjalizacja :");
+        ChoiceBox<Specialization> specialization = new ChoiceBox<>();;
+        specialization.getItems().addAll(Specialization.values());
+
+        Label ECTSLabel = new Label("ECTS :");
+        TextField ECTS = new TextField();
+
+        Label obligatoryLabel = new Label("Obowiązkowy :");
+        CheckBox obligatory = new CheckBox();
+
+
+        HBox nameBox = new HBox(nameLabel,name);
+        nameBox.setSpacing(10);
+
+        HBox courseCodeBox = new HBox(courseCodeLabel,courseCode);
+        courseCodeBox.setSpacing(10);
+
+        HBox termBox = new HBox(termLabel,term);
+        termBox.setSpacing(10);
+
+        HBox departmentBox = new HBox(departmentLabel,department);
+        departmentBox.setSpacing(10);
+
+        HBox lectureBox = new HBox(lectureLabel,lecture);
+        lectureBox.setSpacing(10);
+
+        HBox excerciseBox = new HBox(excercisesLabel,excercises);
+        excerciseBox.setSpacing(10);
+
+        HBox seminarBox = new HBox(seminarLabel,seminar);
+        seminarBox.setSpacing(10);
+
+        HBox laboratoryBox = new HBox(laboratoryLabel,laboratory);
+        laboratoryBox.setSpacing(10);
+
+        HBox projectBox = new HBox(projectLabel,project);
+        projectBox.setSpacing(10);
+
+        HBox fieldOfStudyBox = new HBox(fieldOfStudysLabel,fieldOfStudys);
+        fieldOfStudyBox.setSpacing(10);
+
+        HBox specializationBox = new HBox(specializationLabel,specialization);
+        specializationBox.setSpacing(10);
+
+        HBox ECTSBox = new HBox(ECTSLabel,ECTS);
+        ECTSBox.setSpacing(10);
+
+        HBox obligatoryBox = new HBox(obligatoryLabel,obligatory);
+        obligatoryBox.setSpacing(10);
+
+        VBox box = new VBox(nameBox,courseCodeBox,termBox,departmentBox,lectureBox,excerciseBox,seminarBox,laboratoryBox,projectBox,fieldOfStudyBox,specializationBox,ECTSBox,obligatoryBox);
+        box.setSpacing(4);
+
+
+        Button confirm = new Button("Zatwierdź");
+        Button powrot = new Button("Wróć");
+
+        HBox buttons = new HBox(powrot,confirm);
+
+        VBox layout = new VBox();
+        layout.getChildren().addAll(box,buttons);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(40,30,40,30));
+
+        Scene scene = new Scene(layout);
+        parentWindow.setScene(scene);
+
+        powrot.setOnAction(e->{
+            parentWindow.setScene(lastScene);
+        });
+
+        confirm.setOnAction(e->{
+
+            ArrayList<GroupTypes> groupsTypes = new ArrayList<>();
+            if(lecture.isSelected()) groupsTypes.add(GroupTypes.LCTR);
+            if(excercises.isSelected()) groupsTypes.add(GroupTypes.EX);
+            if(seminar.isSelected()) groupsTypes.add(GroupTypes.SEM);
+            if(laboratory.isSelected()) groupsTypes.add(GroupTypes.LAB);
+            if(project.isSelected()) groupsTypes.add(GroupTypes.PR);
+
+            DataBase.INSTANCE.addCourse(
+                    new Course(name.getText(),
+                            courseCode.getText(),
+                            Integer.valueOf(term.getText()),
+                            department.getValue(),
+                            fieldOfStudys.getValue(),
+                            groupsTypes,
+                            specialization.getValue(),
+                            Integer.parseInt(ECTS.getText()),
+                            obligatory.isSelected())
+            );
+
+            AlertBox.Display("Potwierdzenie","Dodano kurs.");
+            parentWindow.setScene(lastScene);
+        });
+    }
 }
 
 

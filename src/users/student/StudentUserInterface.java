@@ -41,6 +41,9 @@ public class StudentUserInterface extends GeneralUserInteface {
         initInterfaceFrame("Panel studenta");
 
         Button buttonManageStudentsGroups = new Button("Zarządzaj Swoimi Grupami");
+        buttonManageStudentsGroups.setPadding(new Insets(5,10,5,10));
+        buttonManageStudentsGroups.setAlignment(Pos.CENTER);
+
 
         VBox mainMenuLayout = new VBox();
         mainMenuLayout.setPadding(new Insets(50,50,50,50));
@@ -63,6 +66,7 @@ public class StudentUserInterface extends GeneralUserInteface {
     public void showProfile(Scene lastScene) {
         System.out.println(student);
         GridPane layout = new GridPane();
+        layout.setPadding(new Insets(40,30,40,30));
         VBox v1 = new VBox();
         VBox v2 = new VBox();
         v1.setSpacing(20);
@@ -131,12 +135,12 @@ public class StudentUserInterface extends GeneralUserInteface {
         bottomBar.setSpacing(20);
         Button powrot = new Button("Wróć");
         Button przegladajGrupy = new Button("Przeglądaj Grupy");
-
+        przegladajGrupy.setDisable(true);
 
         javafx.scene.control.TableView<Course> table = new javafx.scene.control.TableView<>();
 
         TableColumn<Course,String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(100);
+        nameColumn.setMinWidth(300);
         nameColumn.setCellValueFactory(new PropertyValueFactory<Course, String>("name"));
 
         TableColumn<Course,String> courseCodeColumn = new TableColumn<>("Code");
@@ -160,22 +164,25 @@ public class StudentUserInterface extends GeneralUserInteface {
         groupTypesColumn.setCellValueFactory(new PropertyValueFactory<Course, String>("groupTypes"));
 
         TableColumn<Course,String> specializationColumn = new TableColumn<>("Spec");
-        specializationColumn.setMinWidth(20);
+        specializationColumn.setMinWidth(40);
         specializationColumn.setCellValueFactory(new PropertyValueFactory<Course, String>("specializationName"));
 
         TableColumn<Course,String> ECTSColumn = new TableColumn<>("ECTS");
-        ECTSColumn.setMinWidth(20);
+        ECTSColumn.setMinWidth(40);
         ECTSColumn.setCellValueFactory(new PropertyValueFactory<Course, String>("ECTS"));
 
         table.setItems(DataBase.INSTANCE.getCourseList());
         table.getColumns().addAll(nameColumn,courseCodeColumn,termColumn,departmentColumn,fieldOfStudeyColumn,groupTypesColumn,specializationColumn,ECTSColumn);
+        table.setMinWidth(1500);
 
         bottomBar.getChildren().addAll(powrot,przegladajGrupy);
         layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
         parentWindow.setScene(scene);
 
-
+        table.getSelectionModel().selectedItemProperty().addListener((v,oldValue,newvalue)->{
+            przegladajGrupy.setDisable(false);
+        });
 
         przegladajGrupy.setOnAction(e->{
             try {
@@ -200,12 +207,12 @@ public class StudentUserInterface extends GeneralUserInteface {
         bottomBar.setSpacing(20);
         Button powrot = new Button("Wróć");
         Button zapisz = new Button("Zapisz");
-
+        zapisz.setDisable(true);
 
         javafx.scene.control.TableView<Group> table = new javafx.scene.control.TableView<>();
 
         TableColumn<Group,String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(100);
+        nameColumn.setMinWidth(300);
         nameColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("name"));
 
         TableColumn<Group,String> groupCodeColumn = new TableColumn<>("GroupCode");
@@ -213,7 +220,7 @@ public class StudentUserInterface extends GeneralUserInteface {
         groupCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("groupCode"));
 
         TableColumn<Group,String> courseCodeColumn = new TableColumn<>("CourseCode");
-        courseCodeColumn.setMinWidth(40);
+        courseCodeColumn.setMinWidth(70);
         courseCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("courseCode"));
 
         TableColumn<Group,String> proffesorColumn = new TableColumn<>("Proffesor");
@@ -225,26 +232,29 @@ public class StudentUserInterface extends GeneralUserInteface {
         dataColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("date"));
 
         TableColumn<Group,String> numberOfHoursColumn = new TableColumn<>("NumberOfHours");
-        numberOfHoursColumn.setMinWidth(20);
+        numberOfHoursColumn.setMinWidth(200);
         numberOfHoursColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfHours"));
 
         TableColumn<Group,String> numberOfPlacesColumn = new TableColumn<>("NumberOfPlaces");
-        numberOfPlacesColumn.setMinWidth(20);
+        numberOfPlacesColumn.setMinWidth(200);
         numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
 
         TableColumn<Group,String> roomColumn = new TableColumn<>("room");
-        roomColumn.setMinWidth(20);
+        roomColumn.setMinWidth(40);
         roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
         table.setItems(course.getGroups());
         table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+        table.setMinWidth(1500);
 
         bottomBar.getChildren().addAll(powrot,zapisz);
         layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
         parentWindow.setScene(scene);
 
-
+        table.getSelectionModel().selectedItemProperty().addListener((v,oldValue,newvalue)->{
+            zapisz.setDisable(false);
+        });
 
         zapisz.setOnAction(e->{
             try{
@@ -269,15 +279,16 @@ public class StudentUserInterface extends GeneralUserInteface {
         bottomBar.setSpacing(20);
         Button powrot = new Button("Wróć");
         Button wypisz = new Button("Wypisz");
+        wypisz.setDisable(false);
 
         javafx.scene.control.TableView<Group> table = new javafx.scene.control.TableView<>();
 
         TableColumn<Group,String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(100);
+        nameColumn.setMinWidth(300);
         nameColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("name"));
 
         TableColumn<Group,String> groupCodeColumn = new TableColumn<>("GroupCode");
-        groupCodeColumn.setMinWidth(40);
+        groupCodeColumn.setMinWidth(70);
         groupCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("groupCode"));
 
         TableColumn<Group,String> courseCodeColumn = new TableColumn<>("CourseCode");
@@ -293,19 +304,23 @@ public class StudentUserInterface extends GeneralUserInteface {
         dataColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("date"));
 
         TableColumn<Group,String> numberOfHoursColumn = new TableColumn<>("NumberOfHours");
-        numberOfHoursColumn.setMinWidth(20);
+        numberOfHoursColumn.setMinWidth(200);
         numberOfHoursColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfHours"));
 
         TableColumn<Group,String> numberOfPlacesColumn = new TableColumn<>("NumberOfPlaces");
-        numberOfPlacesColumn.setMinWidth(20);
+        numberOfPlacesColumn.setMinWidth(200);
         numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
 
         TableColumn<Group,String> roomColumn = new TableColumn<>("room");
-        roomColumn.setMinWidth(20);
+        roomColumn.setMinWidth(40);
         roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
         table.setItems(student.getGroupList());
         table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+        table.setMinWidth(1500);
+        table.getSelectionModel().selectedItemProperty().addListener((v,oldValue,newvalue)->{
+            wypisz.setDisable(false);
+        });
 
         bottomBar.getChildren().addAll(powrot,wypisz);
         layout.getChildren().addAll(table,bottomBar);
