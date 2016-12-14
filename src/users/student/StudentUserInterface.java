@@ -85,10 +85,10 @@ public class StudentUserInterface extends GeneralUserInteface {
         Label surrV2              = new Label(student.surname);
         Label idV2                = new Label(student.getID());
         Label departmentV2        = new Label(student.getDepartment().getName());
-        Label fieldOfStudyV2      = new Label(student.getFieldOfStudy());
-        Label specializationV2    = new Label(student.getSpecialization());
+        Label fieldOfStudyV2      = new Label(student.getFieldOfStudy().getName());
+        Label specializationV2    = new Label(student.getSpecialization().getName());
         Label termV2              = new Label(String.valueOf(student.getTerm()));
-        Label signUpRightV2       = new Label(student.getSpecialization());
+        Label signUpRightV2       = new Label(student.getSpecialization().getName());
         Label ectsV2              = new Label(String .valueOf(student.getECTS()));
 
 

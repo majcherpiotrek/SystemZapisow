@@ -3,6 +3,9 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by piotrek on 07.12.16.
  */
@@ -12,28 +15,20 @@ public class Course {
     private String courseCode;
     private int term;
     private Department department;
-    private String fieldOfStudy;
-    private Boolean lecture;
-    private Boolean excercises;
-    private Boolean seminar;
-    private Boolean laboratory;
-    private Boolean project;
-    private String specialization;
+    private FieldsOfStudies fieldOfStudy;
+    private ArrayList<GroupTypes> groupTypes;
+    private Specialization specialization;
     private int ECTS;
     private Boolean obligatory;
     private ObservableList<Group> groups;
 
-    public Course(String name, String courseCode, int term, Department department, String fieldOfStudy, Boolean lecture,Boolean excercises, Boolean seminar, Boolean laboratory, Boolean project, String specialization, int ECTS, Boolean obligatory){
+    public Course(String name, String courseCode, int term, Department department, FieldsOfStudies fieldOfStudy, ArrayList<GroupTypes> groupTypes, Specialization specialization, int ECTS, Boolean obligatory){
         this.name = name;
         this.courseCode = courseCode;
         this.term = term;
         this. department = department;
         this.fieldOfStudy = fieldOfStudy;
-        this.lecture = lecture;
-        this.excercises = excercises;
-        this.seminar = seminar;
-        this.laboratory = laboratory;
-        this.project = project;
+        this.groupTypes = groupTypes;
         this.specialization = specialization;
         this.ECTS = ECTS;
         this.obligatory = obligatory;
@@ -77,60 +72,12 @@ public class Course {
         this.department = department;
     }
 
-    public String getFieldOfStudy() {
+    public FieldsOfStudies getFieldOfStudy() {
         return fieldOfStudy;
     }
 
-    public void setFieldOfStudy(String fieldOfStudy) {
-        this.fieldOfStudy = fieldOfStudy;
-    }
-
-    public Boolean getLecture() {
-        return lecture;
-    }
-
-    public void setLecture(Boolean lecture) {
-        this.lecture = lecture;
-    }
-
-    public Boolean getExcercises() {
-        return excercises;
-    }
-
-    public void setExcercises(Boolean excercises) {
-        this.excercises = excercises;
-    }
-
-    public Boolean getSeminar() {
-        return seminar;
-    }
-
-    public void setSeminar(Boolean seminar) {
-        this.seminar = seminar;
-    }
-
-    public Boolean getLaboratory() {
-        return laboratory;
-    }
-
-    public void setLaboratory(Boolean laboratory) {
-        this.laboratory = laboratory;
-    }
-
-    public Boolean getProject() {
-        return project;
-    }
-
-    public void setProject(Boolean project) {
-        this.project = project;
-    }
-
-    public String getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
     }
 
     public int getECTS() {

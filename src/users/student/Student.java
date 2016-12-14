@@ -1,9 +1,7 @@
 package users.student;
 import javafx.collections.FXCollections;
-import sample.Department;
-import sample.Group;
+import sample.*;
 import users.User;
-import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,14 +18,14 @@ public class Student extends User {
     //atrybuty studenta
     private String ID;
     private Department department;
-    private String fieldOfStudy;
-    private String specialization;
+    private FieldsOfStudies fieldOfStudy;
+    private Specialization specialization;
     private int term;
     private boolean signUpRight;
     private int ECTS;
     private ObservableList<Group> groupList;
 
-    public Student(String login, String password,String name, String surname, String email, String ID, Department department, String fieldOfStudy, String specialization, int term, boolean signUpRight, int ECTS){
+    public Student(String login, String password, String name, String surname, String email, String ID, Department department, FieldsOfStudies fieldOfStudy, Specialization specialization, int term, boolean signUpRight, int ECTS){
         this.login = login;
         this.password = password;
         this. name = name;
@@ -47,59 +45,59 @@ public class Student extends User {
         groupList.add(group);
     }
 
-    public String getID() {
+    String getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    void setID(String ID) {
         this.ID = ID;
     }
 
-    public Department getDepartment() {
+    Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    void setDepartment(Department department) {
         this.department = department;
     }
 
-    public String getFieldOfStudy() {
+    FieldsOfStudies getFieldOfStudy() {
         return fieldOfStudy;
     }
 
-    public void setFieldOfStudy(String fieldOfStudy) {
+    void setFieldOfStudy(FieldsOfStudies fieldOfStudy) {
         this.fieldOfStudy = fieldOfStudy;
     }
 
-    public String getSpecialization() {
+    Specialization getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
 
-    public int getTerm() {
+    int getTerm() {
         return term;
     }
 
-    public void setTerm(int term) {
+    void setTerm(int term) {
         this.term = term;
     }
 
-    public boolean isSignUpRight() {
+    boolean isSignUpRight() {
         return signUpRight;
     }
 
-    public void setSignUpRight(boolean signUpRight) {
+    void setSignUpRight(boolean signUpRight) {
         this.signUpRight = signUpRight;
     }
 
-    public int getECTS() {
+    int getECTS() {
         return ECTS;
     }
 
-    public void setECTS(int ECTS) {
+    void setECTS(int ECTS) {
         this.ECTS = ECTS;
     }
 
@@ -147,8 +145,8 @@ public class Student extends User {
         surname = input.next();
         ID = input.next();
         department = Department.valueOf(input.next());
-        fieldOfStudy = input.next();
-        specialization = input.next();
+        fieldOfStudy = FieldsOfStudies.W1K1;
+        specialization = Specialization.W1K1S1;
         term = parseInt(input.next());
         signUpRight = Boolean.valueOf(input.next());
         ECTS = Integer.valueOf(input.next());
@@ -167,8 +165,8 @@ public class Student extends User {
         profileData.add(email);
         profileData.add(ID);
         profileData.add(department.getName());
-        profileData.add(fieldOfStudy);
-        profileData.add(specialization);
+        profileData.add(fieldOfStudy.toString());
+        profileData.add(specialization.toString());
         profileData.add(String.valueOf(term));
         profileData.add(String.valueOf(signUpRight));
         profileData.add(String.valueOf(ECTS));
