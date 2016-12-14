@@ -23,23 +23,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /*TODO
-       ->Dodać dodatkowe pola w klasie Student (listę grup, wydział, prawo do zapisów itd.) + dodać te dane w plikach tekstowych
-       ->Stworzyć enumy dla wydziałów itd... (albo jakoś inaczej to rozwiązać, jak nam coś przyjdzie do głowy, żeby się nie napisać tak strasznie ;< )
-       ->Stworzyć klasę kurs i grupa
-       ->Utworzyć globalną listę wszystkich kursów albo oddzielne listy kursów dla każdego wydziału czy kierunku, whatever, jeszcze to przemyślimy
-       ->Zrobić dodawanie nowych kursów w klasie Admin
-       ->Zrobić listę studentów, którą będzie mógł przeglądać admin (pytanie czy globalną, czy tworzoną dla obiektu admina, chyba lepiej globalną)
-       ->Jak już jest lista studentów to zrobić zmianę prawa do zapisów
-       ->Zrobić zapisywanie danych do plików (tych list wszystkich itd), albo automatyczne generowanie przy starcie programu.
-       ->Zrobić przeglądanie kursów i grup w klasie Student
-       ->Zrobić zapisywanie/wypisywanie do/z grup w klasie Student
-       ->Jak nam się będzie chciało, to można zrobić ładne wyświetlanie planu zajęć w formie tabeli
 
-    Najpierw zróbmy jak najprostsze GUI albo nawet wyświetlanie profili, list itd w konsoli, a potem to jakoś ubierzemy. Bo inaczej będziemy walczyć
-    z gui, a z logiką programu będziemy w lesie. Tak na spokojnie ogarniemy sobie ten tutorial i będzie git :D
-
-    PS Proponuję pisać tutaj roboczo jakieś ważne rzeczy jak coś przyjdzie do głowy co jeszcze trzeba zrobić, albo co zmienić. Komunikaty w commitach
-    można dawać krótkie, a nad klasami dawać dokładny opis co się zmieniło, albo właśnie tutaj.
+      ->Zrobić dodawanie nowych kursów w klasie Admin
+       ->Może zrobić bazę danych serializable i zapamiętywać zmiany, ale w sumie to nie ma ciśnienia
+       ->Wygenerować losowe grupy zajęciowe do kursów
+       -> merge z tym co maciek zrobił, żeby zobaczyć czy działa zapisywanie do grup itd
+       ->zrobić, żeby wiersze w tabeli kursów i grup mieściły się w poziomie
+       ->PRZETESTOWAĆ CZY WSZYSTKO HULA
+       ->dodawanie/usuwanie kursów i grup przez admina
 
 */
 public class Main extends Application {
