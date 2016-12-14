@@ -18,9 +18,6 @@ import javafx.scene.control.Label;
 import users.student.Student;
 import users.student.StudentUserInterface;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
 
 /*TODO
 
