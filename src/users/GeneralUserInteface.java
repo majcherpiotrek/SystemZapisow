@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import sample.ConfirmationBox;
+import sample.Course;
 
 /**
  * Created by piotrek on 06.12.16.
@@ -29,7 +30,7 @@ public abstract class GeneralUserInteface {
     public abstract void displayMainMenu();
     public abstract void showProfile(Scene lastScene);
     public abstract void manageCourses(Scene lastScene);
-    public abstract void manageGroups();
+    public abstract void manageGroups(Scene lastScene, Course course);
 
     /*Funkcja inicjalizująca elementy wspólne interfejsów admina i studenta*/
     public void initInterfaceFrame(String windowTitle){

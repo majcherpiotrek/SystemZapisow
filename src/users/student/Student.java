@@ -1,9 +1,7 @@
 package users.student;
 import javafx.collections.FXCollections;
-import sample.Department;
-import sample.Group;
+import sample.*;
 import users.User;
-import sample.Main;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +41,32 @@ public class Student extends User {
         this.groupList = FXCollections.observableArrayList();
     }
 
+    public ObservableList<Group> getGroupList() {return groupList;}
+
     public void addGroup(Group group){
-        groupList.add(group);
+
+            if (group.getSignedUpStudents().size() < group.getNumberOfPlaces()) {
+
+                //dodanie studenta dla obiektu grupy w bazie danych
+                group.getSignedUpStudents().add(this);
+
+                //dodanie studentowi grupy
+                groupList.add(group);
+
+            }
+    }
+
+    public void deleteGroup(Group group){
+      for(Course c : DataBase.INSTANCE.getCourseList()){
+          if(c.getCourseCode().equals(group.getCourseCode())){
+
+              for(Student student : group.getSignedUpStudents()){
+                  student.getGroupList().remove(group);
+              }
+
+              c.getGroups().remove((group));
+          }
+      }
     }
 
     public String getID() {
@@ -193,4 +215,6 @@ public class Student extends User {
 
         return result;
     }
+
+
 }

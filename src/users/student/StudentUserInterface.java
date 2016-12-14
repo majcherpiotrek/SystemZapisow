@@ -8,10 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import sample.AlertBox;
 import sample.Course;
 import sample.DataBase;
+import sample.Group;
 import users.GeneralUserInteface;
 
 import javax.swing.text.TableView;
@@ -33,18 +36,21 @@ public class StudentUserInterface extends GeneralUserInteface {
         /*Inicjalizacja szkieletu GUI*/
         initInterfaceFrame("Panel studenta");
 
+        Button buttonManageStudentsGroups = new Button("Zarządzaj Swoimi Grupami");
+
         VBox mainMenuLayout = new VBox();
         mainMenuLayout.setPadding(new Insets(50,50,50,50));
         mainMenuLayout.setSpacing(40);
         mainMenuLayout.setAlignment(Pos.CENTER);
 
-        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonLogout);
+        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonLogout, buttonManageStudentsGroups);
         Scene mainMenuScene = new Scene(mainMenuLayout);
 
          /*Obsługa zdarzeń przycisków*/
         buttonLogout.setOnAction(e -> logout());
         buttonProfile.setOnAction(e -> showProfile(mainMenuScene));
         buttonCourses.setOnAction(e -> manageCourses(mainMenuScene));
+        buttonManageStudentsGroups.setOnAction(e-> manageSignedUp(mainMenuScene));
 
         this.parentWindow.setScene(mainMenuScene);
     }
@@ -114,7 +120,14 @@ public class StudentUserInterface extends GeneralUserInteface {
     public void manageCourses(Scene lastScene) {
 
         VBox layout = new VBox();
+        HBox bottomBar = new HBox();
+        layout.setPadding(new Insets(10,10,5,5));
+        layout.setSpacing(10);
+        bottomBar.setPadding(new Insets(10,10,5,5));
+        bottomBar.setSpacing(20);
         Button powrot = new Button("Wróć");
+        Button przegladajGrupy = new Button("Przeglądaj Grupy");
+
 
         javafx.scene.control.TableView<Course> table = new javafx.scene.control.TableView<>();
 
@@ -169,11 +182,15 @@ public class StudentUserInterface extends GeneralUserInteface {
         table.setItems(DataBase.INSTANCE.getCourseList());
         table.getColumns().addAll(nameColumn,courseCodeColumn,termColumn,departmentColumn,fieldOfStudeyColumn,lectureColumn,excercisesColumn,seminarColumn,laboratoryColumn,projectColumn,specializationColumn,ECTSColumn);
 
-        layout.getChildren().addAll(table,powrot);
+        bottomBar.getChildren().addAll(powrot,przegladajGrupy);
+        layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
         parentWindow.setScene(scene);
 
 
+        przegladajGrupy.setOnAction(e->{
+            manageGroups(scene, table.getSelectionModel().getSelectedItem());
+        });
 
         powrot.setOnAction(e->{
             parentWindow.setScene(lastScene);
@@ -181,7 +198,133 @@ public class StudentUserInterface extends GeneralUserInteface {
     }
 
     @Override
-    public void manageGroups() {
+    public void manageGroups(Scene lastScene, Course course) {
+        VBox layout = new VBox();
+        HBox bottomBar = new HBox();
+        layout.setPadding(new Insets(10,10,5,5));
+        layout.setSpacing(10);
+        bottomBar.setPadding(new Insets(10,10,5,5));
+        bottomBar.setSpacing(20);
+        Button powrot = new Button("Wróć");
+        Button zapisz = new Button("Zapisz");
 
+
+        javafx.scene.control.TableView<Group> table = new javafx.scene.control.TableView<>();
+
+        TableColumn<Group,String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setMinWidth(100);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("name"));
+
+        TableColumn<Group,String> groupCodeColumn = new TableColumn<>("GroupCode");
+        groupCodeColumn.setMinWidth(40);
+        groupCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("groupCode"));
+
+        TableColumn<Group,String> courseCodeColumn = new TableColumn<>("CourseCode");
+        courseCodeColumn.setMinWidth(40);
+        courseCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("courseCode"));
+
+        TableColumn<Group,String> proffesorColumn = new TableColumn<>("Proffesor");
+        proffesorColumn.setMinWidth(40);
+        proffesorColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("proffesor"));
+
+        TableColumn<Group,String> dataColumn = new TableColumn<>("Date");
+        dataColumn.setMinWidth(40);
+        dataColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("date"));
+
+        TableColumn<Group,String> numberOfHoursColumn = new TableColumn<>("NumberOfHours");
+        numberOfHoursColumn.setMinWidth(20);
+        numberOfHoursColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfHours"));
+
+        TableColumn<Group,String> numberOfPlacesColumn = new TableColumn<>("NumberOfPlaces");
+        numberOfPlacesColumn.setMinWidth(20);
+        numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
+
+        TableColumn<Group,String> roomColumn = new TableColumn<>("room");
+        roomColumn.setMinWidth(20);
+        roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
+
+        table.setItems(course.getGroups());
+        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+
+        bottomBar.getChildren().addAll(powrot,zapisz);
+        layout.getChildren().addAll(table,bottomBar);
+        Scene scene = new Scene(layout);
+        parentWindow.setScene(scene);
+
+
+
+        zapisz.setOnAction(e->{
+            try {
+                student.addGroup(table.getSelectionModel().getSelectedItem());
+            }catch(NullPointerException exc){
+                AlertBox.Display("Błąd","Nie wybrano żadnej grupy do zapisania.");
+            }
+        });
+
+        powrot.setOnAction(e-> {
+            parentWindow.setScene(lastScene);
+        });
+    }
+
+
+    public void manageSignedUp(Scene lastScene){
+        VBox layout = new VBox();
+        HBox bottomBar = new HBox();
+        layout.setPadding(new Insets(10,10,5,5));
+        layout.setSpacing(10);
+        bottomBar.setPadding(new Insets(10,10,5,5));
+        bottomBar.setSpacing(20);
+        Button powrot = new Button("Wróć");
+        Button wypisz = new Button("Wypisz");
+
+        javafx.scene.control.TableView<Group> table = new javafx.scene.control.TableView<>();
+
+        TableColumn<Group,String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setMinWidth(100);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("name"));
+
+        TableColumn<Group,String> groupCodeColumn = new TableColumn<>("GroupCode");
+        groupCodeColumn.setMinWidth(40);
+        groupCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("groupCode"));
+
+        TableColumn<Group,String> courseCodeColumn = new TableColumn<>("CourseCode");
+        courseCodeColumn.setMinWidth(40);
+        courseCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("courseCode"));
+
+        TableColumn<Group,String> proffesorColumn = new TableColumn<>("Proffesor");
+        proffesorColumn.setMinWidth(40);
+        proffesorColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("proffesor"));
+
+        TableColumn<Group,String> dataColumn = new TableColumn<>("Date");
+        dataColumn.setMinWidth(40);
+        dataColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("date"));
+
+        TableColumn<Group,String> numberOfHoursColumn = new TableColumn<>("NumberOfHours");
+        numberOfHoursColumn.setMinWidth(20);
+        numberOfHoursColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfHours"));
+
+        TableColumn<Group,String> numberOfPlacesColumn = new TableColumn<>("NumberOfPlaces");
+        numberOfPlacesColumn.setMinWidth(20);
+        numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
+
+        TableColumn<Group,String> roomColumn = new TableColumn<>("room");
+        roomColumn.setMinWidth(20);
+        roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
+
+        table.setItems(student.getGroupList());
+        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+
+        bottomBar.getChildren().addAll(powrot,wypisz);
+        layout.getChildren().addAll(table,bottomBar);
+        Scene scene = new Scene(layout);
+        parentWindow.setScene(scene);
+
+        wypisz.setOnAction(e->{
+                try {
+                    student.deleteGroup(table.getSelectionModel().getSelectedItem());
+                }catch(NullPointerException exc){
+                    AlertBox.Display("Błąd","Nie wybrano żadnej grupy do usunięcia.");
+                }
+        });
     }
 }

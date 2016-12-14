@@ -12,7 +12,6 @@ public final class DataBase {
     public static final DataBase INSTANCE = new DataBase();
 
     private final ObservableList<Student> studentsList = FXCollections.observableArrayList();
-    private final ObservableList<Group>   groupsList   = FXCollections.observableArrayList();
     private final ObservableList<Course>  courseList   = FXCollections.observableArrayList();
     private final ObservableList<Admin>  adminList   = FXCollections.observableArrayList();
 
@@ -28,14 +27,11 @@ public final class DataBase {
 
         //courseCode,term,department,fieldOfStudy,lecture,excercises,seminar,laboratory,project,specialization,ECTS,obligatory
         courseList.add(new Course("AK1","C1",6,Department.W1,"Informatyka",true,true,false,false,true,"ISK",5,true));
+
     }
 
     public ObservableList<Student> getStudentsList() {
         return studentsList;
-    }
-
-    public ObservableList<Group> getGroupsList() {
-        return groupsList;
     }
 
     public ObservableList<Course> getCourseList() {return courseList; }
