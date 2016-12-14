@@ -3,7 +3,7 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 /**
@@ -15,9 +15,14 @@ public class Course {
     private String courseCode;
     private int term;
     private Department department;
+    private String departmentName;
     private FieldsOfStudies fieldOfStudy;
+    private String fieldOfStudyName;
+
+
     private ArrayList<GroupTypes> groupTypes;
     private Specialization specialization;
+    private String specializationName;
     private int ECTS;
     private Boolean obligatory;
     private ObservableList<Group> groups;
@@ -27,9 +32,12 @@ public class Course {
         this.courseCode = courseCode;
         this.term = term;
         this. department = department;
+        this.departmentName = this.department.getName();
         this.fieldOfStudy = fieldOfStudy;
+        this.fieldOfStudyName = this.fieldOfStudy.getName();
         this.groupTypes = groupTypes;
         this.specialization = specialization;
+        this.specializationName = this.specialization.getName();
         this.ECTS = ECTS;
         this.obligatory = obligatory;
         groups = FXCollections.observableArrayList();
@@ -103,4 +111,27 @@ public class Course {
     public void setGroups(ObservableList<Group> groups) {
         this.groups = groups;
     }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public String getFieldOfStudyName() {
+        return fieldOfStudyName;
+    }
+
+    public String getSpecializationName() {
+        return specializationName;
+    }
+    public String getGroupTypes() {
+        String ret = "";
+        for(GroupTypes g : groupTypes)
+            ret += g.getName() + ",";
+        return ret;
+    }
+
+    public ArrayList<GroupTypes> getGroupTypesList(){
+        return groupTypes;
+    }
+
 }

@@ -41,8 +41,32 @@ public class Student extends User {
         this.groupList = FXCollections.observableArrayList();
     }
 
+    public ObservableList<Group> getGroupList() {return groupList;}
+
     public void addGroup(Group group){
-        groupList.add(group);
+
+            if (group.getSignedUpStudents().size() < group.getNumberOfPlaces()) {
+
+                //dodanie studenta dla obiektu grupy w bazie danych
+                group.getSignedUpStudents().add(this);
+
+                //dodanie studentowi grupy
+                groupList.add(group);
+
+            }
+    }
+
+    public void deleteGroup(Group group){
+      for(Course c : DataBase.INSTANCE.getCourseList()){
+          if(c.getCourseCode().equals(group.getCourseCode())){
+
+              for(Student student : group.getSignedUpStudents()){
+                  student.getGroupList().remove(group);
+              }
+
+              c.getGroups().remove((group));
+          }
+      }
     }
 
     String getID() {
@@ -101,59 +125,6 @@ public class Student extends User {
         this.ECTS = ECTS;
     }
 
-
-    /*Konstruktor klasy Student - tworzy obiekt użytkownika
-     *na podstawie danych z pliku. Znajduje odpowiednie dane
-     *na podstawie loginu, pozyskanego przy logowaniu*/
-    public Student(String _login){
-        this.login = _login;
-        String studentData = "";
-        String fileName = Main.studentDataFilename;
-        File file = new File(fileName);
-        Scanner input;
-        boolean found = false;
-
-        try {
-            input = new Scanner(file);
-        }catch(IOException ex){
-            Main.closeOnError("FATAL ERROR - database disappeared");
-            return;
-        }
-
-        while(input.hasNextLine()){
-            String temp = input.findInLine(login);
-            if(temp!=null)
-            if(temp.equals(login)){
-                found = true;
-                studentData = input.nextLine();
-                break;
-            }
-            input.nextLine();
-        }
-        if(found)
-            input = new Scanner(studentData);
-        else{
-            Main.closeOnError("FATAL ERROR - Student not found after login");
-            return;
-        }
-
-        input.useDelimiter(" ");
-
-        password = input.next();
-        email = input.next();
-        name = input.next();
-        surname = input.next();
-        ID = input.next();
-        department = Department.valueOf(input.next());
-        fieldOfStudy = FieldsOfStudies.W1K1;
-        specialization = Specialization.W1K1S1;
-        term = parseInt(input.next());
-        signUpRight = Boolean.valueOf(input.next());
-        ECTS = Integer.valueOf(input.next());
-    }
-
-
-
     @Override
     public ArrayList<String> getProfile(){
         ArrayList<String> profileData = new ArrayList<>();
@@ -165,8 +136,8 @@ public class Student extends User {
         profileData.add(email);
         profileData.add(ID);
         profileData.add(department.getName());
-        profileData.add(fieldOfStudy.toString());
-        profileData.add(specialization.toString());
+        profileData.add(fieldOfStudy.getName());
+        profileData.add(specialization.getName());
         profileData.add(String.valueOf(term));
         profileData.add(String.valueOf(signUpRight));
         profileData.add(String.valueOf(ECTS));
@@ -191,4 +162,6 @@ public class Student extends User {
 
         return result;
     }
+
+
 }

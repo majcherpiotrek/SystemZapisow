@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.collections.ObservableList;
+import users.admin.Admin;
 import users.admin.AdminUserInterface;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -140,46 +141,14 @@ public class Main extends Application {
 
     private ValidationOutput validateLoginData(String login, String password){
 
-        Scanner input;
 
-        try{
-            File adminDataFile = new File(adminDataFilename);
-            input = new Scanner(adminDataFile);
-        }catch(IOException ex){
-            return ValidationOutput.noDatabase;
-        }
-
-        String line;
-
-        while(input.hasNextLine()) {
-            line = input.nextLine();
-            Scanner temp = new Scanner(line);
-            temp.useDelimiter(" ");
-            String _login = temp.next();
-            String _password = temp.next();
-
-            if(login.equals(_login) && password.equals(_password))
-                return ValidationOutput.admin;
-        }
-
-
-
-        try{
-            File studentDataFile = new File(studentDataFilename);
-            input = new Scanner(studentDataFile);
-        }catch(IOException ex){
-            return ValidationOutput.noDatabase;
-        }
-
-        while(input.hasNextLine()){
-            line = input.nextLine();
-            Scanner temp = new Scanner(line);
-            temp.useDelimiter(" ");
-            String _login = temp.next();
-            String _password = temp.next();
-            if(login.equals(_login) && password.equals(_password))
+        for(Student s : DataBase.INSTANCE.getStudentsList())
+            if(s.login.equals(login))
                 return ValidationOutput.student;
-        }
+
+        for(Admin a : DataBase.INSTANCE.getAdminList())
+            if(a.login.equals(login))
+                return  ValidationOutput.admin;
 
         return ValidationOutput.wrongInput;
     }

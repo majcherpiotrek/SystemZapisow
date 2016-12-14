@@ -184,6 +184,10 @@ public final class DataBase {
         return studentsList;
     }
 
+    public ObservableList<Admin> getAdminList() {
+        return adminList;
+    }
+
     public ObservableList<Course> getCourseList() {return courseList; }
 
     public void addStudent(Student student){ studentsList.add(student); }

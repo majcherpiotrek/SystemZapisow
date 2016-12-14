@@ -11,6 +11,7 @@ import users.student.Student;
  */
 public class Group {
 
+    private String name;
     private String groupCode;
     private String courseCode;
     private String proffesor;
@@ -20,7 +21,8 @@ public class Group {
     private int room;
     private ObservableList<Student> signedUpStudents;
 
-    public Group(String groupCode, String courseCode, String proffesor, String date, int numberOfHours, int numberOfPlaces, int room){
+    public Group(String name, String groupCode, String courseCode, String proffesor, String date, int numberOfHours, int numberOfPlaces, int room){
+        this.name = name;
         this.groupCode = groupCode;
         this.courseCode = courseCode;
         this.proffesor = proffesor;
@@ -34,4 +36,73 @@ public class Group {
     public void addStudent(Student student){
         signedUpStudents.add(student);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGroupCode() {
+        return groupCode;
+    }
+
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public String getProffesor() {
+        return proffesor;
+    }
+
+    public void setProffesor(String proffesor) {
+        this.proffesor = proffesor;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getNumberOfHours() {
+        return numberOfHours;
+    }
+
+    public void setNumberOfHours(int numberOfHours) {
+        this.numberOfHours = numberOfHours;
+    }
+
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
+    }
+
+    public void setNumberOfPlaces(int numberOfPlaces) {
+        this.numberOfPlaces = numberOfPlaces;
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public ObservableList<Student> getSignedUpStudents() {
+        return signedUpStudents;
+    }
+
 }
