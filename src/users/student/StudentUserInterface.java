@@ -17,7 +17,6 @@ import sample.DataBase;
 import sample.Group;
 import users.GeneralUserInteface;
 
-import javax.swing.text.TableView;
 /**
  * Created by piotrek on 06.12.16.
  */
@@ -43,7 +42,7 @@ public class StudentUserInterface extends GeneralUserInteface {
         mainMenuLayout.setSpacing(40);
         mainMenuLayout.setAlignment(Pos.CENTER);
 
-        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonLogout, buttonManageStudentsGroups);
+        mainMenuLayout.getChildren().addAll(buttonProfile, buttonCourses, buttonManageStudentsGroups, buttonLogout);
         Scene mainMenuScene = new Scene(mainMenuLayout);
 
          /*Obsługa zdarzeń przycisków*/
@@ -188,8 +187,13 @@ public class StudentUserInterface extends GeneralUserInteface {
         parentWindow.setScene(scene);
 
 
+
         przegladajGrupy.setOnAction(e->{
-            manageGroups(scene, table.getSelectionModel().getSelectedItem());
+            try {
+                manageGroups(scene, table.getSelectionModel().getSelectedItem());
+            }catch(NullPointerException exc) {
+                AlertBox.Display("Błąd", "Nie wybrano żadnego kursu.");
+            }
         });
 
         powrot.setOnAction(e->{
@@ -254,8 +258,8 @@ public class StudentUserInterface extends GeneralUserInteface {
 
 
         zapisz.setOnAction(e->{
-            try {
-                student.addGroup(table.getSelectionModel().getSelectedItem());
+            try{
+                student.signUpToGroup(table.getSelectionModel().getSelectedItem());
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano żadnej grupy do zapisania.");
             }
@@ -325,6 +329,10 @@ public class StudentUserInterface extends GeneralUserInteface {
                 }catch(NullPointerException exc){
                     AlertBox.Display("Błąd","Nie wybrano żadnej grupy do usunięcia.");
                 }
+        });
+
+        powrot.setOnAction(e-> {
+            parentWindow.setScene(lastScene);
         });
     }
 }

@@ -28,6 +28,7 @@ public final class DataBase {
         //courseCode,term,department,fieldOfStudy,lecture,excercises,seminar,laboratory,project,specialization,ECTS,obligatory
         courseList.add(new Course("AK1","C1",6,Department.W1,"Informatyka",true,true,false,false,true,"ISK",5,true));
 
+        courseList.get(0).addGroup(new Group("AK1","1",courseList.get(0).getCourseCode(),"JB","sroda 7:30",30,70,15));
     }
 
     public ObservableList<Student> getStudentsList() {
