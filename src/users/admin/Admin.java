@@ -85,4 +85,5 @@ public class Admin extends User{
         DataBase.INSTANCE.addCourse(course);
     }
 
+
 }
