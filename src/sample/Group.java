@@ -33,6 +33,21 @@ public class Group {
         this.signedUpStudents = FXCollections.observableArrayList();
     }
 
+    public Group(){
+
+        Integer i = null;
+
+        this.name = null;
+        this.groupCode = null;
+        this.courseCode = null;
+        this.proffesor = null;
+        this.date = null;
+        this.numberOfHours = i;
+        this.numberOfPlaces = i;
+        this.room = i;
+        this.signedUpStudents = FXCollections.observableArrayList();
+    }
+
     public void addStudent(Student student){
         signedUpStudents.add(student);
     }

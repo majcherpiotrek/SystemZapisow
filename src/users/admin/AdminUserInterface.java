@@ -478,17 +478,19 @@ public class AdminUserInterface extends GeneralUserInteface {
             if(laboratory.isSelected()) groupsTypes.add(GroupTypes.LAB);
             if(project.isSelected()) groupsTypes.add(GroupTypes.PR);
 
-           admin.addNewCourse(
-                    new Course(name.getText(),
-                            courseCode.getText(),
-                            Integer.valueOf(term.getText()),
-                            department.getValue(),
-                            fieldOfStudys.getValue(),
-                            groupsTypes,
-                            specialization.getValue(),
-                            Integer.parseInt(ECTS.getText()),
-                            obligatory.isSelected())
-            );
+
+           Course course = admin.createNewCourse();
+
+            admin.setCourseName(course,name.getText());
+            admin.setCourseCode(course,courseCode.getText());
+            admin.setCourseTerm(course,Integer.valueOf(term.getText()));
+            admin.setCourseDepartment(course,department.getValue());
+            admin.setCourseFieldOfStudy(course,fieldOfStudys.getValue());
+            admin.setCourseGroupTypes(course,groupsTypes);
+            admin.setCourseSpecialization(course,specialization.getValue());
+            admin.setCourseECTS(course,Integer.parseInt(ECTS.getText()));
+            admin.setCourseObligatory(course,obligatory.isSelected());
+
 
             AlertBox.Display("Potwierdzenie","Dodano kurs.");
             parentWindow.setScene(lastScene);
@@ -585,17 +587,16 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         confirm.setOnAction(e->{
 
-            course.addGroup(
-                    new Group(name.getText(),
-                            groupCode.getText(),
-                            groupCode.getText(),
-                            profesor.getText(),
-                            date.getText(),
-                            Integer.parseInt(numberOfHours.getText()),
-                            Integer.parseInt(numberOfPlaces.getText()),
-                            Integer.parseInt(room.getText())
-                            )
-            );
+            Group group = admin.createNewGroup(course);
+
+            admin.setGroupName(group,name.getText());
+            admin.setGroupGroupCode(group,groupCode.getText());
+            admin.setGroupCourseCode(group,groupCode.getText());
+            admin.setGroupProffesor(group,profesor.getText());
+            admin.setGroupDate(group,date.getText());
+            admin.setGroupNumberOfHours(group,Integer.parseInt(numberOfHours.getText()));
+            admin.setGroupNumberOfPlaces(group,Integer.parseInt(numberOfPlaces.getText()));
+            admin.setGroupRoom(group,Integer.parseInt(room.getText()));
 
             AlertBox.Display("Potwierdzenie","Dodano kurs.");
             parentWindow.setScene(lastScene);

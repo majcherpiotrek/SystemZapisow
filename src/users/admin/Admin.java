@@ -1,9 +1,6 @@
 package users.admin;
-import sample.Course;
-import sample.DataBase;
-import sample.Group;
+import sample.*;
 import users.User;
-import sample.Main;
 import users.student.Student;
 
 import javax.xml.crypto.Data;
@@ -81,9 +78,79 @@ public class Admin extends User{
 
     public void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
 
-    public void addNewCourse(Course course){
+    public Course createNewCourse(){
+        Course course = new Course();
         DataBase.INSTANCE.addCourse(course);
+        return course;
+    }
+
+    public Group createNewGroup(Course course){
+     Group group = new Group();
+     course.addGroup(group);
+     return group;
     }
 
 
+
+    //Funkcje umozliwiające ustawianie parametrów kursu
+
+    public void setCourseName(Course course , String name){
+        course.setName(name);
+    }
+    public void setCourseCode(Course course , String code){
+        course.setCourseCode(code);
+    }
+    public void setCourseTerm(Course course , int term){
+        course.setTerm(term);
+    }
+    public void setCourseDepartment(Course course , Department department){
+        course.setDepartment(department);
+        course.setDepartmentName(department.getName());
+    }
+    public void setCourseFieldOfStudy(Course course , FieldsOfStudies field){
+        course.setFieldOfStudy(field);
+        course.setFieldOfStudyName(field.getName());
+    }
+    public void setCourseGroupTypes(Course course , ArrayList<GroupTypes> groupTypes){
+        course.setGroupTypes(groupTypes);
+    }
+    public void setCourseSpecialization(Course course , Specialization specialization){
+        course.setSpecialization(specialization);
+        course.setSpecializationName(specialization.getName());
+    }
+    public void setCourseECTS(Course course , int ECTS){
+        course.setECTS(ECTS);
+    }
+    public void setCourseObligatory(Course course , Boolean obligatory){
+        course.setObligatory(obligatory);
+    }
+
+
+
+    //Funkcje umożliwiające ustawianie parametrów grupy
+
+    public void setGroupName(Group group, String name){
+        group.setName(name);
+    }
+    public void setGroupGroupCode(Group group, String code){
+        group.setGroupCode(code);
+    }
+    public void setGroupCourseCode(Group group, String code){
+        group.setCourseCode(code);
+    }
+    public void setGroupProffesor(Group group, String proffesor){
+        group.setProffesor(proffesor);
+    }
+    public void setGroupDate(Group group, String date){
+        group.setDate(date);
+    }
+    public void setGroupNumberOfHours(Group group, int numberOfHours){
+        group.setNumberOfHours(numberOfHours);
+    }
+    public void setGroupNumberOfPlaces(Group group, int numberOfPlaces){
+        group.setNumberOfPlaces(numberOfPlaces);
+    }
+    public void setGroupRoom(Group group, int room){
+        group.setRoom(room);
+    }
 }

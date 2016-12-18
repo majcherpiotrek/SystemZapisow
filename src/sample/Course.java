@@ -141,6 +141,7 @@ public class Course {
     public String getSpecializationName() {
         return specializationName;
     }
+
     public String getGroupTypes() {
         String ret = "";
         for(GroupTypes g : groupTypes)
@@ -152,4 +153,27 @@ public class Course {
         return groupTypes;
     }
 
+    public void setGroupTypes(ArrayList<GroupTypes> groupTypes) {
+        this.groupTypes = groupTypes;
+    }
+
+    public void setFieldOfStudy(FieldsOfStudies fieldOfStudy) {
+        this.fieldOfStudy = fieldOfStudy;
+    }
+
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public void setFieldOfStudyName(String fieldOfStudyName) {
+        this.fieldOfStudyName = fieldOfStudyName;
+    }
+
+    public void setSpecializationName(String specializationName) {
+        this.specializationName = specializationName;
+    }
 }
