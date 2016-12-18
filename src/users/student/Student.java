@@ -24,7 +24,7 @@ public class Student extends User {
     private Specialization specialization;
     private String specializationName;
     private int term;
-    private boolean signUpRight;
+    private Boolean signUpRight;
     private int ECTS;
     private ObservableList<Group> groupList = FXCollections.observableArrayList();
 
