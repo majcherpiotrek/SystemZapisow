@@ -83,7 +83,30 @@ public class Admin extends User{
      course.addGroup(group);
      return group;
     }
+    public void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
+        group.setProffesor(profesor);
+        group.setDate(date);
+        group.setNumberOfHours(nH);
 
+        if(nP>0) {
+            if (nP > group.getSignedUpStudents().size()) {
+                group.setNumberOfPlaces(nP);
+            } else if (nP < group.getSignedUpStudents().size()) {
+                AlertBox.Display("Uwaga", "Nie można zmniejszyć liczby miejsc, ponieważ do grupy zapisani są studenci. Nie dokonano zmiany tego pola.");
+            }
+        }else{
+            AlertBox.Display("Uwaga", "Liczba miejsc nie moze być mniejsza od zera. Nie dokonano zmiany tego pola.");
+        }
+        group.setRoom(room);
+
+        for(Student student : DataBase.INSTANCE.getStudentsList()){
+            for(Group g : student.getGroupList()){
+                if(g.getGroupCode().equals(group.getGroupCode())){
+                    g=group;
+                }
+            }
+        }
+    }
 
 
     //Funkcje umozliwiające ustawianie parametrów kursu
@@ -143,6 +166,7 @@ public class Admin extends User{
     }
     public void setGroupNumberOfPlaces(Group group, int numberOfPlaces){
         group.setNumberOfPlaces(numberOfPlaces);
+        group.setAvaiablePlaces(numberOfPlaces);
     }
     public void setGroupRoom(Group group, int room){
         group.setRoom(room);

@@ -253,12 +253,16 @@ public class StudentUserInterface extends GeneralUserInteface {
         numberOfPlacesColumn.setMinWidth(200);
         numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
 
+        TableColumn<Group,String> avaibalePlacesColumn = new TableColumn<>("AvaiablePlaces");
+        avaibalePlacesColumn.setMinWidth(20);
+        avaibalePlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("avaiablePlaces"));
+
         TableColumn<Group,String> roomColumn = new TableColumn<>("room");
         roomColumn.setMinWidth(40);
         roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
         table.setItems(course.getGroups());
-        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
         table.setMinWidth(1500);
 
         bottomBar.getChildren().addAll(powrot,zapisz);
@@ -273,6 +277,7 @@ public class StudentUserInterface extends GeneralUserInteface {
         zapisz.setOnAction(e->{
             try{
                 student.signUpToGroup(table.getSelectionModel().getSelectedItem());
+                table.refresh();
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano żadnej grupy do zapisania.");
             }
@@ -325,12 +330,16 @@ public class StudentUserInterface extends GeneralUserInteface {
         numberOfPlacesColumn.setMinWidth(200);
         numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
 
+        TableColumn<Group,String> avaibalePlacesColumn = new TableColumn<>("AvaiablePlaces");
+        avaibalePlacesColumn.setMinWidth(20);
+        avaibalePlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("avaiablePlaces"));
+
         TableColumn<Group,String> roomColumn = new TableColumn<>("room");
         roomColumn.setMinWidth(40);
         roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
         table.setItems(student.getGroupList());
-        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
         table.setMinWidth(1500);
         table.getSelectionModel().selectedItemProperty().addListener((v,oldValue,newvalue)->{
             wypisz.setDisable(false);

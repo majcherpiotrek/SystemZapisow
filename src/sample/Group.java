@@ -18,6 +18,7 @@ public class Group {
     private String date;
     private int numberOfHours;
     private int numberOfPlaces;
+    private int avaiablePlaces;
     private int room;
     private ObservableList<Student> signedUpStudents;
 
@@ -29,6 +30,7 @@ public class Group {
         this.date = date;
         this.numberOfHours = numberOfHours;
         this.numberOfPlaces = numberOfPlaces;
+        this.avaiablePlaces = numberOfPlaces;
         this.room = room;
         this.signedUpStudents = FXCollections.observableArrayList();
     }
@@ -41,6 +43,7 @@ public class Group {
         this.date = null;
         this.numberOfHours = 0;
         this.numberOfPlaces = 0;
+        this.avaiablePlaces = 0;
         this.room = 0;
         this.signedUpStudents = FXCollections.observableArrayList();
     }
@@ -117,4 +120,11 @@ public class Group {
         return signedUpStudents;
     }
 
+    public int getAvaiablePlaces() {return avaiablePlaces;}
+
+    public void setAvaiablePlaces(int avaiablePlaces) {this.avaiablePlaces = avaiablePlaces;}
+
+    public void decAvaiablePlaces(){avaiablePlaces--;}
+
+    public void incAvaiablePlaces(){avaiablePlaces++;}
 }

@@ -76,7 +76,7 @@ public class Student extends User {
 
     public void signUpToGroup(Group group){
 
-            if (group.getSignedUpStudents().size() < group.getNumberOfPlaces()) {
+            if (group.getAvaiablePlaces() > 0 ) {
                 for(Group g : this.groupList){
                     if(g.equals(group)){
                         AlertBox.Display("Błąd","Zostałeś już zapisany do tej grupy");
@@ -85,9 +85,10 @@ public class Student extends User {
                 }
                 //dodanie studenta dla obiektu grupy w bazie danych
                 group.getSignedUpStudents().add(this);
-
+                group.decAvaiablePlaces();
                 //dodanie studentowi grupy
                 this.groupList.add(group);
+                AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
 
             }
     }
@@ -96,9 +97,10 @@ public class Student extends User {
       for(Course c : DataBase.INSTANCE.getCourseList())
           if(c.getCourseCode().equals(group.getCourseCode()))
               for(Group g : c.getGroups())
-                  if(g.equals(group))
+                  if(g.equals(group)) {
                       g.getSignedUpStudents().remove(this);
-
+                      g.incAvaiablePlaces();
+                  }
       this.groupList.remove(group);
 
     }

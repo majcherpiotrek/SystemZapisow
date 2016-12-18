@@ -242,12 +242,16 @@ public class AdminUserInterface extends GeneralUserInteface {
             numberOfPlacesColumn.setMinWidth(20);
             numberOfPlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("numberOfPlaces"));
 
+            TableColumn<Group,String> avaibalePlacesColumn = new TableColumn<>("AvaiablePlaces");
+            avaibalePlacesColumn.setMinWidth(20);
+            avaibalePlacesColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("avaiablePlaces"));
+
             TableColumn<Group,String> roomColumn = new TableColumn<>("room");
             roomColumn.setMinWidth(20);
             roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
             table.setItems(course.getGroups());
-            table.getColumns().addAll(nameColumn,groupCodeColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+            table.getColumns().addAll(nameColumn,groupCodeColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
             table.setMinWidth(1500);
 
             bottomBar.getChildren().addAll(powrot,usun,dodaj,edytuj);
@@ -272,8 +276,12 @@ public class AdminUserInterface extends GeneralUserInteface {
             powrot.setOnAction(e->{
             parentWindow.setScene(lastScene);
             });
-    }
 
+            edytuj.setOnAction(e->{
+                editGroup(scene,table.getSelectionModel().getSelectedItem(),course);
+                table.refresh();
+            });
+    }
 
     public void manageStudents(Scene lastScene){
         VBox layout = new VBox();
@@ -365,7 +373,6 @@ public class AdminUserInterface extends GeneralUserInteface {
             parentWindow.setScene(lastScene);
         });
     }
-
 
     public void addCourse(Scene lastScene){
         Label nameLabel = new Label("Nazwa Kursu :");
@@ -499,16 +506,7 @@ public class AdminUserInterface extends GeneralUserInteface {
         });
     }
 
-
     void addGroup(Scene lastScene, Course course){
-       /* private String name;
-        private String groupCode;
-        private String courseCode;
-        private String proffesor;
-        private String date;
-        private int numberOfHours;
-        private int numberOfPlaces;
-        private int room;*/
         Label nameLabel = new Label("Nazwa Kursu :");
         TextField name = new TextField();
         name.setText(course.getName());
@@ -533,9 +531,6 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         Label numberOfPlacesLabel = new Label("Liczba miejsc :");
         TextField numberOfPlaces = new TextField();
-
-        Label ECTSLabel = new Label("ECTS :");
-        TextField ECTS = new TextField();
 
         Label roomLabel = new Label("Pokój :");
         TextField room = new TextField();
@@ -602,6 +597,98 @@ public class AdminUserInterface extends GeneralUserInteface {
 
 
             AlertBox.Display("Potwierdzenie","Dodano grupę.");
+            parentWindow.setScene(lastScene);
+        });
+    }
+
+    void editGroup(Scene lastScene, Group group, Course course){
+        Label nameLabel = new Label("Nazwa Kursu :");
+        TextField name = new TextField();
+        name.setText(course.getName());
+        name.setDisable(true);
+
+        Label groupCodeLabel = new Label("Kod Grupy :");
+        TextField groupCode = new TextField();
+        groupCode.setText(group.getGroupCode());
+        groupCode.setDisable(true);
+
+        Label courseCodeLabel = new Label("Kod Kursu :");
+        TextField courseCode = new TextField();
+        courseCode.setText(course.getCourseCode());
+        courseCode.setDisable(true);
+
+        Label profesorLabel = new Label("Profesor :");
+        TextField profesor = new TextField();
+        profesor.setText(group.getProffesor());
+
+        Label dateLabel = new Label("Termin :");
+        TextField date = new TextField();
+        date.setText(group.getDate());
+
+        Label numberOfHoursLabel = new Label("Liczba godzin :");
+        TextField numberOfHours = new TextField();
+        numberOfHours.setText(Integer.toString(group.getNumberOfHours()));
+
+        Label numberOfPlacesLabel = new Label("Liczba miejsc :");
+        TextField numberOfPlaces = new TextField();
+        numberOfPlaces.setText(Integer.toString(group.getNumberOfPlaces()));
+
+        Label roomLabel = new Label("Pokój :");
+        TextField room = new TextField();
+        room.setText(Integer.toString(group.getRoom()));
+
+
+
+        HBox nameBox = new HBox(nameLabel,name);
+        nameBox.setSpacing(10);
+
+        HBox groupCodeBox = new HBox(groupCodeLabel,groupCode);
+        groupCodeBox.setSpacing(10);
+
+        HBox courseCodeBox = new HBox(courseCodeLabel,courseCode);
+        courseCodeBox.setSpacing(10);
+
+        HBox profesorBox = new HBox(profesorLabel,profesor);
+        profesorBox.setSpacing(10);
+
+        HBox dateBox = new HBox(dateLabel,date);
+        dateBox.setSpacing(10);
+
+        HBox numberOfHoursBox = new HBox(numberOfHoursLabel,numberOfHours);
+        numberOfHoursBox.setSpacing(10);
+
+        HBox numberOfPlacesBox = new HBox(numberOfPlacesLabel,numberOfPlaces);
+        numberOfPlacesBox.setSpacing(10);
+
+        HBox roomBox = new HBox(roomLabel,room);
+        roomBox.setSpacing(10);
+
+        VBox box = new VBox(nameBox,groupCodeBox,courseCodeBox,profesorBox,dateBox,numberOfHoursBox,numberOfPlacesBox,roomBox);
+        box.setSpacing(4);
+
+
+        Button confirm = new Button("Zatwierdź");
+        Button powrot = new Button("Wróć");
+
+        HBox buttons = new HBox(powrot,confirm);
+
+        VBox layout = new VBox();
+        layout.getChildren().addAll(box,buttons);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(40,30,40,30));
+
+        Scene scene = new Scene(layout);
+        parentWindow.setScene(scene);
+
+        powrot.setOnAction(e->{
+            parentWindow.setScene(lastScene);
+        });
+
+        confirm.setOnAction(e->{
+
+            admin.editGroup(group,profesor.getText(),date.getText(),Integer.parseInt(numberOfHours.getText()),Integer.parseInt(numberOfPlaces.getText()),Integer.parseInt(room.getText()));
+
+            AlertBox.Display("Potwierdzenie","Wprowadzono zmiany.");
             parentWindow.setScene(lastScene);
         });
     }
