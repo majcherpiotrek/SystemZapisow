@@ -19,7 +19,6 @@ public class Course {
     private FieldsOfStudies fieldOfStudy;
     private String fieldOfStudyName;
 
-
     private ArrayList<GroupTypes> groupTypes;
     private Specialization specialization;
     private String specializationName;
@@ -43,10 +42,29 @@ public class Course {
         groups = FXCollections.observableArrayList();
     }
 
+    public Course(){
+
+        Boolean b = null;
+        Integer i = null;
+
+        this.name = null;
+        this.courseCode = null;
+        this.term = i;
+        this. department = null;
+        this.departmentName = null;
+        this.fieldOfStudy = null;
+        this.fieldOfStudyName = null;
+        this.groupTypes = null;
+        this.specialization = null;
+        this.specializationName = null;
+        this.ECTS = i;
+        this.obligatory = null;
+        groups = FXCollections.observableArrayList();
+    }
+
     public void addGroup(Group group){
         groups.add(group);
     }
-
 
     public String getName() {
         return name;

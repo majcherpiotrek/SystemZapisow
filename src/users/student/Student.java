@@ -5,6 +5,7 @@ import users.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class Student extends User {
     private Specialization specialization;
     private String specializationName;
     private int term;
-    private boolean signUpRight;
+    private Boolean signUpRight;
     private int ECTS;
     private ObservableList<Group> groupList = FXCollections.observableArrayList();
 
@@ -47,6 +48,28 @@ public class Student extends User {
         this.groupList = FXCollections.observableArrayList();
     }
 
+    public Student(){
+
+        Integer i = null;
+
+        this.login = null;
+        this.password = null;
+        this. name = null;
+        this.surname = null;
+        this.email = null;
+        this.ID = null;
+        this.department = null;
+        this.departmentName = null;
+        this.fieldOfStudy = null;
+        this.fieldOfStudyName = null;
+        this.specialization = null;
+        this.specializationName = null;
+        this.term = i;
+        this.signUpRight = null;
+        this.ECTS = i;
+        this.groupList = FXCollections.observableArrayList();
+    }
+
     public ObservableList<Group> getGroupList() {return groupList;}
 
 
@@ -55,7 +78,12 @@ public class Student extends User {
     public void signUpToGroup(Group group){
 
             if (group.getSignedUpStudents().size() < group.getNumberOfPlaces()) {
-
+                for(Group g : this.groupList){
+                    if(g.equals(group)){
+                        AlertBox.Display("Błąd","Zostałeś już zapisany do tej grupy");
+                        return;
+                    }
+                }
                 //dodanie studenta dla obiektu grupy w bazie danych
                 group.getSignedUpStudents().add(this);
 
@@ -72,7 +100,6 @@ public class Student extends User {
               for(Student student : group.getSignedUpStudents()){
                   student.getGroupList().remove(group);
               }
-
               c.getGroups().remove((group));
           }
       }

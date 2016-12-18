@@ -478,7 +478,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             if(laboratory.isSelected()) groupsTypes.add(GroupTypes.LAB);
             if(project.isSelected()) groupsTypes.add(GroupTypes.PR);
 
-            DataBase.INSTANCE.addCourse(
+           admin.addNewCourse(
                     new Course(name.getText(),
                             courseCode.getText(),
                             Integer.valueOf(term.getText()),
@@ -494,6 +494,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             parentWindow.setScene(lastScene);
         });
     }
+
 
     void addGroup(Scene lastScene, Course course){
        /* private String name;

@@ -81,10 +81,8 @@ public class Admin extends User{
 
     public void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
 
-    public void CreateNewCourse(){
-
+    public void addNewCourse(Course course){
+        DataBase.INSTANCE.addCourse(course);
     }
-
-
 
 }
