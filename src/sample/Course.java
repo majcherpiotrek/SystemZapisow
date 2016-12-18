@@ -45,11 +45,10 @@ public class Course {
     public Course(){
 
         Boolean b = null;
-        Integer i = null;
 
         this.name = null;
         this.courseCode = null;
-        this.term = i;
+        this.term = 0;
         this. department = null;
         this.departmentName = null;
         this.fieldOfStudy = null;
@@ -57,7 +56,7 @@ public class Course {
         this.groupTypes = null;
         this.specialization = null;
         this.specializationName = null;
-        this.ECTS = i;
+        this.ECTS = 0;
         this.obligatory = null;
         groups = FXCollections.observableArrayList();
     }

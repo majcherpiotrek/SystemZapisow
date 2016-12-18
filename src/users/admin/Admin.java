@@ -34,7 +34,6 @@ public class Admin extends User{
 
         return profileData;
     }
-
     @Override
     public String toString(){
         String result = "";
@@ -56,7 +55,6 @@ public class Admin extends User{
 
         DataBase.INSTANCE.getCourseList().remove(course);
     }
-
     public void deleteGroup(Group group){
 
         for (Student student : group.getSignedUpStudents()) {
@@ -71,19 +69,15 @@ public class Admin extends User{
         }
 
     }
-
     public void giveSignUpLaw(Student student){
         student.setSignUpRight(true);
     }
-
     public void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
-
     public Course createNewCourse(){
         Course course = new Course();
         DataBase.INSTANCE.addCourse(course);
         return course;
     }
-
     public Group createNewGroup(Course course){
      Group group = new Group();
      course.addGroup(group);

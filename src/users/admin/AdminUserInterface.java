@@ -598,7 +598,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             admin.setGroupNumberOfPlaces(group,Integer.parseInt(numberOfPlaces.getText()));
             admin.setGroupRoom(group,Integer.parseInt(room.getText()));
 
-            AlertBox.Display("Potwierdzenie","Dodano kurs.");
+            AlertBox.Display("Potwierdzenie","Dodano grupę.");
             parentWindow.setScene(lastScene);
         });
     }

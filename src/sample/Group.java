@@ -34,17 +34,14 @@ public class Group {
     }
 
     public Group(){
-
-        Integer i = null;
-
         this.name = null;
         this.groupCode = null;
         this.courseCode = null;
         this.proffesor = null;
         this.date = null;
-        this.numberOfHours = i;
-        this.numberOfPlaces = i;
-        this.room = i;
+        this.numberOfHours = 0;
+        this.numberOfPlaces = 0;
+        this.room = 0;
         this.signedUpStudents = FXCollections.observableArrayList();
     }
 
