@@ -5,7 +5,6 @@ import users.User;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,7 +24,7 @@ public class Student extends User {
     private Specialization specialization;
     private String specializationName;
     private int term;
-    private Boolean signUpRight;
+    private boolean signUpRight;
     private int ECTS;
     private ObservableList<Group> groupList = FXCollections.observableArrayList();
 
@@ -93,16 +92,15 @@ public class Student extends User {
             }
     }
 
-    public void deleteGroup(Group group){
-      for(Course c : DataBase.INSTANCE.getCourseList()){
-          if(c.getCourseCode().equals(group.getCourseCode())){
+    public void signOutFromGroup(Group group){
+      for(Course c : DataBase.INSTANCE.getCourseList())
+          if(c.getCourseCode().equals(group.getCourseCode()))
+              for(Group g : c.getGroups())
+                  if(g.equals(group))
+                      g.getSignedUpStudents().remove(this);
 
-              for(Student student : group.getSignedUpStudents()){
-                  student.getGroupList().remove(group);
-              }
-              c.getGroups().remove((group));
-          }
-      }
+      this.groupList.remove(group);
+
     }
 
     public String getID() {

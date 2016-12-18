@@ -329,7 +329,7 @@ public class StudentUserInterface extends GeneralUserInteface {
 
         wypisz.setOnAction(e->{
                 try {
-                    student.deleteGroup(table.getSelectionModel().getSelectedItem());
+                    student.signOutFromGroup(table.getSelectionModel().getSelectedItem());
                 }catch(NullPointerException exc){
                     AlertBox.Display("Błąd","Nie wybrano żadnej grupy do usunięcia.");
                 }
