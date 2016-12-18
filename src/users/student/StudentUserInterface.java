@@ -1,5 +1,7 @@
 package users.student;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,10 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import sample.AlertBox;
-import sample.Course;
-import sample.DataBase;
-import sample.Group;
+import sample.*;
 import users.GeneralUserInteface;
 
 /**
@@ -171,7 +170,22 @@ public class StudentUserInterface extends GeneralUserInteface {
         ECTSColumn.setMinWidth(40);
         ECTSColumn.setCellValueFactory(new PropertyValueFactory<Course, String>("ECTS"));
 
-        table.setItems(DataBase.INSTANCE.getCourseList());
+
+        ObservableList<Course> avaiableCourses = FXCollections.observableArrayList();
+
+        for(Course c : DataBase.INSTANCE.getCourseList()){
+            if(c.getDepartment().equals(student.getDepartment())){
+                if(c.getFieldOfStudy().equals(student.getFieldOfStudy())){
+                    if(c.getSpecialization().equals(student.getSpecialization()) || c.getSpecialization().equals(Specialization.NOSPECIALIZATION)) {
+                        if (c.getTerm() == student.getTerm()) {
+                            avaiableCourses.add(c);
+                        }
+                    }
+                }
+            }
+        }
+
+        table.setItems(avaiableCourses);
         table.getColumns().addAll(nameColumn,courseCodeColumn,termColumn,departmentColumn,fieldOfStudeyColumn,groupTypesColumn,specializationColumn,ECTSColumn);
         table.setMinWidth(1500);
 
