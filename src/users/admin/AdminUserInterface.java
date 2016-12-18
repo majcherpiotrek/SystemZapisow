@@ -187,14 +187,14 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         zarzadzajGrupami.setOnAction(e->{
             try {
-                manageGroups(lastScene, table.getSelectionModel().getSelectedItem());
+                manageGroups(scene, table.getSelectionModel().getSelectedItem());
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano żadnego kursu.");
             }
         });
 
         dodaj.setOnAction(e->{
-            addCourse(lastScene);
+            addCourse(scene);
             }
         );
     }
@@ -247,7 +247,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
             table.setItems(course.getGroups());
-            table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
+            table.getColumns().addAll(nameColumn,groupCodeColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,roomColumn);
             table.setMinWidth(1500);
 
             bottomBar.getChildren().addAll(powrot,usun,dodaj,edytuj);
@@ -258,13 +258,15 @@ public class AdminUserInterface extends GeneralUserInteface {
             usun.setOnAction(e->{
                 try {
                     admin.deleteGroup(table.getSelectionModel().getSelectedItem());
+                    table.refresh();
                 }catch(NullPointerException exc){
                     AlertBox.Display("Błąd","Nie wybrano żadnej grupy do usunięcia.");
                 }
             });
 
             dodaj.setOnAction(e->{
-                addGroup(lastScene,course);
+                addGroup(scene,course);
+                table.refresh();
             });
 
             powrot.setOnAction(e->{
@@ -591,12 +593,13 @@ public class AdminUserInterface extends GeneralUserInteface {
 
             admin.setGroupName(group,name.getText());
             admin.setGroupGroupCode(group,groupCode.getText());
-            admin.setGroupCourseCode(group,groupCode.getText());
+            admin.setGroupCourseCode(group,courseCode.getText());
             admin.setGroupProffesor(group,profesor.getText());
             admin.setGroupDate(group,date.getText());
             admin.setGroupNumberOfHours(group,Integer.parseInt(numberOfHours.getText()));
             admin.setGroupNumberOfPlaces(group,Integer.parseInt(numberOfPlaces.getText()));
             admin.setGroupRoom(group,Integer.parseInt(room.getText()));
+
 
             AlertBox.Display("Potwierdzenie","Dodano grupę.");
             parentWindow.setScene(lastScene);
