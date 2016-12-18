@@ -197,6 +197,10 @@ public class AdminUserInterface extends GeneralUserInteface {
             addCourse(scene);
             }
         );
+
+        edytuj.setOnAction(e->{
+            editCourse(scene,table.getSelectionModel().getSelectedItem());
+        });
     }
 
     @Override
@@ -488,7 +492,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             if(project.isSelected()) groupsTypes.add(GroupTypes.PR);
 
 
-           Course course = admin.createNewCourse();
+            Course course = admin.createNewCourse();
 
             admin.setCourseName(course,name.getText());
             admin.setCourseCode(course,courseCode.getText());
@@ -691,6 +695,183 @@ public class AdminUserInterface extends GeneralUserInteface {
             AlertBox.Display("Potwierdzenie","Wprowadzono zmiany.");
             parentWindow.setScene(lastScene);
         });
+    }
+
+    void editCourse(Scene lastScene, Course course){
+
+        if(course.getGroups().isEmpty()) {
+
+            Label nameLabel = new Label("Nazwa Kursu :");
+            TextField name = new TextField();
+            name.setText(course.getName());
+
+            Label courseCodeLabel = new Label("Kod Kursu :");
+            TextField courseCode = new TextField();
+            ;
+            courseCode.setText(course.getCourseCode());
+            courseCode.setDisable(true);
+
+            Label termLabel = new Label("Semestr :");
+            TextField term = new TextField();
+            ;
+            term.setText(Integer.toString(course.getTerm()));
+
+            Label departmentLabel = new Label("Wydział :");
+            ChoiceBox<Department> department = new ChoiceBox<>();
+            department.getItems().addAll(Department.values());
+            department.getSelectionModel().select(course.getDepartment());
+
+            Label lectureLabel = new Label("Wykład :");
+            CheckBox lecture = new CheckBox();
+            lecture.setSelected(false);
+            for (GroupTypes g : course.getGroupTypesList()) {
+                if (g.equals(GroupTypes.LCTR)) {
+                    lecture.setSelected(true);
+                    break;
+                }
+            }
+
+            Label excercisesLabel = new Label("Ćwiczenia :");
+            CheckBox excercises = new CheckBox();
+            excercises.setSelected(false);
+            for (GroupTypes g : course.getGroupTypesList()) {
+                if (g.equals(GroupTypes.EX)) {
+                    excercises.setSelected(true);
+                    break;
+                }
+            }
+
+
+            Label seminarLabel = new Label("Seminarium :");
+            CheckBox seminar = new CheckBox();
+            seminar.setSelected(false);
+            for (GroupTypes g : course.getGroupTypesList()) {
+                if (g.equals(GroupTypes.SEM)) {
+                    seminar.setSelected(true);
+                    break;
+                }
+            }
+
+
+            Label laboratoryLabel = new Label("Laboratorium :");
+            CheckBox laboratory = new CheckBox();
+            laboratory.setSelected(false);
+            for (GroupTypes g : course.getGroupTypesList()) {
+                if (g.equals(GroupTypes.LAB)) {
+                    laboratory.setSelected(true);
+                    break;
+                }
+            }
+
+            Label projectLabel = new Label("Projekt :");
+            CheckBox project = new CheckBox();
+            project.setSelected(false);
+            for (GroupTypes g : course.getGroupTypesList()) {
+                if (g.equals(GroupTypes.PR)) {
+                    project.setSelected(true);
+                    break;
+                }
+            }
+
+            Label fieldOfStudysLabel = new Label("Kierunek :");
+            ChoiceBox<FieldsOfStudies> fieldOfStudys = new ChoiceBox<>();
+            ;
+            fieldOfStudys.getItems().addAll(FieldsOfStudies.values());
+            fieldOfStudys.getSelectionModel().select(course.getFieldOfStudy());
+
+            Label specializationLabel = new Label("Specjalizacja :");
+            ChoiceBox<Specialization> specialization = new ChoiceBox<>();
+            ;
+            specialization.getItems().addAll(Specialization.values());
+            specialization.getSelectionModel().select(course.getSpecialization());
+
+            Label ECTSLabel = new Label("ECTS :");
+            TextField ECTS = new TextField();
+            ECTS.setText(Integer.toString(course.getECTS()));
+
+            Label obligatoryLabel = new Label("Obowiązkowy :");
+            CheckBox obligatory = new CheckBox();
+            if (course.getObligatory())
+                obligatory.setSelected(true);
+
+
+            HBox nameBox = new HBox(nameLabel, name);
+            nameBox.setSpacing(10);
+
+            HBox courseCodeBox = new HBox(courseCodeLabel, courseCode);
+            courseCodeBox.setSpacing(10);
+
+            HBox termBox = new HBox(termLabel, term);
+            termBox.setSpacing(10);
+
+            HBox departmentBox = new HBox(departmentLabel, department);
+            departmentBox.setSpacing(10);
+
+            HBox lectureBox = new HBox(lectureLabel, lecture);
+            lectureBox.setSpacing(10);
+
+            HBox excerciseBox = new HBox(excercisesLabel, excercises);
+            excerciseBox.setSpacing(10);
+
+            HBox seminarBox = new HBox(seminarLabel, seminar);
+            seminarBox.setSpacing(10);
+
+            HBox laboratoryBox = new HBox(laboratoryLabel, laboratory);
+            laboratoryBox.setSpacing(10);
+
+            HBox projectBox = new HBox(projectLabel, project);
+            projectBox.setSpacing(10);
+
+            HBox fieldOfStudyBox = new HBox(fieldOfStudysLabel, fieldOfStudys);
+            fieldOfStudyBox.setSpacing(10);
+
+            HBox specializationBox = new HBox(specializationLabel, specialization);
+            specializationBox.setSpacing(10);
+
+            HBox ECTSBox = new HBox(ECTSLabel, ECTS);
+            ECTSBox.setSpacing(10);
+
+            HBox obligatoryBox = new HBox(obligatoryLabel, obligatory);
+            obligatoryBox.setSpacing(10);
+
+            VBox box = new VBox(nameBox, courseCodeBox, termBox, departmentBox, lectureBox, excerciseBox, seminarBox, laboratoryBox, projectBox, fieldOfStudyBox, specializationBox, ECTSBox, obligatoryBox);
+            box.setSpacing(4);
+
+
+            Button confirm = new Button("Zatwierdź");
+            Button powrot = new Button("Wróć");
+
+            HBox buttons = new HBox(powrot, confirm);
+
+            VBox layout = new VBox();
+            layout.getChildren().addAll(box, buttons);
+            layout.setAlignment(Pos.CENTER);
+            layout.setPadding(new Insets(40, 30, 40, 30));
+
+            Scene scene = new Scene(layout);
+            parentWindow.setScene(scene);
+
+            powrot.setOnAction(e -> {
+                parentWindow.setScene(lastScene);
+            });
+
+            confirm.setOnAction(e -> {
+
+                ArrayList<GroupTypes> groupsTypes = new ArrayList<>();
+                if (lecture.isSelected()) groupsTypes.add(GroupTypes.LCTR);
+                if (excercises.isSelected()) groupsTypes.add(GroupTypes.EX);
+                if (seminar.isSelected()) groupsTypes.add(GroupTypes.SEM);
+                if (laboratory.isSelected()) groupsTypes.add(GroupTypes.LAB);
+                if (project.isSelected()) groupsTypes.add(GroupTypes.PR);
+
+                admin.editCourse(course, name.getText(), Integer.parseInt(term.getText()), department.getValue(), groupsTypes, fieldOfStudys.getValue(), specialization.getValue(), Integer.parseInt(ECTS.getText()), obligatory.isSelected());
+
+                AlertBox.Display("Potwierdzenie", "Dodano wprowadzone zmiany.");
+                parentWindow.setScene(lastScene);
+            });
+        }else{
+            AlertBox.Display("Błąd","Nie można edytować kursu który zawiera utworzone grupy.");
+        }
     }
 }
 

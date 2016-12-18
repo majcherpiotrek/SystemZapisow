@@ -107,7 +107,19 @@ public class Admin extends User{
             }
         }
     }
-
+    public void editCourse(Course course, String name, int term, Department department, ArrayList<GroupTypes> groupTypes, FieldsOfStudies field, Specialization spec, int ECTS, Boolean obligatory){
+        course.setName(name);
+        course.setTerm(term);
+        course.setDepartment(department);
+        course.setDepartmentName(department.getName());
+        course.setGroupTypes(groupTypes);
+        course.setFieldOfStudy(field);
+        course.setFieldOfStudyName(field.getName());
+        course.setSpecialization(spec);
+        course.setSpecializationName(spec.getName());
+        course.setECTS(ECTS);
+        course.setObligatory(obligatory);
+    }
 
     //Funkcje umozliwiające ustawianie parametrów kursu
 
