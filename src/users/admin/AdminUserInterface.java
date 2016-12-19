@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import users.student.Student;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Klasa administrator w systemie. Posiada metody do wyświetlnia
@@ -395,7 +396,8 @@ public class AdminUserInterface extends GeneralUserInteface {
         TextField courseCode = new TextField();;
 
         Label termLabel = new Label("Semestr :");
-        TextField term = new TextField();;
+        ChoiceBox<Integer> term = new ChoiceBox<>();
+        term.getItems().addAll(1,2,3,4,5,6,7);
 
         Label departmentLabel = new Label("Wydział :");
         ChoiceBox<Department> department = new ChoiceBox<>();
@@ -425,7 +427,8 @@ public class AdminUserInterface extends GeneralUserInteface {
         specialization.getItems().addAll(Specialization.values());
 
         Label ECTSLabel = new Label("ECTS :");
-        TextField ECTS = new TextField();
+        ChoiceBox<Integer> ECTS = new ChoiceBox<>();
+        ECTS.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
 
         Label obligatoryLabel = new Label("Obowiązkowy :");
         CheckBox obligatory = new CheckBox();
@@ -505,12 +508,12 @@ public class AdminUserInterface extends GeneralUserInteface {
 
             admin.setCourseName(course,name.getText());
             admin.setCourseCode(course,courseCode.getText());
-            admin.setCourseTerm(course,Integer.valueOf(term.getText()));
+            admin.setCourseTerm(course,term.getValue());
             admin.setCourseDepartment(course,department.getValue());
             admin.setCourseFieldOfStudy(course,fieldOfStudys.getValue());
             admin.setCourseGroupTypes(course,groupsTypes);
             admin.setCourseSpecialization(course,specialization.getValue());
-            admin.setCourseECTS(course,Integer.parseInt(ECTS.getText()));
+            admin.setCourseECTS(course,ECTS.getValue());
             admin.setCourseObligatory(course,obligatory.isSelected());
 
 
@@ -546,15 +549,16 @@ public class AdminUserInterface extends GeneralUserInteface {
         TextField date = new TextField();
 
         Label numberOfHoursLabel = new Label("Liczba godzin :");
-        TextField numberOfHours = new TextField();
+        ChoiceBox<Integer> numberOfHours= new ChoiceBox<>();
+        numberOfHours.getItems().addAll(15,25,30);
 
         Label numberOfPlacesLabel = new Label("Liczba miejsc :");
-        TextField numberOfPlaces = new TextField();
+        Spinner<Integer> numberOfPlaces = new Spinner<>(30,60,30);
+        numberOfPlaces.setEditable(true);
 
         Label roomLabel = new Label("Pokój :");
-        TextField room = new TextField();
-
-
+        Spinner<Integer> room = new Spinner<>(1,200,1);
+        room.setEditable(true);
 
         HBox nameBox = new HBox(nameLabel,name);
         nameBox.setSpacing(10);
@@ -606,6 +610,32 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         confirm.setOnAction(e->{
 
+            if(name.getText().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(profesor.getText().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(date.getText().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(numberOfHours.getSelectionModel().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(numberOfPlaces.getValue().toString().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(room.getValue().toString().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+
+
             String generatedGroupCode ="";
             generatedGroupCode+=course.getCourseCode();
 
@@ -626,9 +656,9 @@ public class AdminUserInterface extends GeneralUserInteface {
             admin.setGroupCourseCode(group,courseCode.getText());
             admin.setGroupProffesor(group,profesor.getText());
             admin.setGroupDate(group,date.getText());
-            admin.setGroupNumberOfHours(group,Integer.parseInt(numberOfHours.getText()));
-            admin.setGroupNumberOfPlaces(group,Integer.parseInt(numberOfPlaces.getText()));
-            admin.setGroupRoom(group,Integer.parseInt(room.getText()));
+            admin.setGroupNumberOfHours(group,numberOfHours.getValue());
+            admin.setGroupNumberOfPlaces(group,numberOfPlaces.getValue());
+            admin.setGroupRoom(group,room.getValue());
 
 
             AlertBox.Display("Potwierdzenie","Dodano grupę.");
@@ -665,17 +695,17 @@ public class AdminUserInterface extends GeneralUserInteface {
         date.setText(group.getDate());
 
         Label numberOfHoursLabel = new Label("Liczba godzin :");
-        TextField numberOfHours = new TextField();
-        numberOfHours.setText(Integer.toString(group.getNumberOfHours()));
+        ChoiceBox<Integer> numberOfHours= new ChoiceBox<>();
+        numberOfHours.getItems().addAll(15,25,30);
+        numberOfHours.getSelectionModel().select(Integer.valueOf(group.getNumberOfHours()));
 
         Label numberOfPlacesLabel = new Label("Liczba miejsc :");
-        TextField numberOfPlaces = new TextField();
-        numberOfPlaces.setText(Integer.toString(group.getNumberOfPlaces()));
+        Spinner<Integer> numberOfPlaces = new Spinner<>(30,60,group.getNumberOfPlaces());
+        numberOfPlaces.setEditable(true);
 
         Label roomLabel = new Label("Pokój :");
-        TextField room = new TextField();
-        room.setText(Integer.toString(group.getRoom()));
-
+        Spinner<Integer> room = new Spinner<>(1,200,group.getRoom());
+        room.setEditable(true);
 
 
         HBox nameBox = new HBox(nameLabel,name);
@@ -728,7 +758,33 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         confirm.setOnAction(e->{
 
-            admin.editGroup(group,profesor.getText(),date.getText(),Integer.parseInt(numberOfHours.getText()),Integer.parseInt(numberOfPlaces.getText()),Integer.parseInt(room.getText()));
+            if(name.getText().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(profesor.getText().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(date.getText().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(numberOfHours.getSelectionModel().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(numberOfPlaces.getValue().toString().isEmpty()){
+                AlertBox.Display("Błąd","Wypełnij wszystkie pola.");
+                return;
+            }
+            if(room.getValue().toString().isEmpty()) {
+                AlertBox.Display("Błąd", "Wypełnij wszystkie pola.");
+                return;
+            }
+
+
+            admin.editGroup(group, profesor.getText(), date.getText(), numberOfHours.getValue(), numberOfPlaces.getValue(), room.getValue());
 
             AlertBox.Display("Potwierdzenie","Wprowadzono zmiany.");
             parentWindow.setScene(lastScene);
@@ -745,14 +801,14 @@ public class AdminUserInterface extends GeneralUserInteface {
 
             Label courseCodeLabel = new Label("Kod Kursu :");
             TextField courseCode = new TextField();
-            ;
+
             courseCode.setText(course.getCourseCode());
             courseCode.setDisable(true);
 
             Label termLabel = new Label("Semestr :");
-            TextField term = new TextField();
-            ;
-            term.setText(Integer.toString(course.getTerm()));
+            ChoiceBox<Integer> term = new ChoiceBox<>();
+            term.getItems().addAll(1,2,3,4,5,6,7);
+            term.getSelectionModel().select(course.getTerm());
 
             Label departmentLabel = new Label("Wydział :");
             ChoiceBox<Department> department = new ChoiceBox<>();
@@ -824,8 +880,9 @@ public class AdminUserInterface extends GeneralUserInteface {
             specialization.getSelectionModel().select(course.getSpecialization());
 
             Label ECTSLabel = new Label("ECTS :");
-            TextField ECTS = new TextField();
-            ECTS.setText(Integer.toString(course.getECTS()));
+            ChoiceBox<Integer> ECTS = new ChoiceBox<>();
+            ECTS.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
+            ECTS.getSelectionModel().select(course.getECTS());
 
             Label obligatoryLabel = new Label("Obowiązkowy :");
             CheckBox obligatory = new CheckBox();
@@ -902,7 +959,7 @@ public class AdminUserInterface extends GeneralUserInteface {
                 if (laboratory.isSelected()) groupsTypes.add(GroupTypes.LAB);
                 if (project.isSelected()) groupsTypes.add(GroupTypes.PR);
 
-                admin.editCourse(course, name.getText(), Integer.parseInt(term.getText()), department.getValue(), groupsTypes, fieldOfStudys.getValue(), specialization.getValue(), Integer.parseInt(ECTS.getText()), obligatory.isSelected());
+                admin.editCourse(course, name.getText(), term.getValue(), department.getValue(), groupsTypes, fieldOfStudys.getValue(), specialization.getValue(), ECTS.getValue(), obligatory.isSelected());
 
                 AlertBox.Display("Potwierdzenie", "Dodano wprowadzone zmiany.");
                 parentWindow.setScene(lastScene);

@@ -281,7 +281,7 @@ public final class DataBase {
                 }
 
 
-                int numberOfPlaces = generator.nextInt(30)+30;
+                int numberOfPlaces = generator.nextInt(31)+30;
                 int room = generator.nextInt(200)+1;
 
                 String groupCode = c.getCourseCode()+Integer.toString(i)+type.toString();
