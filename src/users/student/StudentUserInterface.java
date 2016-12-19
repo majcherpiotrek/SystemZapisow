@@ -241,6 +241,10 @@ public class StudentUserInterface extends GeneralUserInteface {
         proffesorColumn.setMinWidth(40);
         proffesorColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("proffesor"));
 
+        TableColumn<Group,String> typeColumn = new TableColumn<>("Type");
+        typeColumn.setMinWidth(40);
+        typeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("type"));
+
         TableColumn<Group,String> dataColumn = new TableColumn<>("Date");
         dataColumn.setMinWidth(40);
         dataColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("date"));
@@ -262,7 +266,7 @@ public class StudentUserInterface extends GeneralUserInteface {
         roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
         table.setItems(course.getGroups());
-        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
+        table.getColumns().addAll(nameColumn,courseCodeColumn,proffesorColumn,typeColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
         table.setMinWidth(1500);
 
         bottomBar.getChildren().addAll(powrot,zapisz);

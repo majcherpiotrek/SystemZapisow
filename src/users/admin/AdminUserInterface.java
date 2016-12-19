@@ -1,5 +1,6 @@
 package users.admin;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -230,6 +231,10 @@ public class AdminUserInterface extends GeneralUserInteface {
             courseCodeColumn.setMinWidth(40);
             courseCodeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("courseCode"));
 
+            TableColumn<Group,String> typeColumn = new TableColumn<>("Type");
+            typeColumn.setMinWidth(40);
+            typeColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("type"));
+
             TableColumn<Group,String> proffesorColumn = new TableColumn<>("Proffesor");
             proffesorColumn.setMinWidth(40);
             proffesorColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("proffesor"));
@@ -255,7 +260,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             roomColumn.setCellValueFactory(new PropertyValueFactory<Group, String>("room"));
 
             table.setItems(course.getGroups());
-            table.getColumns().addAll(nameColumn,groupCodeColumn,courseCodeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
+            table.getColumns().addAll(nameColumn,groupCodeColumn,courseCodeColumn,typeColumn,proffesorColumn,dataColumn,numberOfHoursColumn, numberOfPlacesColumn,avaibalePlacesColumn,roomColumn);
             table.setMinWidth(1500);
 
             bottomBar.getChildren().addAll(powrot,usun,dodaj,edytuj);
@@ -282,8 +287,12 @@ public class AdminUserInterface extends GeneralUserInteface {
             });
 
             edytuj.setOnAction(e->{
-                editGroup(scene,table.getSelectionModel().getSelectedItem(),course);
-                table.refresh();
+                if(!table.getSelectionModel().isEmpty()) {
+                    editGroup(scene, table.getSelectionModel().getSelectedItem(), course);
+                    table.refresh();
+                }else{
+                    AlertBox.Display("Błąd","Nie wybrano żadnej grupy.");
+                }
             });
     }
 
@@ -518,11 +527,17 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         Label groupCodeLabel = new Label("Kod Grupy :");
         TextField groupCode = new TextField();
+        groupCode.setText("Automatyczna generacja");
+        groupCode.setDisable(true);
 
         Label courseCodeLabel = new Label("Kod Kursu :");
         TextField courseCode = new TextField();
         courseCode.setText(course.getCourseCode());
         courseCode.setDisable(true);
+
+        Label groupTypeLabel = new Label("Type : ");
+        ChoiceBox<GroupTypes> type= new ChoiceBox<>();
+        type.getItems().addAll(GroupTypes.values());
 
         Label profesorLabel = new Label("Profesor :");
         TextField profesor = new TextField();
@@ -550,6 +565,9 @@ public class AdminUserInterface extends GeneralUserInteface {
         HBox courseCodeBox = new HBox(courseCodeLabel,courseCode);
         courseCodeBox.setSpacing(10);
 
+        HBox typeBox = new HBox(groupTypeLabel,type);
+        typeBox.setSpacing(10);
+
         HBox profesorBox = new HBox(profesorLabel,profesor);
         profesorBox.setSpacing(10);
 
@@ -565,7 +583,7 @@ public class AdminUserInterface extends GeneralUserInteface {
         HBox roomBox = new HBox(roomLabel,room);
         roomBox.setSpacing(10);
 
-        VBox box = new VBox(nameBox,groupCodeBox,courseCodeBox,profesorBox,dateBox,numberOfHoursBox,numberOfPlacesBox,roomBox);
+        VBox box = new VBox(nameBox,groupCodeBox,courseCodeBox,typeBox,profesorBox,dateBox,numberOfHoursBox,numberOfPlacesBox,roomBox);
         box.setSpacing(4);
 
 
@@ -588,10 +606,23 @@ public class AdminUserInterface extends GeneralUserInteface {
 
         confirm.setOnAction(e->{
 
+            String generatedGroupCode ="";
+            generatedGroupCode+=course.getCourseCode();
+
+            int groupNumber=0;
+            for(Group g : course.getGroups()){
+                if(g.getType().equals(type.getValue())){
+                    groupNumber++;
+                }
+            }
+            generatedGroupCode+=Integer.toString(groupNumber+1);
+            generatedGroupCode+=type.toString();
+
+
             Group group = admin.createNewGroup(course);
 
             admin.setGroupName(group,name.getText());
-            admin.setGroupGroupCode(group,groupCode.getText());
+            admin.setGroupGroupCode(group,generatedGroupCode);
             admin.setGroupCourseCode(group,courseCode.getText());
             admin.setGroupProffesor(group,profesor.getText());
             admin.setGroupDate(group,date.getText());
@@ -620,6 +651,10 @@ public class AdminUserInterface extends GeneralUserInteface {
         TextField courseCode = new TextField();
         courseCode.setText(course.getCourseCode());
         courseCode.setDisable(true);
+
+        Label groupTypeLabel = new Label("Type : ");
+        TextField type = new TextField(group.getType().toString());
+        type.setDisable(true);
 
         Label profesorLabel = new Label("Profesor :");
         TextField profesor = new TextField();
@@ -652,6 +687,9 @@ public class AdminUserInterface extends GeneralUserInteface {
         HBox courseCodeBox = new HBox(courseCodeLabel,courseCode);
         courseCodeBox.setSpacing(10);
 
+        HBox typeBox = new HBox(groupTypeLabel,type);
+        typeBox.setSpacing(10);
+
         HBox profesorBox = new HBox(profesorLabel,profesor);
         profesorBox.setSpacing(10);
 
@@ -667,7 +705,7 @@ public class AdminUserInterface extends GeneralUserInteface {
         HBox roomBox = new HBox(roomLabel,room);
         roomBox.setSpacing(10);
 
-        VBox box = new VBox(nameBox,groupCodeBox,courseCodeBox,profesorBox,dateBox,numberOfHoursBox,numberOfPlacesBox,roomBox);
+        VBox box = new VBox(nameBox,groupCodeBox,courseCodeBox,typeBox,profesorBox,dateBox,numberOfHoursBox,numberOfPlacesBox,roomBox);
         box.setSpacing(4);
 
 

@@ -14,6 +14,7 @@ public class Group {
     private String name;
     private String groupCode;
     private String courseCode;
+    private GroupTypes type;
     private String proffesor;
     private String date;
     private int numberOfHours;
@@ -22,10 +23,11 @@ public class Group {
     private int room;
     private ObservableList<Student> signedUpStudents;
 
-    public Group(String name, String groupCode, String courseCode, String proffesor, String date, int numberOfHours, int numberOfPlaces, int room){
+    public Group(String name, String groupCode, String courseCode,GroupTypes type, String proffesor, String date, int numberOfHours, int numberOfPlaces, int room){
         this.name = name;
         this.groupCode = groupCode;
         this.courseCode = courseCode;
+        this.type = type;
         this.proffesor = proffesor;
         this.date = date;
         this.numberOfHours = numberOfHours;
@@ -39,6 +41,7 @@ public class Group {
         this.name = null;
         this.groupCode = null;
         this.courseCode = null;
+        this.type = null;
         this.proffesor = null;
         this.date = null;
         this.numberOfHours = 0;
@@ -127,4 +130,8 @@ public class Group {
     public void decAvaiablePlaces(){avaiablePlaces--;}
 
     public void incAvaiablePlaces(){avaiablePlaces++;}
+
+    public GroupTypes getType() {return type;}
+
+    public void setType(GroupTypes type) {this.type = type;}
 }

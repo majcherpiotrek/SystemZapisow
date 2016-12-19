@@ -77,21 +77,33 @@ public class Student extends User {
     public void signUpToGroup(Group group){
 
         if(this.signUpRight){
+
             if (group.getAvaiablePlaces() > 0 ) {
-                for(Group g : this.groupList){
-                    if(g.equals(group)){
-                        AlertBox.Display("Błąd","Zostałeś już zapisany do tej grupy");
+                for (Group g : this.groupList) {
+                    if (g.equals(group)) {
+                        AlertBox.Display("Błąd", "Zostałeś już zapisany do tej grupy");
                         return;
                     }
                 }
+            }
+
+            for(Group g : this.getGroupList()){
+                if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType())) {
+                    AlertBox.Display("Błąd", "Jeseś już zapisany do grupy tego typu w wybranym kursie.");
+                    return;
+                }
+            }
+
+
                 //dodanie studenta dla obiektu grupy w bazie danych
                 group.getSignedUpStudents().add(this);
                 group.decAvaiablePlaces();
                 //dodanie studentowi grupy
                 this.groupList.add(group);
                 AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
+                return;
 
-            }
+
         }else{
             AlertBox.Display("Błąd","Nie posiadasz prawa do zapisów.");
             return;
