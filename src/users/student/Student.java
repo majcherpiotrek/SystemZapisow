@@ -76,6 +76,7 @@ public class Student extends User {
 
     public void signUpToGroup(Group group){
 
+        if(this.signUpRight){
             if (group.getAvaiablePlaces() > 0 ) {
                 for(Group g : this.groupList){
                     if(g.equals(group)){
@@ -91,6 +92,10 @@ public class Student extends User {
                 AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
 
             }
+        }else{
+            AlertBox.Display("Błąd","Nie posiadasz prawa do zapisów.");
+            return;
+        }
     }
 
     public void signOutFromGroup(Group group){
