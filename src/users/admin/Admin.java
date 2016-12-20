@@ -1,16 +1,10 @@
 package users.admin;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import sample.*;
 import users.User;
 import users.student.Student;
 
-import javax.xml.crypto.Data;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Created by piotrek on 06.12.16.
@@ -81,19 +75,18 @@ public class Admin extends User{
         }
 
     }
-     void giveSignUpLaw(Student student){
-        student.setSignUpRight(true);
+     void changeSignUpRight(Student student){
+        student.setSignUpRight(!student.getSignUpRight());
     }
-     void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
      Course createNewCourse(){
         Course course = new Course();
         DataBase.INSTANCE.addCourse(course);
         return course;
     }
      Group createNewGroup(Course course){
-     Group group = new Group();
-     course.addGroup(group);
-     return group;
+        Group group = new Group();
+        course.addGroup(group);
+        return group;
     }
      void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
         group.setProffesor(profesor);
@@ -141,7 +134,7 @@ public class Admin extends User{
         label.add(5,new Label("Kierunek : " + (student.getFieldOfStudyName())));
         label.add(6,new Label("Specjalizacja : " + (student.getSpecializationName())));
         label.add(7,new Label("Semestr : " + (Integer.toString(student.getTerm()))));
-        label.add(8,new Label("Prawo do zapisów : " + (Boolean.toString(student.isSignUpRight()))));
+        label.add(8,new Label("Prawo do zapisów : " + (Boolean.toString(student.getSignUpRight()))));
         label.add(9,new Label("ECTS : " + (Integer.toString(student.getECTS()))));
     }
 

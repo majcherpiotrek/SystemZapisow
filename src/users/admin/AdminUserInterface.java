@@ -1,6 +1,5 @@
 package users.admin;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -13,8 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import users.student.Student;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Klasa administrator w systemie. Posiada metody do wyświetlnia
@@ -304,10 +301,9 @@ public class AdminUserInterface extends GeneralUserInteface {
         layout.setSpacing(10);
         bottomBar.setPadding(new Insets(10,10,5,5));
         bottomBar.setSpacing(20);
-        Button powrot = new Button("Wróć");
-        Button nadajPrawoDoZapisow = new Button("Nadaj prawo do zapisów");
-        Button usunPrawoDoZapisow = new Button("Usuń prawo do zapisów");
-        Button pokazProfil = new Button("Wyswietl profil studenta");
+        Button returnButton = new Button("Wróć");
+        Button changeSignUpRightButton = new Button("Zmień prawo do zapisów");
+        Button showProfileButton = new Button("Wyswietl profil studenta");
 
         javafx.scene.control.TableView<Student> table = new javafx.scene.control.TableView<>();
 
@@ -359,14 +355,14 @@ public class AdminUserInterface extends GeneralUserInteface {
         table.getColumns().addAll(loginColumn,nameColumn,surnameColumn,emailColumn,IDColumn,departmentColumn,fieldOfStudyColumn,specializationColumn,termColumn,signUpRightColumn,ECTSColumn);
         table.setMinWidth(1500);
         //table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        bottomBar.getChildren().addAll(powrot,nadajPrawoDoZapisow,usunPrawoDoZapisow,pokazProfil);
+        bottomBar.getChildren().addAll(returnButton,changeSignUpRightButton,showProfileButton);
         layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
         parentWindow.setScene(scene);
 
-        nadajPrawoDoZapisow.setOnAction(e->{
+        changeSignUpRightButton.setOnAction(e->{
             try {
-                admin.giveSignUpLaw(table.getSelectionModel().getSelectedItem());
+                admin.changeSignUpRight(table.getSelectionModel().getSelectedItem());
                 //manageStudents(lastScene);
                 table.refresh();
             }catch(NullPointerException exc){
@@ -374,17 +370,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             }
         });
 
-        usunPrawoDoZapisow.setOnAction(e->{
-            try {
-                admin.deleteSignUpLaw(table.getSelectionModel().getSelectedItem());
-                //manageStudents(lastScene);
-                table.refresh();
-            }catch(NullPointerException exc){
-                AlertBox.Display("Błąd","Nie wybrano studenta.");
-            }
-        });
-
-        pokazProfil.setOnAction(e->{
+        showProfileButton.setOnAction(e->{
             try {
             showStudentProfile(scene,table.getSelectionModel().getSelectedItem());
             }catch(NullPointerException exc){
@@ -392,7 +378,7 @@ public class AdminUserInterface extends GeneralUserInteface {
             }
         });
 
-        powrot.setOnAction(e->{
+        returnButton.setOnAction(e->{
             parentWindow.setScene(lastScene);
         });
     }

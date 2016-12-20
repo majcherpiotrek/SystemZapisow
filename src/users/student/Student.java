@@ -75,34 +75,28 @@ public class Student extends User {
 
             if (group.getAvaiablePlaces() > 0 ) {
                 for (Group g : this.groupList) {
-                    if (g.equals(group)) {
+                    if (group.isInTheGroup(this)) {
                         AlertBox.Display("Błąd", "Zostałeś już zapisany do tej grupy");
                         return;
                     }
-                }
-            }
+                    if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType())) {
+                        AlertBox.Display("Błąd", "Jeseś już zapisany do grupy tego typu w wybranym kursie.");
+                        return;
+                    }
 
-            for(Group g : this.getGroupList()){
-                if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType())) {
-                    AlertBox.Display("Błąd", "Jeseś już zapisany do grupy tego typu w wybranym kursie.");
+                    //dodanie studenta dla obiektu grupy w bazie danych
+                    group.addStudent(this);
+                    //dodanie studentowi grupy
+                    this.groupList.add(group);
+                    AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
                     return;
                 }
-            }
-
-
-                //dodanie studenta dla obiektu grupy w bazie danych
-                group.getSignedUpStudents().add(this);
-                group.decAvaiablePlaces();
-                //dodanie studentowi grupy
-                this.groupList.add(group);
-                AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
-                return;
-
-
-        }else{
+            }else
+                AlertBox.Display("Błąd","W grupie nie ma juz miejsc!");
+        }else
             AlertBox.Display("Błąd","Nie posiadasz prawa do zapisów.");
-            return;
-        }
+
+
     }
 
     public void signOutFromGroup(Group group){
@@ -157,7 +151,7 @@ public class Student extends User {
         this.term = term;
     }
 
-    public boolean isSignUpRight() {
+    public boolean getSignUpRight() {
         return signUpRight;
     }
 

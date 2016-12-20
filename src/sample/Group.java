@@ -53,6 +53,7 @@ public class Group {
 
     public void addStudent(Student student){
         signedUpStudents.add(student);
+        avaiablePlaces--;
     }
 
     public String getName() {
@@ -134,4 +135,12 @@ public class Group {
     public GroupTypes getType() {return type;}
 
     public void setType(GroupTypes type) {this.type = type;}
+
+    public Boolean isInTheGroup(Student student){
+        for(Student s : this.signedUpStudents)
+            if(s.equals(student))
+                return true;
+
+        return false;
+    }
 }
