@@ -307,6 +307,7 @@ public class AdminUserInterface extends GeneralUserInteface {
         Button powrot = new Button("Wróć");
         Button nadajPrawoDoZapisow = new Button("Nadaj prawo do zapisów");
         Button usunPrawoDoZapisow = new Button("Usuń prawo do zapisów");
+        Button pokazProfil = new Button("Wyswietl profil studenta");
 
         javafx.scene.control.TableView<Student> table = new javafx.scene.control.TableView<>();
 
@@ -357,8 +358,8 @@ public class AdminUserInterface extends GeneralUserInteface {
         table.setItems(DataBase.INSTANCE.getStudentsList());
         table.getColumns().addAll(loginColumn,nameColumn,surnameColumn,emailColumn,IDColumn,departmentColumn,fieldOfStudyColumn,specializationColumn,termColumn,signUpRightColumn,ECTSColumn);
         table.setMinWidth(1500);
-
-        bottomBar.getChildren().addAll(powrot,nadajPrawoDoZapisow,usunPrawoDoZapisow);
+        //table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        bottomBar.getChildren().addAll(powrot,nadajPrawoDoZapisow,usunPrawoDoZapisow,pokazProfil);
         layout.getChildren().addAll(table,bottomBar);
         Scene scene = new Scene(layout);
         parentWindow.setScene(scene);
@@ -378,6 +379,14 @@ public class AdminUserInterface extends GeneralUserInteface {
                 admin.deleteSignUpLaw(table.getSelectionModel().getSelectedItem());
                 //manageStudents(lastScene);
                 table.refresh();
+            }catch(NullPointerException exc){
+                AlertBox.Display("Błąd","Nie wybrano studenta.");
+            }
+        });
+
+        pokazProfil.setOnAction(e->{
+            try {
+            showStudentProfile(scene,table.getSelectionModel().getSelectedItem());
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano studenta.");
             }
@@ -707,7 +716,6 @@ public class AdminUserInterface extends GeneralUserInteface {
         Spinner<Integer> room = new Spinner<>(1,200,group.getRoom());
         room.setEditable(true);
 
-
         HBox nameBox = new HBox(nameLabel,name);
         nameBox.setSpacing(10);
 
@@ -967,6 +975,38 @@ public class AdminUserInterface extends GeneralUserInteface {
         }else{
             AlertBox.Display("Błąd","Nie można edytować kursu który zawiera utworzone grupy.");
         }
+    }
+
+    void showStudentProfile(Scene lastScene,Student student){
+        GridPane layout = new GridPane();
+        layout.setPadding(new Insets(40,30,40,30));
+        VBox box = new VBox();
+        box.setSpacing(20);
+        layout.setAlignment(Pos.CENTER_LEFT);
+
+        Button powrot = new Button("Wróć");
+
+        powrot.setOnAction(e->{
+            parentWindow.setScene(lastScene);
+        });
+
+        ArrayList<Label> labels = new ArrayList<>();
+        admin.getStudentProfile(labels,student);
+
+        for(Label l : labels) {
+            box.getChildren().add(l);
+        }
+        layout.setHgap(10);
+        layout.setVgap(10);
+
+
+        layout.setConstraints(box,0,0);
+        layout.setConstraints(powrot,0,1);
+        layout.getChildren().addAll(box,powrot);
+
+        Scene scene = new Scene(layout);
+
+        parentWindow.setScene(scene);
     }
 }
 

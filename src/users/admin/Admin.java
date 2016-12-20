@@ -1,9 +1,12 @@
 package users.admin;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import sample.*;
 import users.User;
 import users.student.Student;
 
 import javax.xml.crypto.Data;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,6 +122,18 @@ public class Admin extends User{
         course.setSpecializationName(spec.getName());
         course.setECTS(ECTS);
         course.setObligatory(obligatory);
+    }
+    public void getStudentProfile(ArrayList<javafx.scene.control.Label> label, Student student){
+        label.add(0,new Label("Imię : " + student.getName()));
+        label.add(1,new Label("Nazwisko : " + student.getSurname()));
+        label.add(2,new Label("Email : " + student.getEmail()));
+        label.add(3,new Label("Indeks : " + student.getID()));
+        label.add(4,new Label("Wydział : " + (student.getDepartmentName())));
+        label.add(5,new Label("Kierunek : " + (student.getFieldOfStudyName())));
+        label.add(6,new Label("Specjalizacja : " + (student.getSpecializationName())));
+        label.add(7,new Label("Semestr : " + (Integer.toString(student.getTerm()))));
+        label.add(8,new Label("Prawo do zapisów : " + (Boolean.toString(student.isSignUpRight()))));
+        label.add(9,new Label("ECTS : " + (Integer.toString(student.getECTS()))));
     }
 
     //Funkcje umozliwiające ustawianie parametrów kursu

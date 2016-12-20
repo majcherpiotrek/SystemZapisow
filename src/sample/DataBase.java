@@ -59,7 +59,7 @@ public final class DataBase {
             }
 
             //login,password,name,surname,email,ID,department,fieldOfStudy,specialization,term,signUpRight ECTS)
-            Student student = new Student(login, password, name, surname, email, ID, department, fieldsOfStudies, specialization, term, true, 30);
+            Student student = new Student(login, password, name, surname, email, ID, department, fieldsOfStudies, specialization, term, true,(term-1)*30);
             studentsList.add(student);
         }
 
