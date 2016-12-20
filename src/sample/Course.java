@@ -187,6 +187,7 @@ public class Course {
 
         generatedGroupCode+=Integer.toString(groupNumber);
         generatedGroupCode+=type.toString();
+        generatedGroupCode+= this.courseCode;
         return  generatedGroupCode;
     }
 }

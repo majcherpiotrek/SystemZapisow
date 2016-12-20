@@ -93,24 +93,17 @@ public class Admin extends User{
         group.setDate(date);
         group.setNumberOfHours(nH);
 
-        if(nP>0) {
-            if (nP > group.getSignedUpStudents().size()) {
+        int signedUpStudents = group.getSignedUpStudents().size();
+        if(nP>0)
+            if (nP >= signedUpStudents)
                 group.setNumberOfPlaces(nP);
-            } else if (nP < group.getSignedUpStudents().size()) {
-                AlertBox.Display("Uwaga", "Nie można zmniejszyć liczby miejsc, ponieważ do grupy zapisani są studenci. Nie dokonano zmiany tego pola.");
-            }
-        }else{
-            AlertBox.Display("Uwaga", "Liczba miejsc nie moze być mniejsza od zera. Nie dokonano zmiany tego pola.");
-        }
+            else
+                AlertBox.Display("Uwaga", "Nie można zmniejszyć liczby miejsc, ponieważ do grupy zapisani są studenci.");
+        else
+            AlertBox.Display("Uwaga", "Liczba miejsc nie moze być mniejsza od zera.");
+
         group.setRoom(room);
 
-        for(Student student : DataBase.INSTANCE.getStudentsList()){
-            for(Group g : student.getGroupList()){
-                if(g.getGroupCode().equals(group.getGroupCode())){
-                    g=group;
-                }
-            }
-        }
     }
      void editCourse(Course course, String name, int term, Department department, ArrayList<GroupTypes> groupTypes, FieldsOfStudies field, Specialization spec, int ECTS, Boolean obligatory){
         course.setName(name);
@@ -178,7 +171,7 @@ public class Admin extends User{
     void setGroupName(Group group, String name){
         group.setName(name);
     }
-    void setGroupGroupCode(Group group, String code){
+    void setGroupCode(Group group, String code){
         group.setGroupCode(code);
     }
     void setGroupCourseCode(Group group, String code){

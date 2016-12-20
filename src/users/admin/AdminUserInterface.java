@@ -632,13 +632,11 @@ public class AdminUserInterface extends GeneralUserInteface {
 
             String generatedGroupCode = course.generateNewGroupCode(type.getValue());
 
-            generatedGroupCode+=course.getCourseCode();
-            
             Group group = admin.createGroupInDatabase(course);
 
-            admin.setGroupName(group,name.getText());
-            admin.setGroupGroupCode(group,generatedGroupCode);
-            admin.setGroupCourseCode(group,courseCode.getText());
+            admin.setGroupName(group,course.getName());
+            admin.setGroupCode(group,generatedGroupCode);
+            admin.setGroupCourseCode(group,course.getCourseCode());
             admin.setGroupProffesor(group,profesor.getText());
             admin.setGroupDate(group,date.getText());
             admin.setGroupNumberOfHours(group,numberOfHours.getValue());
