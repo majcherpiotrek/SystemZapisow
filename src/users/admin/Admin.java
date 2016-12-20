@@ -83,7 +83,7 @@ public class Admin extends User{
         DataBase.INSTANCE.addCourse(course);
         return course;
     }
-     Group createNewGroup(Course course){
+     Group createGroupInDatabase(Course course){
         Group group = new Group();
         course.addGroup(group);
         return group;

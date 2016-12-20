@@ -630,21 +630,11 @@ public class AdminUserInterface extends GeneralUserInteface {
                 return;
             }
 
+            String generatedGroupCode = course.generateNewGroupCode(type.getValue());
 
-            String generatedGroupCode ="";
             generatedGroupCode+=course.getCourseCode();
-
-            int groupNumber=0;
-            for(Group g : course.getGroups()){
-                if(g.getType().equals(type.getValue())){
-                    groupNumber++;
-                }
-            }
-            generatedGroupCode+=Integer.toString(groupNumber+1);
-            generatedGroupCode+=type.toString();
-
-
-            Group group = admin.createNewGroup(course);
+            
+            Group group = admin.createGroupInDatabase(course);
 
             admin.setGroupName(group,name.getText());
             admin.setGroupGroupCode(group,generatedGroupCode);

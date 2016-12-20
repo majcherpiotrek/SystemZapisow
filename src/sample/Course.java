@@ -176,5 +176,17 @@ public class Course {
         this.specializationName = specializationName;
     }
 
+    public String generateNewGroupCode(GroupTypes type){
+        String generatedGroupCode ="";
+        generatedGroupCode+=this.getCourseCode();
 
+        int groupNumber=1;
+        for(Group g : this.getGroups())
+            if(g.getType().equals(type))
+                groupNumber++;
+
+        generatedGroupCode+=Integer.toString(groupNumber);
+        generatedGroupCode+=type.toString();
+        return  generatedGroupCode;
+    }
 }
