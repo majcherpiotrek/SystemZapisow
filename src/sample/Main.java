@@ -138,11 +138,11 @@ public class Main extends Application {
 
 
         for(Student s : DataBase.INSTANCE.getStudentsList())
-            if(s.login.equals(login))
+            if(s.getLogin().equals(login) && s.getPassword().equals(password))
                 return ValidationOutput.student;
 
         for(Admin a : DataBase.INSTANCE.getAdminList())
-            if(a.login.equals(login))
+            if(a.getLogin().equals(login)&& a.getPassword().equals(password))
                 return  ValidationOutput.admin;
 
         return ValidationOutput.wrongInput;

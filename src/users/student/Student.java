@@ -28,7 +28,7 @@ public class Student extends User {
     private int ECTS;
     private ObservableList<Group> groupList = FXCollections.observableArrayList();
 
-    public Student(String login, String password, String name, String surname, String email, String ID, Department department, FieldsOfStudies fieldOfStudy, Specialization specialization, int term, boolean signUpRight, int ECTS){
+    /*public Student(String login, String password, String name, String surname, String email, String ID, Department department, FieldsOfStudies fieldOfStudy, Specialization specialization, int term, boolean signUpRight, int ECTS){
         this.login = login;
         this.password = password;
         this. name = name;
@@ -45,11 +45,9 @@ public class Student extends User {
         this.signUpRight = signUpRight;
         this.ECTS = ECTS;
         this.groupList = FXCollections.observableArrayList();
-    }
+    }*/
 
     public Student(){
-
-        Integer i = null;
 
         this.login = null;
         this.password = null;
@@ -63,16 +61,13 @@ public class Student extends User {
         this.fieldOfStudyName = null;
         this.specialization = null;
         this.specializationName = null;
-        this.term = i;
+        this.term = -1;
         this.signUpRight = null;
-        this.ECTS = i;
+        this.ECTS = -1;
         this.groupList = FXCollections.observableArrayList();
     }
 
     public ObservableList<Group> getGroupList() {return groupList;}
-
-
-
 
     public void signUpToGroup(Group group){
 
@@ -126,31 +121,31 @@ public class Student extends User {
         return ID;
     }
 
-    void setID(String ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
-    Department getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    void setDepartment(Department department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
-    FieldsOfStudies getFieldOfStudy() {
+    public FieldsOfStudies getFieldOfStudy() {
         return fieldOfStudy;
     }
 
-    void setFieldOfStudy(FieldsOfStudies fieldOfStudy) {
+    public void setFieldOfStudy(FieldsOfStudies fieldOfStudy) {
         this.fieldOfStudy = fieldOfStudy;
     }
 
-    Specialization getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
 
-    void setSpecialization(Specialization specialization) {
+    public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
 
@@ -158,7 +153,7 @@ public class Student extends User {
         return term;
     }
 
-    void setTerm(int term) {
+    public void setTerm(int term) {
         this.term = term;
     }
 
@@ -174,7 +169,7 @@ public class Student extends User {
         return ECTS;
     }
 
-    void setECTS(int ECTS) {
+    public void setECTS(int ECTS) {
         this.ECTS = ECTS;
     }
 

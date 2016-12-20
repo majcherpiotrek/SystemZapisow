@@ -59,13 +59,38 @@ public final class DataBase {
             }
 
             //login,password,name,surname,email,ID,department,fieldOfStudy,specialization,term,signUpRight ECTS)
-            Student student = new Student(login, password, name, surname, email, ID, department, fieldsOfStudies, specialization, term, true,(term-1)*30);
+            Student student = new Student();
+            student.setLogin(login);
+            student.setPassword(password);
+            student.setName(name);
+            student.setSurname(surname);
+            student.setEmail(email);
+            student.setID(ID);
+            student.setDepartment(department);
+            student.setFieldOfStudy(fieldsOfStudies);
+            student.setSpecialization(specialization);
+            student.setTerm(term);
+            student.setSignUpRight(true);
+            student.setECTS((term-1)*30);
+
             studentsList.add(student);
         }
 
         //login,password,name,surname,email
-        adminList.add(new Admin("piotrek","piotrek","Piotr","Majcher","piotrek@email.com"));
-        adminList.add(new Admin("maciek", "maciek", "Maciej", "Łuczak", "maciek@gmail.com"));
+        adminList.add(new Admin());
+        adminList.add(new Admin());
+        adminList.get(0).setLogin("piotrek");
+        adminList.get(0).setPassword("piotrek");
+        adminList.get(0).setName("Piotrek");
+        adminList.get(0).setSurname("Majcher");
+        adminList.get(0).setEmail("piotrek@email.com");
+
+        adminList.get(1).setLogin("maciek");
+        adminList.get(1).setPassword("maciek");
+        adminList.get(1).setName("Maciek");
+        adminList.get(1).setSurname("Łuczak");
+        adminList.get(1).setEmail("maciek@email.com");
+
 
         //Generowanie kursów
         //dla każdegu wydziału

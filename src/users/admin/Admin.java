@@ -17,13 +17,22 @@ import java.util.Scanner;
  */
 public class Admin extends User{
 
-    public Admin(String login, String password, String name, String surname, String email){
+    /*public Admin(String login, String password, String name, String surname, String email){
         this.login = login;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.email = email;
+    }*/
+
+    public Admin(){
+        this.login = "";
+        this.password = "";
+        this.name = "";
+        this.surname = "";
+        this.email = "";
     }
+
 
     @Override
     public ArrayList<String> getProfile(){
@@ -49,7 +58,7 @@ public class Admin extends User{
        return result;
     }
 
-    public void deleteCourse(Course course) {
+     void deleteCourse(Course course) {
 
         for (Group group : course.getGroups()) {
             for (Student student : group.getSignedUpStudents())
@@ -58,7 +67,7 @@ public class Admin extends User{
 
         DataBase.INSTANCE.getCourseList().remove(course);
     }
-    public void deleteGroup(Group group){
+     void deleteGroup(Group group){
 
         for (Student student : group.getSignedUpStudents()) {
             student.getGroupList().remove(group);
@@ -72,21 +81,21 @@ public class Admin extends User{
         }
 
     }
-    public void giveSignUpLaw(Student student){
+     void giveSignUpLaw(Student student){
         student.setSignUpRight(true);
     }
-    public void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
-    public Course createNewCourse(){
+     void deleteSignUpLaw(Student student){ student.setSignUpRight(false); }
+     Course createNewCourse(){
         Course course = new Course();
         DataBase.INSTANCE.addCourse(course);
         return course;
     }
-    public Group createNewGroup(Course course){
+     Group createNewGroup(Course course){
      Group group = new Group();
      course.addGroup(group);
      return group;
     }
-    public void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
+     void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
         group.setProffesor(profesor);
         group.setDate(date);
         group.setNumberOfHours(nH);
@@ -110,7 +119,7 @@ public class Admin extends User{
             }
         }
     }
-    public void editCourse(Course course, String name, int term, Department department, ArrayList<GroupTypes> groupTypes, FieldsOfStudies field, Specialization spec, int ECTS, Boolean obligatory){
+     void editCourse(Course course, String name, int term, Department department, ArrayList<GroupTypes> groupTypes, FieldsOfStudies field, Specialization spec, int ECTS, Boolean obligatory){
         course.setName(name);
         course.setTerm(term);
         course.setDepartment(department);
@@ -123,7 +132,7 @@ public class Admin extends User{
         course.setECTS(ECTS);
         course.setObligatory(obligatory);
     }
-    public void getStudentProfile(ArrayList<javafx.scene.control.Label> label, Student student){
+     void getStudentProfile(ArrayList<javafx.scene.control.Label> label, Student student){
         label.add(0,new Label("Imię : " + student.getName()));
         label.add(1,new Label("Nazwisko : " + student.getSurname()));
         label.add(2,new Label("Email : " + student.getEmail()));
@@ -138,34 +147,34 @@ public class Admin extends User{
 
     //Funkcje umozliwiające ustawianie parametrów kursu
 
-    public void setCourseName(Course course , String name){
+    void setCourseName(Course course , String name){
         course.setName(name);
     }
-    public void setCourseCode(Course course , String code){
+    void setCourseCode(Course course , String code){
         course.setCourseCode(code);
     }
-    public void setCourseTerm(Course course , int term){
+    void setCourseTerm(Course course , int term){
         course.setTerm(term);
     }
-    public void setCourseDepartment(Course course , Department department){
+    void setCourseDepartment(Course course , Department department){
         course.setDepartment(department);
         course.setDepartmentName(department.getName());
     }
-    public void setCourseFieldOfStudy(Course course , FieldsOfStudies field){
+    void setCourseFieldOfStudy(Course course , FieldsOfStudies field){
         course.setFieldOfStudy(field);
         course.setFieldOfStudyName(field.getName());
     }
-    public void setCourseGroupTypes(Course course , ArrayList<GroupTypes> groupTypes){
+    void setCourseGroupTypes(Course course , ArrayList<GroupTypes> groupTypes){
         course.setGroupTypes(groupTypes);
     }
-    public void setCourseSpecialization(Course course , Specialization specialization){
+    void setCourseSpecialization(Course course , Specialization specialization){
         course.setSpecialization(specialization);
         course.setSpecializationName(specialization.getName());
     }
-    public void setCourseECTS(Course course , int ECTS){
+    void setCourseECTS(Course course , int ECTS){
         course.setECTS(ECTS);
     }
-    public void setCourseObligatory(Course course , Boolean obligatory){
+    void setCourseObligatory(Course course , Boolean obligatory){
         course.setObligatory(obligatory);
     }
 
@@ -173,29 +182,29 @@ public class Admin extends User{
 
     //Funkcje umożliwiające ustawianie parametrów grupy
 
-    public void setGroupName(Group group, String name){
+    void setGroupName(Group group, String name){
         group.setName(name);
     }
-    public void setGroupGroupCode(Group group, String code){
+    void setGroupGroupCode(Group group, String code){
         group.setGroupCode(code);
     }
-    public void setGroupCourseCode(Group group, String code){
+    void setGroupCourseCode(Group group, String code){
         group.setCourseCode(code);
     }
-    public void setGroupProffesor(Group group, String proffesor){
+    void setGroupProffesor(Group group, String proffesor){
         group.setProffesor(proffesor);
     }
-    public void setGroupDate(Group group, String date){
+    void setGroupDate(Group group, String date){
         group.setDate(date);
     }
-    public void setGroupNumberOfHours(Group group, int numberOfHours){
+    void setGroupNumberOfHours(Group group, int numberOfHours){
         group.setNumberOfHours(numberOfHours);
     }
-    public void setGroupNumberOfPlaces(Group group, int numberOfPlaces){
+    void setGroupNumberOfPlaces(Group group, int numberOfPlaces){
         group.setNumberOfPlaces(numberOfPlaces);
         group.setAvaiablePlaces(numberOfPlaces);
     }
-    public void setGroupRoom(Group group, int room){
+    void setGroupRoom(Group group, int room){
         group.setRoom(room);
     }
 }
