@@ -283,6 +283,7 @@ public class StudentUserInterface extends GeneralUserInteface {
             try{
                 try{
                     student.signUpToGroup(table.getSelectionModel().getSelectedItem());
+                    AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
                     table.refresh();
                 }catch (WrongGroupException exc){
                     AlertBox.Display("Błąd", exc.getMessage());

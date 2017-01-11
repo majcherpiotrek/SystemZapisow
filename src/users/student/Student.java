@@ -87,7 +87,7 @@ public class Student extends User {
                         if(c.getCourseCode().equals(group.getCourseCode())){
                             if(!c.getDepartment().equals(this.getDepartment())
                                     || !c.getFieldOfStudy().equals(this.getFieldOfStudy())
-                                    || !(c.getSpecialization().equals(this.getSpecialization()))
+                                    || !(c.getSpecialization().equals(this.getSpecialization()) || c.getSpecialization().equals(Specialization.NOSPECIALIZATION))
                                     || c.getTerm()!= this.getTerm())
                                 throw new WrongGroupException("Zła grupa! Nie możesz się do niej zapisać!");
                             if(group.getAvaiablePlaces() == 0)
@@ -97,7 +97,7 @@ public class Student extends User {
                     group.addStudent(this);
                     //dodanie studentowi grupy
                     this.groupList.add(group);
-                    AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
+
 
             }else
                 throw new WrongGroupException("W grupie nie ma juz miejsc!");
