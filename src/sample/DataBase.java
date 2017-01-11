@@ -311,7 +311,7 @@ public final class DataBase {
 
                     String groupCode = c.getCourseCode() + Integer.toString(i) + type.toString();
                     String date = dayName + " " + Integer.toString(hour) + ":15";
-                    c.addGroup(new Group(c.getName(), groupCode, c.getCourseCode(), type, profesor, date, numberOfHours, numberOfPlaces, room));
+                    c.addGroup(new Group(c.getName(), c.getDepartment(), c.getFieldOfStudy(), c.getTerm(), c.getSpecialization(), groupCode, c.getCourseCode(), type, profesor, date, numberOfHours, numberOfPlaces, room));
                 }
             }
             c.updateComplete();

@@ -152,5 +152,9 @@ public class Admin extends User{
     void setGroupCourseCode(Group group, String code){
         group.setCourseCode(code);
     }
+    void setGroupDepartment(Group group, Department department){group.setDepartment(department);}
+    void setGroupFieldOfStudies(Group group, FieldsOfStudies fieldsOfStudies){group.setFieldOfStudy(fieldsOfStudies);}
+    void setGroupTerm(Group group, int term){group.setTerm(term);}
+    void setGroupSpecialization(Group group, Specialization specialization){ group.setSpecialization(specialization);}
 
 }

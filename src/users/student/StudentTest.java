@@ -1,8 +1,7 @@
 package users.student;
 
-import sample.Course;
-import sample.DataBase;
-import sample.Specialization;
+import org.junit.Before;
+import sample.*;
 
 import static org.junit.Assert.*;
 
@@ -10,26 +9,51 @@ import static org.junit.Assert.*;
  * Created by piotrek on 11.01.17.
  */
 public class StudentTest {
+
+    private Group group;
+    private Student student;
+
+    @Before
+    public void init(){
+       group = new Group("grupa",
+                Department.W1,
+                FieldsOfStudies.W1K1,
+                1,
+                Specialization.NOSPECIALIZATION,
+                "123",
+                "123",
+                GroupTypes.EX,
+                "profesor",
+                "date",
+                10,
+                10,
+                120);
+
+        student = new Student();
+        student.setSignUpRight(true);
+        student.setSpecialization(Specialization.NOSPECIALIZATION);
+        student.setDepartment(Department.W1);
+        student.setFieldOfStudy(FieldsOfStudies.W1K1);
+        student.setTerm(1);
+    }
+
     @org.junit.Test
     public void signUpToGoodGroupTest() throws Exception {
-        Student student  = DataBase.INSTANCE.getStudentsList().get(0);
-        Course course = DataBase.INSTANCE.getCourseList().get(0);
-        for(Course c : DataBase.INSTANCE.getCourseList())
-            if(c.getDepartment().equals(student.getDepartment()))
-                if(c.getFieldOfStudy().equals(student.getFieldOfStudy()))
-                    if(c.getSpecialization().equals(student.getSpecialization()) || c.getSpecialization().equals(Specialization.NOSPECIALIZATION))
-                        if(c.getTerm() == student.getTerm() && student.getSignUpRight()) {
-                            course = c;
-                            student.signUpToGroup(c.getGroups().get(0));
-                            break;
-                        }
-        assertTrue(student.getGroupList().get(0).equals(course.getGroups().get(0)));
+        int availablePlaces = group.getAvaiablePlaces();
+        student.signUpToGroup(group);
+        assertTrue(student.getGroupList().get(0).equals(group) && availablePlaces-1 == group.getAvaiablePlaces());
 
     }
 
     @org.junit.Test
-    public void signOutFromGroupTest() throws Exception {
-        assertTrue(true);
+    public void signOutFromGoodGroupTest() throws Exception {
+
+        student.signUpToGroup(group);
+        int availablePlaces = group.getAvaiablePlaces();
+        int studentGroupNum = student.getGroupList().size();
+        student.signOutFromGroup(group);
+        assertTrue((availablePlaces+1 == group.getAvaiablePlaces()) && (studentGroupNum-1 ==student.getGroupList().size()));
+
     }
 
 }

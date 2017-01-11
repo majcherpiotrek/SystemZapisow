@@ -82,18 +82,18 @@ public class Student extends User {
                     if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType()))
                         throw new WrongGroupException("Jeseś już zapisany do grupy tego typu w wybranym kursie.");
                 }
+
                     //dodanie studenta dla obiektu grupy w bazie danych
-                    for(Course c : DataBase.INSTANCE.getCourseList()){
-                        if(c.getCourseCode().equals(group.getCourseCode())){
-                            if(!c.getDepartment().equals(this.getDepartment())
-                                    || !c.getFieldOfStudy().equals(this.getFieldOfStudy())
-                                    || !(c.getSpecialization().equals(this.getSpecialization()) || c.getSpecialization().equals(Specialization.NOSPECIALIZATION))
-                                    || c.getTerm()!= this.getTerm())
-                                throw new WrongGroupException("Zła grupa! Nie możesz się do niej zapisać!");
-                            if(group.getAvaiablePlaces() == 0)
-                                throw new WrongGroupException("Brak miejsc w grupie!");
-                        }
-                    }
+
+                if(!group.getDepartment().equals(this.getDepartment())
+                        || !group.getFieldOfStudy().equals(this.getFieldOfStudy())
+                        || !(group.getSpecialization().equals(this.getSpecialization()) || group.getSpecialization().equals(Specialization.NOSPECIALIZATION))
+                        || group.getTerm()!= this.getTerm())
+                    throw new WrongGroupException("Zła grupa! Nie możesz się do niej zapisać!");
+                if(group.getAvaiablePlaces() == 0)
+                    throw new WrongGroupException("Brak miejsc w grupie!");
+
+
                     group.addStudent(this);
                     //dodanie studentowi grupy
                     this.groupList.add(group);
@@ -108,15 +108,9 @@ public class Student extends User {
     }
 
     public void signOutFromGroup(Group group){
-      for(Course c : DataBase.INSTANCE.getCourseList())
-          if(c.getCourseCode().equals(group.getCourseCode()))
-              for(Group g : c.getGroups())
-                  if(g.equals(group)) {
-                      g.getSignedUpStudents().remove(this);
-                      g.incAvaiablePlaces();
-                  }
+      group.getSignedUpStudents().remove(this);
+      group.incAvaiablePlaces();
       this.groupList.remove(group);
-
     }
 
     public String getID() {

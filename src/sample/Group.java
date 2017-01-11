@@ -22,9 +22,50 @@ public class Group {
     private int avaiablePlaces;
     private int room;
     private ObservableList<Student> signedUpStudents;
+    private Department department;
+    private FieldsOfStudies fieldOfStudy;
+    private int term;
 
-    public Group(String name, String groupCode, String courseCode,GroupTypes type, String proffesor, String date, int numberOfHours, int numberOfPlaces, int room){
+    public Specialization getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
+    private Specialization specialization;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public FieldsOfStudies getFieldOfStudy() {
+        return fieldOfStudy;
+    }
+
+    public void setFieldOfStudy(FieldsOfStudies fieldOfStudy) {
+        this.fieldOfStudy = fieldOfStudy;
+    }
+
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
+    }
+
+    public Group(String name, Department department, FieldsOfStudies fieldsOfStudies, int term, Specialization spec, String groupCode, String courseCode, GroupTypes type, String proffesor, String date, int numberOfHours, int numberOfPlaces, int room){
         this.name = name;
+        this.department = department;
+        this.fieldOfStudy = fieldsOfStudies;
+        this.term = term;
+        this.specialization = spec;
         this.groupCode = groupCode;
         this.courseCode = courseCode;
         this.type = type;
@@ -39,6 +80,9 @@ public class Group {
 
     public Group(){
         this.name = null;
+        this.department = null;
+        this.fieldOfStudy = null;
+        this.specialization = null;
         this.groupCode = null;
         this.courseCode = null;
         this.type = null;

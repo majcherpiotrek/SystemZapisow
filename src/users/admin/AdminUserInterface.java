@@ -630,6 +630,10 @@ public class AdminUserInterface extends GeneralUserInteface {
             Group group = admin.createGroupInDatabase(course);
 
             admin.setGroupName(group,course.getName());
+            admin.setGroupDepartment(group, course.getDepartment());
+            admin.setGroupFieldOfStudies(group, course.getFieldOfStudy());
+            admin.setGroupTerm(group, course.getTerm());
+            admin.setGroupSpecialization(group, course.getSpecialization());
             admin.setGroupCode(group,generatedGroupCode);
             admin.setGroupCourseCode(group,course.getCourseCode());
             admin.editGroup(group, profesor.getText(),date.getText(), numberOfHours.getValue(), numberOfPlaces.getValue(),room.getValue());
