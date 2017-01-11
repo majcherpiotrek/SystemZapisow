@@ -20,11 +20,18 @@ public class Course {
     private String fieldOfStudyName;
 
     private ArrayList<GroupTypes> groupTypes;
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+
     private Specialization specialization;
     private String specializationName;
     private int ECTS;
     private Boolean obligatory;
     private ObservableList<Group> groups;
+    private ArrayList<Boolean>hasGroupTypes;
+    private Boolean complete;
 
     public Course(String name, String courseCode, int term, Department department, FieldsOfStudies fieldOfStudy, ArrayList<GroupTypes> groupTypes, Specialization specialization, int ECTS, Boolean obligatory){
         this.name = name;
@@ -35,11 +42,20 @@ public class Course {
         this.fieldOfStudy = fieldOfStudy;
         this.fieldOfStudyName = this.fieldOfStudy.getName();
         this.groupTypes = groupTypes;
+        hasGroupTypes = new ArrayList<>();
+        for(int i = 0; i < this.groupTypes.size(); i++){
+            hasGroupTypes.add(false);
+        }
         this.specialization = specialization;
         this.specializationName = this.specialization.getName();
         this.ECTS = ECTS;
         this.obligatory = obligatory;
+        this.complete = false;
         groups = FXCollections.observableArrayList();
+    }
+
+    public Boolean getComplete() {
+        return complete;
     }
 
     public Course(){
@@ -61,9 +77,38 @@ public class Course {
         groups = FXCollections.observableArrayList();
     }
 
+    public ArrayList<Boolean> getHasGroupTypes() {
+        return hasGroupTypes;
+    }
+
     public void addGroup(Group group){
         groups.add(group);
     }
+    public void updateComplete(){
+
+        int i = 0;
+        for (GroupTypes gt: this.groupTypes) {
+            boolean found = false;
+            for(Group group : this.groups)
+                if(group.getType().equals(gt)) {
+                    found = true;
+                    break;
+                }
+            if(!found) // jeśli nie znaleziono tego typu grupy
+                this.hasGroupTypes.set(i,false);
+            else
+                this.hasGroupTypes.set(i,true);
+            i++;
+        }
+
+        this.complete = this.isCourseComplete();
+    }
+    public boolean isCourseComplete(){
+        for (Boolean b: hasGroupTypes) {
+            if(b.equals(false)) return false;
+        }
+        return true;
+    };
 
     public String getName() {
         return name;

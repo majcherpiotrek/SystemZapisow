@@ -53,7 +53,7 @@ public class Group {
 
     public void addStudent(Student student){
         signedUpStudents.add(student);
-        avaiablePlaces--;
+        this.decAvaiablePlaces();
     }
 
     public String getName() {
