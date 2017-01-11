@@ -41,9 +41,9 @@ public class Main extends Application {
 
     private static Stage mainWindow;
     private static Scene mainScene;
-    public static final String adminDataFilename = "admin.txt";
-    public static final String studentDataFilename = "student.txt";
-    public static final String groupDataFilename = "grupy.txt";
+    //public static final String adminDataFilename = "admin.txt";
+    //public static final String studentDataFilename = "student.txt";
+    //public static final String groupDataFilename = "grupy.txt";
 
     private enum ValidationOutput {
         admin, student, wrongInput, noDatabase

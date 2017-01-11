@@ -201,118 +201,120 @@ public final class DataBase {
             }
         }
 
-        for(Course c : this.courseList){
-            for(GroupTypes type : c.getGroupTypesList())
-            for(int i=0 ; i<5 ; i++){
+        for(Course c : this.courseList) {
+            for (GroupTypes type : c.getGroupTypesList()){
+                for (int i = 0; i < 5; i++) {
 
-                String dayName="";
-                int day = generator.nextInt(5);
+                    String dayName = "";
+                    int day = generator.nextInt(5);
 
-                switch (day){
-                    case 0: {
-                        dayName="Pt";
-                        break;
-                    }
-                    case 1:{
-                        dayName="Pon";
-                        break;
-                    }
-                    case 2:{
-                        dayName="Wt";
-                        break;
-                    }
-                    case 3:{
-                        dayName="Śr";
-                        break;
-                    }
-                    case 4:{
-                        dayName="Czw";
-                        break;
+                    switch (day) {
+                        case 0: {
+                            dayName = "Pt";
+                            break;
+                        }
+                        case 1: {
+                            dayName = "Pon";
+                            break;
+                        }
+                        case 2: {
+                            dayName = "Wt";
+                            break;
+                        }
+                        case 3: {
+                            dayName = "Śr";
+                            break;
+                        }
+                        case 4: {
+                            dayName = "Czw";
+                            break;
+                        }
+
                     }
 
+                    String profesor = "";
+                    int profesorName = generator.nextInt(5);
+                    int profesorSurname = generator.nextInt(5);
+
+                    switch (profesorName) {
+                        case 1: {
+                            profesor += "Jan";
+                            break;
+                        }
+                        case 2: {
+                            profesor += "Jerzy";
+                            break;
+                        }
+                        case 3: {
+                            profesor += "Andrzej";
+                            break;
+                        }
+                        case 4: {
+                            profesor += "Krzysztof";
+                            break;
+                        }
+                        case 0: {
+                            profesor += "Marek";
+                            break;
+                        }
+                        default: {
+                            profesor += "Robert";
+                            break;
+                        }
+                    }
+
+                    switch (profesorSurname) {
+                        case 1: {
+                            profesor += " Kowalski";
+                            break;
+                        }
+                        case 2: {
+                            profesor += " Jureczko";
+                            break;
+                        }
+                        case 3: {
+                            profesor += " Nowak";
+                            break;
+                        }
+                        case 4: {
+                            profesor += " Łaski";
+                            break;
+                        }
+                        case 0: {
+                            profesor += " Zamojski";
+                            break;
+                        }
+                    }
+
+
+                    int hour = generator.nextInt(10) + 7;
+                    int numberOfHours = generator.nextInt(3);
+
+                    switch (numberOfHours) {
+                        case 0: {
+                            numberOfHours = 15;
+                            break;
+                        }
+                        case 1: {
+                            numberOfHours = 25;
+                            break;
+                        }
+                        case 2: {
+                            numberOfHours = 30;
+                            break;
+                        }
+                    }
+
+
+                    int numberOfPlaces = generator.nextInt(31) + 30;
+                    int room = generator.nextInt(200) + 1;
+
+                    String groupCode = c.getCourseCode() + Integer.toString(i) + type.toString();
+                    String date = dayName + " " + Integer.toString(hour) + ":15";
+                    c.addGroup(new Group(c.getName(), groupCode, c.getCourseCode(), type, profesor, date, numberOfHours, numberOfPlaces, room));
                 }
-
-                String profesor="";
-                int profesorName = generator.nextInt(5);
-                int profesorSurname = generator.nextInt(5);
-
-                switch (profesorName){
-                    case 1: {
-                        profesor+="Jan";
-                        break;
-                    }
-                    case 2:{
-                        profesor+="Jerzy";
-                        break;
-                    }
-                    case 3:{
-                        profesor+="Andrzej";
-                        break;
-                    }
-                    case 4:{
-                        profesor+="Krzysztof";
-                        break;
-                    }
-                    case 0:{
-                        profesor+="Marek";
-                        break;
-                    }
-                    default :{
-                        profesor+="Robert";
-                        break;
-                    }
-                }
-
-                switch (profesorSurname){
-                    case 1:{
-                        profesor+=" Kowalski";
-                        break;
-                    }
-                    case 2:{
-                        profesor+=" Jureczko";
-                        break;
-                    }
-                    case 3:{
-                        profesor+=" Nowak";
-                        break;
-                    }
-                    case 4:{
-                        profesor+=" Łaski";
-                        break;
-                    }
-                    case 0:{
-                        profesor+=" Zamojski";
-                        break;
-                    }
-                }
-
-
-                int hour = generator.nextInt(10) +7;
-                int numberOfHours = generator.nextInt(3);
-
-                switch (numberOfHours){
-                    case 0 :{
-                        numberOfHours=15;
-                        break;
-                    }
-                    case 1 :{
-                        numberOfHours=25;
-                        break;
-                    }
-                    case 2 :{
-                        numberOfHours=30;
-                        break;
-                    }
-                }
-
-
-                int numberOfPlaces = generator.nextInt(31)+30;
-                int room = generator.nextInt(200)+1;
-
-                String groupCode = c.getCourseCode()+Integer.toString(i)+type.toString();
-                String date = dayName+" "+Integer.toString(hour)+":15";
-                c.addGroup(new Group(c.getName(),groupCode,c.getCourseCode(),type,profesor,date,numberOfHours,numberOfPlaces,room) );
             }
+            c.updateComplete();
         }
  }
 
