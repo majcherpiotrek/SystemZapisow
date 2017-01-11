@@ -1,6 +1,8 @@
 package users.student;
 
+import exceptions.WrongGroupException;
 import org.junit.Before;
+import org.junit.rules.ExpectedException;
 import sample.*;
 
 import static org.junit.Assert.*;
@@ -12,6 +14,7 @@ public class StudentTest {
 
     private Group group;
     private Student student;
+    private ExpectedException exception = ExpectedException.none();
 
     @Before
     public void init(){
@@ -42,6 +45,21 @@ public class StudentTest {
         int availablePlaces = group.getAvaiablePlaces();
         student.signUpToGroup(group);
         assertTrue(student.getGroupList().get(0).equals(group) && availablePlaces-1 == group.getAvaiablePlaces());
+
+    }
+
+    @org.junit.Test (expected = WrongGroupException.class)
+    public void signUpToWrongDepartmentGroupTest() throws WrongGroupException {
+        int availablePlaces = group.getAvaiablePlaces();
+        group.setDepartment(Department.W2);
+        group.setFieldOfStudy(FieldsOfStudies.W2K1);
+        group.setSpecialization(Specialization.NOSPECIALIZATION);
+
+        student.signUpToGroup(group);
+
+
+        exception.expect(WrongGroupException.class);
+        exception.expectMessage("Zła grupa! Nie możesz się do niej zapisać!");
 
     }
 
