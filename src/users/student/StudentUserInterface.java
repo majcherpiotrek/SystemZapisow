@@ -1,5 +1,6 @@
 package users.student;
 
+import exceptions.NotIntheGroupException;
 import exceptions.WrongGroupException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -362,7 +363,11 @@ public class StudentUserInterface extends GeneralUserInteface {
 
         wypisz.setOnAction(e->{
                 try {
-                    student.signOutFromGroup(table.getSelectionModel().getSelectedItem());
+                    try{
+                        student.signOutFromGroup(table.getSelectionModel().getSelectedItem());
+                    }catch(NotIntheGroupException exc){
+                        AlertBox.Display("Błąd", exc.getMessage());
+                    }
                 }catch(NullPointerException exc){
                     AlertBox.Display("Błąd","Nie wybrano żadnej grupy do usunięcia.");
                 }

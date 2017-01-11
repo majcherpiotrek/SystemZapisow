@@ -1,4 +1,5 @@
 package users.student;
+import exceptions.NotIntheGroupException;
 import exceptions.WrongGroupException;
 import javafx.collections.FXCollections;
 import sample.*;
@@ -90,9 +91,6 @@ public class Student extends User {
                         || !(group.getSpecialization().equals(this.getSpecialization()) || group.getSpecialization().equals(Specialization.NOSPECIALIZATION))
                         || group.getTerm()!= this.getTerm())
                     throw new WrongGroupException("Zła grupa! Nie możesz się do niej zapisać!");
-                if(group.getAvaiablePlaces() == 0)
-                    throw new WrongGroupException("Brak miejsc w grupie!");
-
 
                     group.addStudent(this);
                     //dodanie studentowi grupy
@@ -107,7 +105,16 @@ public class Student extends User {
 
     }
 
-    public void signOutFromGroup(Group group){
+    public void signOutFromGroup(Group group) throws NotIntheGroupException {
+      boolean isIntheGroup = false;
+      for(Student s : group.getSignedUpStudents())
+          if(s.equals(this)) {
+              isIntheGroup = true;
+              break;
+          }
+      if(!isIntheGroup)
+          throw new NotIntheGroupException("Studenta nie ma w tej grupie");
+
       group.getSignedUpStudents().remove(this);
       group.incAvaiablePlaces();
       this.groupList.remove(group);
