@@ -1,4 +1,5 @@
 package users.student;
+import exceptions.WrongGroupException;
 import javafx.collections.FXCollections;
 import sample.*;
 import users.User;
@@ -69,32 +70,39 @@ public class Student extends User {
 
     public ObservableList<Group> getGroupList() {return groupList;}
 
-    public void signUpToGroup(Group group){
+    public void signUpToGroup(Group group) throws WrongGroupException {
 
         if(this.signUpRight){
 
             if (group.getAvaiablePlaces() > 0 ) {
                 for (Group g : this.groupList) {
-                    if (group.isInTheGroup(this)) {
-                        AlertBox.Display("Błąd", "Zostałeś już zapisany do tej grupy");
-                        return;
-                    }
-                    if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType())) {
-                        AlertBox.Display("Błąd", "Jeseś już zapisany do grupy tego typu w wybranym kursie.");
-                        return;
-                    }
+                    if (group.isInTheGroup(this))
+                        throw new WrongGroupException("Zostałeś już zapisany do tej grupy");
 
+                    if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType()))
+                        throw new WrongGroupException("Jeseś już zapisany do grupy tego typu w wybranym kursie.");
+                }
                     //dodanie studenta dla obiektu grupy w bazie danych
+                    for(Course c : DataBase.INSTANCE.getCourseList()){
+                        if(c.getCourseCode().equals(group.getCourseCode())){
+                            if(!c.getDepartment().equals(this.getDepartment())
+                                    || !c.getFieldOfStudy().equals(this.getFieldOfStudy())
+                                    || !(c.getSpecialization().equals(this.getSpecialization()))
+                                    || c.getTerm()!= this.getTerm())
+                                throw new WrongGroupException("Zła grupa! Nie możesz się do niej zapisać!");
+                            if(group.getAvaiablePlaces() == 0)
+                                throw new WrongGroupException("Brak miejsc w grupie!");
+                        }
+                    }
                     group.addStudent(this);
                     //dodanie studentowi grupy
                     this.groupList.add(group);
                     AlertBox.Display("Potwierdzenie","Zapisano do grupy.");
-                    return;
-                }
+
             }else
-                AlertBox.Display("Błąd","W grupie nie ma juz miejsc!");
+                throw new WrongGroupException("W grupie nie ma juz miejsc!");
         }else
-            AlertBox.Display("Błąd","Nie posiadasz prawa do zapisów.");
+            throw new WrongGroupException("Nie posiadasz prawa do zapisów.");
 
 
     }

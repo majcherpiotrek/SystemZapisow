@@ -75,10 +75,16 @@ public class Admin extends User{
         }
 
     }
-     void changeSignUpRight(Student student){
-        student.setSignUpRight(!student.getSignUpRight());
+
+
+    void changeSignUpRight(Student student){
+
+        boolean signUpRight = student.getSignUpRight();
+        student.setSignUpRight(!signUpRight);
+
     }
-     Course createNewCourse(){
+
+    Course createNewCourse(){
         Course course = new Course();
         DataBase.INSTANCE.addCourse(course);
         return course;
@@ -88,7 +94,39 @@ public class Admin extends User{
         course.addGroup(group);
         return group;
     }
-     void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
+     void getStudentProfile(ArrayList<javafx.scene.control.Label> label, Student student){
+        label.add(0,new Label("Imię : " + student.getName()));
+        label.add(1,new Label("Nazwisko : " + student.getSurname()));
+        label.add(2,new Label("Email : " + student.getEmail()));
+        label.add(3,new Label("Indeks : " + student.getID()));
+        label.add(4,new Label("Wydział : " + (student.getDepartmentName())));
+        label.add(5,new Label("Kierunek : " + (student.getFieldOfStudyName())));
+        label.add(6,new Label("Specjalizacja : " + (student.getSpecializationName())));
+        label.add(7,new Label("Semestr : " + (Integer.toString(student.getTerm()))));
+        label.add(8,new Label("Prawo do zapisów : " + (Boolean.toString(student.getSignUpRight()))));
+        label.add(9,new Label("ECTS : " + (Integer.toString(student.getECTS()))));
+    }
+
+    //Funkcje umozliwiające ustawianie parametrów kursu
+    void editCourse(Course course, String name, int term, Department department, ArrayList<GroupTypes> groupTypes, FieldsOfStudies field, Specialization spec, int ECTS, Boolean obligatory){
+        course.setName(name);
+        course.setTerm(term);
+        course.setDepartment(department);
+        course.setDepartmentName(department.getName());
+        course.setGroupTypes(groupTypes);
+        course.setFieldOfStudy(field);
+        course.setFieldOfStudyName(field.getName());
+        course.setSpecialization(spec);
+        course.setSpecializationName(spec.getName());
+        course.setECTS(ECTS);
+        course.setObligatory(obligatory);
+    }
+    void setCourseCode(Course course , String code){
+        course.setCourseCode(code);
+    }
+
+    //Funkcje umożliwiające ustawianie parametrów grupy
+    void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
         group.setProffesor(profesor);
         group.setDate(date);
         group.setNumberOfHours(nH);
@@ -105,69 +143,6 @@ public class Admin extends User{
         group.setRoom(room);
 
     }
-     void editCourse(Course course, String name, int term, Department department, ArrayList<GroupTypes> groupTypes, FieldsOfStudies field, Specialization spec, int ECTS, Boolean obligatory){
-        course.setName(name);
-        course.setTerm(term);
-        course.setDepartment(department);
-        course.setDepartmentName(department.getName());
-        course.setGroupTypes(groupTypes);
-        course.setFieldOfStudy(field);
-        course.setFieldOfStudyName(field.getName());
-        course.setSpecialization(spec);
-        course.setSpecializationName(spec.getName());
-        course.setECTS(ECTS);
-        course.setObligatory(obligatory);
-    }
-     void getStudentProfile(ArrayList<javafx.scene.control.Label> label, Student student){
-        label.add(0,new Label("Imię : " + student.getName()));
-        label.add(1,new Label("Nazwisko : " + student.getSurname()));
-        label.add(2,new Label("Email : " + student.getEmail()));
-        label.add(3,new Label("Indeks : " + student.getID()));
-        label.add(4,new Label("Wydział : " + (student.getDepartmentName())));
-        label.add(5,new Label("Kierunek : " + (student.getFieldOfStudyName())));
-        label.add(6,new Label("Specjalizacja : " + (student.getSpecializationName())));
-        label.add(7,new Label("Semestr : " + (Integer.toString(student.getTerm()))));
-        label.add(8,new Label("Prawo do zapisów : " + (Boolean.toString(student.getSignUpRight()))));
-        label.add(9,new Label("ECTS : " + (Integer.toString(student.getECTS()))));
-    }
-
-    //Funkcje umozliwiające ustawianie parametrów kursu
-
-    void setCourseName(Course course , String name){
-        course.setName(name);
-    }
-    void setCourseCode(Course course , String code){
-        course.setCourseCode(code);
-    }
-    void setCourseTerm(Course course , int term){
-        course.setTerm(term);
-    }
-    void setCourseDepartment(Course course , Department department){
-        course.setDepartment(department);
-        course.setDepartmentName(department.getName());
-    }
-    void setCourseFieldOfStudy(Course course , FieldsOfStudies field){
-        course.setFieldOfStudy(field);
-        course.setFieldOfStudyName(field.getName());
-    }
-    void setCourseGroupTypes(Course course , ArrayList<GroupTypes> groupTypes){
-        course.setGroupTypes(groupTypes);
-    }
-    void setCourseSpecialization(Course course , Specialization specialization){
-        course.setSpecialization(specialization);
-        course.setSpecializationName(specialization.getName());
-    }
-    void setCourseECTS(Course course , int ECTS){
-        course.setECTS(ECTS);
-    }
-    void setCourseObligatory(Course course , Boolean obligatory){
-        course.setObligatory(obligatory);
-    }
-
-
-
-    //Funkcje umożliwiające ustawianie parametrów grupy
-
     void setGroupName(Group group, String name){
         group.setName(name);
     }
@@ -177,20 +152,5 @@ public class Admin extends User{
     void setGroupCourseCode(Group group, String code){
         group.setCourseCode(code);
     }
-    void setGroupProffesor(Group group, String proffesor){
-        group.setProffesor(proffesor);
-    }
-    void setGroupDate(Group group, String date){
-        group.setDate(date);
-    }
-    void setGroupNumberOfHours(Group group, int numberOfHours){
-        group.setNumberOfHours(numberOfHours);
-    }
-    void setGroupNumberOfPlaces(Group group, int numberOfPlaces){
-        group.setNumberOfPlaces(numberOfPlaces);
-        group.setAvaiablePlaces(numberOfPlaces);
-    }
-    void setGroupRoom(Group group, int room){
-        group.setRoom(room);
-    }
+
 }

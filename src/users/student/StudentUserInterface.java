@@ -1,5 +1,6 @@
 package users.student;
 
+import exceptions.WrongGroupException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -280,8 +281,12 @@ public class StudentUserInterface extends GeneralUserInteface {
 
         zapisz.setOnAction(e->{
             try{
-                student.signUpToGroup(table.getSelectionModel().getSelectedItem());
-                table.refresh();
+                try{
+                    student.signUpToGroup(table.getSelectionModel().getSelectedItem());
+                    table.refresh();
+                }catch (WrongGroupException exc){
+                    AlertBox.Display("Błąd", exc.getMessage());
+                }
             }catch(NullPointerException exc){
                 AlertBox.Display("Błąd","Nie wybrano żadnej grupy do zapisania.");
             }

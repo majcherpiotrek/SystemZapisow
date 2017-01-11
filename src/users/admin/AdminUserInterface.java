@@ -501,15 +501,10 @@ public class AdminUserInterface extends GeneralUserInteface {
 
             Course course = admin.createNewCourse();
 
-            admin.setCourseName(course,name.getText());
             admin.setCourseCode(course,courseCode.getText());
-            admin.setCourseTerm(course,term.getValue());
-            admin.setCourseDepartment(course,department.getValue());
-            admin.setCourseFieldOfStudy(course,fieldOfStudys.getValue());
-            admin.setCourseGroupTypes(course,groupsTypes);
-            admin.setCourseSpecialization(course,specialization.getValue());
-            admin.setCourseECTS(course,ECTS.getValue());
-            admin.setCourseObligatory(course,obligatory.isSelected());
+            admin.editCourse(course, name.getText(),term.getValue(), department.getValue(), groupsTypes,fieldOfStudys.getValue(),specialization.getValue(),ECTS.getValue(), obligatory.isSelected());
+
+
 
 
             AlertBox.Display("Potwierdzenie","Dodano kurs.");
@@ -637,11 +632,9 @@ public class AdminUserInterface extends GeneralUserInteface {
             admin.setGroupName(group,course.getName());
             admin.setGroupCode(group,generatedGroupCode);
             admin.setGroupCourseCode(group,course.getCourseCode());
-            admin.setGroupProffesor(group,profesor.getText());
-            admin.setGroupDate(group,date.getText());
-            admin.setGroupNumberOfHours(group,numberOfHours.getValue());
-            admin.setGroupNumberOfPlaces(group,numberOfPlaces.getValue());
-            admin.setGroupRoom(group,room.getValue());
+            admin.editGroup(group, profesor.getText(),date.getText(), numberOfHours.getValue(), numberOfPlaces.getValue(),room.getValue());
+
+
 
 
             AlertBox.Display("Potwierdzenie","Dodano grupę.");
