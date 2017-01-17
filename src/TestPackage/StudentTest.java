@@ -1,4 +1,4 @@
-package users.student;
+package TestPackage;
 
 import exceptions.NotIntheGroupException;
 import exceptions.WrongGroupException;
@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import sample.*;
+import users.student.Student;
 
 import static org.junit.Assert.*;
 
@@ -14,81 +15,58 @@ import static org.junit.Assert.*;
  */
 public class StudentTest {
 
-    private Group group;
-    private Student student;
+    private TestsData data;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void init(){
-       group = new Group("grupa",
-                Department.W1,
-                FieldsOfStudies.W1K1,
-                1,
-                Specialization.NOSPECIALIZATION,
-                "123",
-                "123",
-                GroupTypes.EX,
-                "profesor",
-                "date",
-                10,
-                10,
-                120);
-
-        student = new Student();
-        student.setSignUpRight(true);
-        student.setSpecialization(Specialization.NOSPECIALIZATION);
-        student.setDepartment(Department.W1);
-        student.setFieldOfStudy(FieldsOfStudies.W1K1);
-        student.setTerm(1);
+        data = new TestsData();
     }
 
     @org.junit.Test
     public void signUpToGoodGroupTest() throws Exception {
+        Group group = data.groupForTests;
+        Student student = data.studentForTests;
         int availablePlaces = group.getAvaiablePlaces();
         student.signUpToGroup(group);
-        assertTrue(student.getGroupList().get(0).equals(group) && availablePlaces-1 == group.getAvaiablePlaces());
+        int groupsNum = student.getGroupList().size();
+        assertTrue(student.getGroupList().get(groupsNum-1).equals(group) && availablePlaces-1 == group.getAvaiablePlaces());
 
     }
 
     @org.junit.Test
     public void signUpToWrongDepartmentTest() throws WrongGroupException {
-        group.setDepartment(Department.W2);
-        group.setFieldOfStudy(FieldsOfStudies.W2K1);
-        group.setSpecialization(Specialization.NOSPECIALIZATION);
-
+        Group group = data.groupForSignUpToWrongDepartmentTest;
+        Student student = data.studentForTests;
         exception.expect(WrongGroupException.class);
         exception.expectMessage("Zła grupa! Nie możesz się do niej zapisać!");
-
         student.signUpToGroup(group);
     }
 
     @org.junit.Test
     public void signUpToWrongFieldTest() throws WrongGroupException {
-        group.setFieldOfStudy(FieldsOfStudies.W1K2);
-        group.setSpecialization(Specialization.NOSPECIALIZATION);
-
+        Group group = data.groupForSignUpToWrongFieldTest;
+        Student student = data.studentForTests;
         exception.expect(WrongGroupException.class);
         exception.expectMessage("Zła grupa! Nie możesz się do niej zapisać!");
-
         student.signUpToGroup(group);
     }
 
     @org.junit.Test
     public void signUpToWrongSpecializationTest() throws WrongGroupException {
-        group.setSpecialization(Specialization.W1K1S2);
-
+        Group group = data.groupForSignUpToWrongSpecializationTest;
+        Student student = data.studentForTests;
         exception.expect(WrongGroupException.class);
         exception.expectMessage("Zła grupa! Nie możesz się do niej zapisać!");
-
         student.signUpToGroup(group);
     }
 
     @org.junit.Test
     public void signUpToWrongTermTest() throws WrongGroupException {
-        group.setTerm(3);
-
+        Group group = data.groupForSignUpToWrongTermTest;
+        Student student = data.studentForTests;
         exception.expect(WrongGroupException.class);
         exception.expectMessage("Zła grupa! Nie możesz się do niej zapisać!");
         student.signUpToGroup(group);
@@ -96,9 +74,8 @@ public class StudentTest {
 
     @org.junit.Test
     public void signUpToFullGroupTest() throws Exception {
-
-        group.setAvaiablePlaces(0);
-
+        Group group = data.groupForSignUpToFullGroupTest;
+        Student student = data.studentForTests;
         exception.expect(WrongGroupException.class);
         exception.expectMessage("W grupie nie ma juz miejsc!");
         student.signUpToGroup(group);
@@ -106,7 +83,8 @@ public class StudentTest {
 
     @org.junit.Test
     public void signOutFromGoodGroupTest() throws Exception {
-
+        Group group = data.groupForSignOutFromGoodGroupTest;
+        Student student = data.studentForTests;
         student.signUpToGroup(group);
         int availablePlaces = group.getAvaiablePlaces();
         int studentGroupNum = student.getGroupList().size();
@@ -117,7 +95,8 @@ public class StudentTest {
 
     @org.junit.Test
     public void signOutFromWrongGroupTest() throws Exception {
-
+        Group group = data.groupForSignOutFromWrongGroupTest;
+        Student student = data.studentForTests;
         exception.expect(NotIntheGroupException.class);
         exception.expectMessage("Studenta nie ma w tej grupie");
         student.signOutFromGroup(group);

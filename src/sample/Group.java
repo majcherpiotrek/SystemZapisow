@@ -172,7 +172,7 @@ public class Group {
 
     public void setAvaiablePlaces(int avaiablePlaces) {this.avaiablePlaces = avaiablePlaces;}
 
-    public void decAvaiablePlaces(){avaiablePlaces--;}
+    public void decAvaiablePlaces(){if(avaiablePlaces>0)avaiablePlaces--;}
 
     public void incAvaiablePlaces(){avaiablePlaces++;}
 
