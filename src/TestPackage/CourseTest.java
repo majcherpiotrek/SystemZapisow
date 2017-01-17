@@ -1,13 +1,15 @@
 package TestPackage;
+import exceptions.WrongGroupException;
+import junit.framework.Assert;
+import mockit.Expectations;
 import mockit.Verifications;
 import org.junit.Test;
-import sample.Course;
-import sample.DataBase;
+import sample.*;
 import mockit.Mocked;
 import mockit.integration.junit4.JMockit;
 import org.junit.runner.RunWith;
-import sample.Group;
-import sample.GroupTypes;
+
+import java.util.ArrayList;
 
 /**
  * Klasa do testowania klasy kursów za pomocą narzędzia JMockit
@@ -16,19 +18,47 @@ import sample.GroupTypes;
 @RunWith(JMockit.class)
 public final class CourseTest {
 
+    private DataBase db =DataBase.INSTANCE;
     @Mocked
-    Course course;
+    Group group;
 
     @Test
-    public void addGoodGroupToCourseTest(){
-        Group group = new Group("nazwa grupy", course.getDepartment(),course.getFieldOfStudy(),
-                course.getTerm(), course.getSpecialization(),
-                course.getCourseCode()+"grupa1",course.getCourseCode(),
-                course.getGroupTypesList().get(0),
-                "profesor",
-                "Poniedzialek 17",
-                10, 20, 120);
+    public void addGroupToCourseTest(){
 
+        Course course = db.getCourseList().get(0);
+
+
+        new Expectations(){
+            {
+                group.getDepartment(); result = course.getDepartment();
+                group.getFieldOfStudy(); result = course.getFieldOfStudy();
+                group.getSpecialization(); result = course.getSpecialization();
+                group.getTerm(); result = course.getTerm();
+            }
+        };
+
+        Boolean added = false;
+        try {
+            course.addGroup(group);
+            added=true;
+        }catch(WrongGroupException ex){
+            System.err.println(ex.getMessage());
+        }
+
+        Assert.assertTrue(added && course.getGroups().indexOf(group) > 0);
+    }
+
+    @Test(expected = WrongGroupException.class)
+    public void shouldThrowExceptionAddingWrongGroupToCourse() throws WrongGroupException{
+        Course course = db.getCourseList().get(0);
+
+        new Expectations(){
+            {
+                group.getDepartment(); result = Department.W2;
+            }
+        };
+
+        course.addGroup(group);
     }
 }
 

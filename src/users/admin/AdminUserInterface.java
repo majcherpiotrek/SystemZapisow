@@ -1,4 +1,5 @@
 package users.admin;
+import exceptions.WrongGroupException;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -626,9 +627,13 @@ public class AdminUserInterface extends GeneralUserInteface {
             }
 
             String generatedGroupCode = course.generateNewGroupCode(type.getValue());
-
-            Group group = admin.createGroupInDatabase(course);
-
+            Group group;
+            try {
+                group = admin.createGroupInDatabase(course);
+            }catch(WrongGroupException ex){
+                AlertBox.Display("Blad!", ex.getMessage());
+                return;
+            }
             admin.setGroupName(group,course.getName());
             admin.setGroupDepartment(group, course.getDepartment());
             admin.setGroupFieldOfStudies(group, course.getFieldOfStudy());

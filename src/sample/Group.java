@@ -10,6 +10,50 @@ import users.student.Student;
  * Created by piotrek on 07.12.16.
  */
 public class Group {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        if (numberOfHours != group.numberOfHours) return false;
+        if (numberOfPlaces != group.numberOfPlaces) return false;
+        if (avaiablePlaces != group.avaiablePlaces) return false;
+        if (room != group.room) return false;
+        if (term != group.term) return false;
+        if (name != null ? !name.equals(group.name) : group.name != null) return false;
+        if (groupCode != null ? !groupCode.equals(group.groupCode) : group.groupCode != null) return false;
+        if (courseCode != null ? !courseCode.equals(group.courseCode) : group.courseCode != null) return false;
+        if (type != group.type) return false;
+        if (proffesor != null ? !proffesor.equals(group.proffesor) : group.proffesor != null) return false;
+        if (date != null ? !date.equals(group.date) : group.date != null) return false;
+        if (signedUpStudents != null ? !signedUpStudents.equals(group.signedUpStudents) : group.signedUpStudents != null)
+            return false;
+        if (department != group.department) return false;
+        if (fieldOfStudy != group.fieldOfStudy) return false;
+        return specialization == group.specialization;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (groupCode != null ? groupCode.hashCode() : 0);
+        result = 31 * result + (courseCode != null ? courseCode.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (proffesor != null ? proffesor.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + numberOfHours;
+        result = 31 * result + numberOfPlaces;
+        result = 31 * result + avaiablePlaces;
+        result = 31 * result + room;
+        result = 31 * result + (signedUpStudents != null ? signedUpStudents.hashCode() : 0);
+        result = 31 * result + (department != null ? department.hashCode() : 0);
+        result = 31 * result + (fieldOfStudy != null ? fieldOfStudy.hashCode() : 0);
+        result = 31 * result + term;
+        result = 31 * result + (specialization != null ? specialization.hashCode() : 0);
+        return result;
+    }
 
     private String name;
     private String groupCode;

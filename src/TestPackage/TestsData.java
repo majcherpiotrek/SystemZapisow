@@ -7,27 +7,27 @@ import users.student.Student;
  * Klasa z danymi przeznaczonymi do testów jednostkowych.
  * Created by piotrek on 17.01.17.
  */
-public class TestsData {
+class TestsData {
 
-    public Group groupForTests;
+     Group groupForTests;
 
-    public Group groupForSignUpToFullGroupTest;
+     Group groupForSignUpToFullGroupTest;
 
-    public Group groupForSignUpToWrongDepartmentTest;
+     Group groupForSignUpToWrongDepartmentTest;
 
-    public Group groupForSignUpToWrongFieldTest;
+     Group groupForSignUpToWrongFieldTest;
 
-    public Group groupForSignUpToWrongSpecializationTest;
+     Group groupForSignUpToWrongSpecializationTest;
 
-    public Group groupForSignUpToWrongTermTest;
+     Group groupForSignUpToWrongTermTest;
 
-    public Group groupForSignOutFromGoodGroupTest;
+     Group groupForSignOutFromGoodGroupTest;
 
-    public Group groupForSignOutFromWrongGroupTest;
+     Group groupForSignOutFromWrongGroupTest;
 
-    public Student studentForTests;
+     Student studentForTests;
 
-    public TestsData() {
+     TestsData() {
         groupForTests = new Group("grupa",
                 Department.W1,
                 FieldsOfStudies.W1K1,

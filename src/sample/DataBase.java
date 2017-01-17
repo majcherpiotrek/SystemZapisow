@@ -1,5 +1,6 @@
 package sample;
 
+import exceptions.WrongGroupException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import users.student.Student;
@@ -311,7 +312,12 @@ public final class DataBase {
 
                     String groupCode = c.getCourseCode() + Integer.toString(i) + type.toString();
                     String date = dayName + " " + Integer.toString(hour) + ":15";
-                    c.addGroup(new Group(c.getName(), c.getDepartment(), c.getFieldOfStudy(), c.getTerm(), c.getSpecialization(), groupCode, c.getCourseCode(), type, profesor, date, numberOfHours, numberOfPlaces, room));
+                    try {
+                        c.addGroup(new Group(c.getName(), c.getDepartment(), c.getFieldOfStudy(), c.getTerm(), c.getSpecialization(), groupCode, c.getCourseCode(), type, profesor, date, numberOfHours, numberOfPlaces, room));
+
+                    }catch(WrongGroupException ex){
+
+                    }
                 }
             }
             c.updateComplete();

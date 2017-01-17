@@ -1,5 +1,6 @@
 package sample;
 
+import exceptions.WrongGroupException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,6 +11,53 @@ import java.util.ArrayList;
  * Created by piotrek on 07.12.16.
  */
 public class Course {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        if (term != course.term) return false;
+        if (ECTS != course.ECTS) return false;
+        if (name != null ? !name.equals(course.name) : course.name != null) return false;
+        if (courseCode != null ? !courseCode.equals(course.courseCode) : course.courseCode != null) return false;
+        if (department != course.department) return false;
+        if (departmentName != null ? !departmentName.equals(course.departmentName) : course.departmentName != null)
+            return false;
+        if (fieldOfStudy != course.fieldOfStudy) return false;
+        if (fieldOfStudyName != null ? !fieldOfStudyName.equals(course.fieldOfStudyName) : course.fieldOfStudyName != null)
+            return false;
+        if (groupTypes != null ? !groupTypes.equals(course.groupTypes) : course.groupTypes != null) return false;
+        if (specialization != course.specialization) return false;
+        if (specializationName != null ? !specializationName.equals(course.specializationName) : course.specializationName != null)
+            return false;
+        if (obligatory != null ? !obligatory.equals(course.obligatory) : course.obligatory != null) return false;
+        if (groups != null ? !groups.equals(course.groups) : course.groups != null) return false;
+        if (hasGroupTypes != null ? !hasGroupTypes.equals(course.hasGroupTypes) : course.hasGroupTypes != null)
+            return false;
+        return complete != null ? complete.equals(course.complete) : course.complete == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (courseCode != null ? courseCode.hashCode() : 0);
+        result = 31 * result + term;
+        result = 31 * result + (department != null ? department.hashCode() : 0);
+        result = 31 * result + (departmentName != null ? departmentName.hashCode() : 0);
+        result = 31 * result + (fieldOfStudy != null ? fieldOfStudy.hashCode() : 0);
+        result = 31 * result + (fieldOfStudyName != null ? fieldOfStudyName.hashCode() : 0);
+        result = 31 * result + (groupTypes != null ? groupTypes.hashCode() : 0);
+        result = 31 * result + (specialization != null ? specialization.hashCode() : 0);
+        result = 31 * result + (specializationName != null ? specializationName.hashCode() : 0);
+        result = 31 * result + ECTS;
+        result = 31 * result + (obligatory != null ? obligatory.hashCode() : 0);
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        result = 31 * result + (hasGroupTypes != null ? hasGroupTypes.hashCode() : 0);
+        result = 31 * result + (complete != null ? complete.hashCode() : 0);
+        return result;
+    }
 
     private String name;
     private String courseCode;
@@ -81,8 +129,15 @@ public class Course {
         return hasGroupTypes;
     }
 
-    public void addGroup(Group group){
-        groups.add(group);
+    public void addGroup(Group group) throws WrongGroupException{
+        if(group.getDepartment().equals(this.department))
+            if(group.getTerm() == this.term)
+                if(group.getFieldOfStudy().equals(this.fieldOfStudy))
+                    if(group.getSpecialization().equals(this.specialization)){
+                        groups.add(group);
+                        return;
+                    }
+        throw new WrongGroupException("Grupa nie należy do tego kurs");
     }
     public void updateComplete(){
 

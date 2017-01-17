@@ -1,4 +1,5 @@
 package users.admin;
+import exceptions.WrongGroupException;
 import javafx.scene.control.Label;
 import sample.*;
 import users.User;
@@ -89,7 +90,7 @@ public class Admin extends User{
         DataBase.INSTANCE.addCourse(course);
         return course;
     }
-     Group createGroupInDatabase(Course course){
+     Group createGroupInDatabase(Course course) throws WrongGroupException{
         Group group = new Group();
         course.addGroup(group);
         return group;
