@@ -85,12 +85,12 @@ public class Admin extends User{
 
     }
 
-    Course createNewCourse(){
+    public Course createNewCourse(){
         Course course = new Course();
         DataBase.INSTANCE.addCourse(course);
         return course;
     }
-     Group createGroupInDatabase(Course course) throws WrongGroupException{
+     public Group createGroupInDatabase(Course course) throws WrongGroupException{
         Group group = new Group();
         course.addGroup(group);
         return group;
@@ -125,9 +125,8 @@ public class Admin extends User{
     void setCourseCode(Course course , String code){
         course.setCourseCode(code);
     }
-
     //Funkcje umożliwiające ustawianie parametrów grupy
-    void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
+    public void editGroup(Group group, String profesor, String date, int nH, int nP, int room){
         group.setProffesor(profesor);
         group.setDate(date);
         group.setNumberOfHours(nH);

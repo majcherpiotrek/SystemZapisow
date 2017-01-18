@@ -130,10 +130,10 @@ public class Course {
     }
 
     public void addGroup(Group group) throws WrongGroupException{
-        if(group.getDepartment().equals(this.department))
+        if(group.getDepartment() == this.department)
             if(group.getTerm() == this.term)
-                if(group.getFieldOfStudy().equals(this.fieldOfStudy))
-                    if(group.getSpecialization().equals(this.specialization)){
+                if(group.getFieldOfStudy() == this.fieldOfStudy)
+                    if(group.getSpecialization()==this.specialization){
                         groups.add(group);
                         return;
                     }

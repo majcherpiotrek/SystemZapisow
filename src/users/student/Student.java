@@ -76,12 +76,15 @@ public class Student extends User {
         if(this.signUpRight){
 
             if (group.getAvaiablePlaces() > 0 ) {
-                for (Group g : this.groupList) {
-                    if (group.isInTheGroup(this))
-                        throw new WrongGroupException("Zostałeś już zapisany do tej grupy");
 
-                    if(g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType()))
-                        throw new WrongGroupException("Jeseś już zapisany do grupy tego typu w wybranym kursie.");
+                if(this.getGroupList().size() > 0) {
+                    for (Group g : this.groupList) {
+                        if (group.isInTheGroup(this))
+                            throw new WrongGroupException("Zostałeś już zapisany do tej grupy");
+
+                        if (g.getCourseCode().equals(group.getCourseCode()) && g.getType().equals(group.getType()))
+                            throw new WrongGroupException("Jeseś już zapisany do grupy tego typu w wybranym kursie.");
+                    }
                 }
 
                     //dodanie studenta dla obiektu grupy w bazie danych

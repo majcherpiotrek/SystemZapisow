@@ -5,10 +5,10 @@ import exceptions.WrongGroupException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import sample.*;
+import sample.Group;
 import users.student.Student;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by piotrek on 11.01.17.
@@ -24,6 +24,8 @@ public class StudentTest {
     public void init(){
         data = new TestsData();
     }
+
+
 
     @org.junit.Test
     public void signUpToGoodGroupTest() throws Exception {
@@ -102,4 +104,5 @@ public class StudentTest {
         student.signOutFromGroup(group);
 
     }
+
 }

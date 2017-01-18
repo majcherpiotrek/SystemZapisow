@@ -1,6 +1,9 @@
 package TestPackage;
 
+import mockit.Mocked;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.junit.runners.Parameterized;
@@ -72,5 +75,17 @@ public class GroupTest {
         group.setAvaiablePlaces(0);
         group.decAvaiablePlaces();
         assertEquals(0, group.getAvaiablePlaces());
+    }
+
+    @Mocked
+    Student studentMocked;
+
+    @Test
+    public void isStudentInGroup(){
+        group.addStudent(studentMocked);
+        boolean passed=true;
+        if(group.getSignedUpStudents().indexOf(studentMocked)<0)
+            passed=false;
+        Assert.assertTrue(passed);
     }
 }

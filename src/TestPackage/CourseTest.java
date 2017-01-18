@@ -23,7 +23,7 @@ public final class CourseTest {
     Group group;
 
     @Test
-    public void addGroupToCourseTest(){
+    public void addGoodGroupToCourseTest(){
 
         Course course = db.getCourseList().get(0);
 
@@ -49,6 +49,91 @@ public final class CourseTest {
     }
 
     @Test(expected = WrongGroupException.class)
+    public void addIncorectDepartmentGroupToCourseTest() throws WrongGroupException{
+
+        Course course = db.getCourseList().get(0);
+
+        Department dep;
+        if(course.getDepartment().equals(Department.W1))
+        dep = Department.W2;
+        else
+        dep = Department.W1;
+
+
+        new Expectations(){
+            {
+                group.getDepartment(); result = dep;
+            }
+        };
+
+        course.addGroup(group);
+    }
+
+
+    @Test(expected = WrongGroupException.class)
+    public void addIncorectFieldOfStudyGroupToCourseTest() throws WrongGroupException{
+
+        Course course = db.getCourseList().get(0);
+
+        FieldsOfStudies fos;
+        if(course.getFieldOfStudy().equals(FieldsOfStudies.W1K1))
+            fos = FieldsOfStudies.W2K1;
+        else
+            fos = FieldsOfStudies.W1K1;
+
+
+        new Expectations(){
+            {
+                group.getDepartment(); result = course.getDepartment();
+                group.getTerm(); result = course.getTerm();
+                group.getFieldOfStudy(); result = fos;
+            }
+        };
+
+        course.addGroup(group);
+    }
+
+    @Test(expected = WrongGroupException.class)
+    public void addIncorectTermGroupToCourseTest() throws WrongGroupException{
+
+        Course course = db.getCourseList().get(0);
+
+        new Expectations(){
+            {
+                group.getDepartment(); result = course.getDepartment();
+                group.getTerm(); result = course.getTerm()+1;
+            }
+        };
+
+        course.addGroup(group);
+    }
+
+
+    @Test(expected = WrongGroupException.class)
+    public void addIncorectSpecializationGroupToCourseTest() throws WrongGroupException{
+
+        Course course = db.getCourseList().get(0);
+
+        Specialization sp;
+        if(course.getSpecialization().equals(Specialization.NOSPECIALIZATION))
+            sp = Specialization.W1K1S1;
+        else
+            sp = Specialization.NOSPECIALIZATION;
+
+
+        new Expectations(){
+            {
+                group.getDepartment(); result = course.getDepartment();
+                group.getTerm(); result = course.getTerm();
+                group.getFieldOfStudy(); result = course.getFieldOfStudy();
+                group.getSpecialization(); result = sp;
+            }
+        };
+
+        course.addGroup(group);
+    }
+
+    @Test(expected = WrongGroupException.class)
     public void shouldThrowExceptionAddingWrongGroupToCourse() throws WrongGroupException{
         Course course = db.getCourseList().get(0);
 
@@ -60,7 +145,10 @@ public final class CourseTest {
 
         course.addGroup(group);
     }
+
+
 }
+
 
 
 
