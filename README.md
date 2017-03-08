@@ -1,7 +1,7 @@
 # SystemZapisów
 <p>
 <h4>
-Program umożliwia logowanie do systemu na konta administratora i stiudenta. W zależności od zalgowanej osoby udostostępniane
+Program umożliwia logowanie do systemu na konta administratora i stiudenta. W zależności od zalogowanej osoby udostostępniane
 są różne funkcjonalności.</h4><br> 
 </p>
 <p>
