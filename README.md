@@ -10,7 +10,10 @@ Administrator może:
 -dodawać/usuwać kursy oraz grupy zajęciowe dla tych kursów
 -edytować informacje o kursi lub grupie zajęciowej
 
-Student może:
--przeglądać listę kursów oraz grup zajęciowych dla swojego wydziału, kierunku i specjalizacji
--zapisywać/wypisywać się do/z grup zajęciowych (jeśli posiada prawo do zapisów)
--przeglądać grupy zajęciowe, do których jest już zapisany
+<p>Student może:
+-przeglądać listę kursów oraz grup zajęciowych dla swojego wydziału, kierunku i specjalizacji</br>
+-zapisywać/wypisywać się do/z grup zajęciowych (jeśli posiada prawo do zapisów)</br>
+-przeglądać grupy zajęciowe, do których jest już zapisany</br>
+</p>
+<p>Dane logowania znajdują się w plikach admin.txt oraz student.txt.</p>
+
